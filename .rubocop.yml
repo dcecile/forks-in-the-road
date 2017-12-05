@@ -7,7 +7,6 @@ Rails:
   Enabled: true
 
 Style/StringLiterals:
-  Enabled: false
   EnforcedStyle: double_quotes
 
 Documentation:
