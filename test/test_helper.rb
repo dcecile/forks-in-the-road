@@ -5,10 +5,10 @@ require "rails/test_help"
 
 module ActiveSupport
   class TestCase
-    # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical
-    # order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    def self.expect(test_description, &test_block)
+      test("expect #{test_description}", &test_block)
+    end
   end
 end
