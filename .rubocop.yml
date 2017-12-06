@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.4
+  Include:
+    - .git-hooks/**/*.rb
   Exclude:
     - bin/*
     - db/schema.rb
@@ -9,3 +11,8 @@ Rails:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Naming/FileName:
+  Exclude:
+    - Gemfile
+    - Rakefile
