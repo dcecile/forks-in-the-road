@@ -34,6 +34,8 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   # Use Rubocop for style checking
   gem "rubocop"
+  # Use JSON Expressions for checking JSON API responses
+  gem "json_expressions"
 end
 
 group :development do

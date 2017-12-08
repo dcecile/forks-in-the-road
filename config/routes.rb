@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  def put(_)
+    # Disable PUT route, because PATCH is more accurate
+  end
+
+  resources :comparisons, only: %i[index create show update]
 end
