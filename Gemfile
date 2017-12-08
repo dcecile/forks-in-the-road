@@ -39,6 +39,9 @@ group :development, :test do
 end
 
 group :development do
+  # Use Guard for continuous testing
+  gem "guard"
+  gem "guard-minitest"
   # Use Overcommit for Git hooks
   gem "overcommit"
   # Access an IRB console on exception pages or by using <%= console %>

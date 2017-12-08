@@ -16,3 +16,4 @@ Naming/FileName:
   Exclude:
     - Gemfile
     - Rakefile
+    - Guardfile
