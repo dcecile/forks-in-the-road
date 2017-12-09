@@ -7,9 +7,9 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
     get comparisons_url
     assert_response :success
     assert_response_json(
-      %i[phone plan].map do |name|
+      comparisons(:phone, :plan).map do |comparison|
         {
-          id: comparisons(name).id
+          id: comparison.id
         }.ignore_extra_keys!
       end
     )
@@ -33,7 +33,17 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
       name: comparison.name,
       alternative_noun: comparison.alternative_noun,
       created_at: String,
-      updated_at: String
+      updated_at: String,
+      alternatives: alternatives(:google, :apple).map do |alternative|
+        {
+          id: alternative.id,
+          name: alternative.name,
+          url: alternative.url,
+          comparison_id: comparison.id,
+          created_at: String,
+          updated_at: String
+        }
+      end
     )
   end
 
