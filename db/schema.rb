@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208232845) do
+ActiveRecord::Schema.define(version: 20171209213009) do
 
   create_table "alternatives", force: :cascade do |t|
     t.string "name", null: false
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20171208232845) do
     t.string "alternative_noun"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "value_unit"
+  end
+
+  create_table "criteria", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.float "full_value", null: false
+    t.float "default_estimate"
+    t.integer "comparison_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comparison_id"], name: "index_criteria_on_comparison_id"
   end
 
 end

@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+battery:
+  name: Battery
+  description: It's important to last one day
+  comparison: phone
+  full_value: 50
+
+ram:
+  name: RAM
+  comparison: phone
+  full_value: 30

@@ -3,6 +3,7 @@
 phone:
   name: Fancy phone
   alternative_noun: phone
+  value_unit: $
 
 plan:
   name: 2017 Plan

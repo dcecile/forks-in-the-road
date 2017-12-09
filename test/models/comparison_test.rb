@@ -23,4 +23,15 @@ class ComparisonTest < ActiveSupport::TestCase
       alternatives(:apple)
     )
   end
+
+  expect "has criteria" do
+    assert_includes(
+      comparisons(:phone).criteria,
+      criteria(:battery)
+    )
+    assert_includes(
+      comparisons(:phone).criteria,
+      criteria(:ram)
+    )
+  end
 end

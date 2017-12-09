@@ -17,6 +17,9 @@ class AlternativesController < ApplicationController
   private
 
   def alternative_params
-    params.permit(:name, :url)
+    params.permit(
+      :name,
+      :url
+    )
   end
 end

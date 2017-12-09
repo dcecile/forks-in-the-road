@@ -32,6 +32,7 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
       id: comparison.id,
       name: comparison.name,
       alternative_noun: comparison.alternative_noun,
+      value_unit: comparison.value_unit,
       created_at: String,
       updated_at: String,
       alternatives: alternatives(:google, :apple).map do |alternative|
@@ -50,11 +51,14 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
   expect "patch update" do
     comparison = comparisons(:plan)
     assert_nil comparison.alternative_noun
+    assert_nil comparison.value_unit
     patch comparison_url(comparison.id), params: {
-      alternative_noun: "plan"
+      alternative_noun: "plan",
+      value_unit: "miles"
     }
     assert_response :success
     assert_equal "plan", Comparison.find(comparison.id).alternative_noun
+    assert_equal "miles", Comparison.find(comparison.id).value_unit
     assert_equal comparison.name, Comparison.find(comparison.id).name
   end
 end

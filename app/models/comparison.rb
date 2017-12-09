@@ -6,4 +6,5 @@ class Comparison < ApplicationRecord
   validates :name, presence: true
 
   has_many :alternatives, dependent: :destroy
+  has_many :criteria, dependent: :destroy
 end

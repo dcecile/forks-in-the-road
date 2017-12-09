@@ -26,6 +26,10 @@ class ComparisonsController < ApplicationController
   private
 
   def comparison_params
-    params.permit(:name, :alternative_noun)
+    params.permit(
+      :name,
+      :alternative_noun,
+      :value_unit
+    )
   end
 end
