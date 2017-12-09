@@ -16,12 +16,12 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
   end
 
   expect "post create" do
-    name = "New"
-    assert_nil Comparison.find_by(name: name)
-    post comparisons_url, params: { name: name }
-    assert_response :success
-    assert_response_json({})
-    assert_not_nil Comparison.find_by(name: name)
+    assert_create_succeeds(
+      Comparison,
+      :name,
+      :comparisons_url,
+      name: "New"
+    )
   end
 
   expect "get show" do
@@ -35,30 +35,44 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
       value_unit: comparison.value_unit,
       created_at: String,
       updated_at: String,
-      alternatives: alternatives(:google, :apple).map do |alternative|
-        {
-          id: alternative.id,
-          name: alternative.name,
-          url: alternative.url,
-          comparison_id: comparison.id,
-          created_at: String,
-          updated_at: String
-        }
-      end
+      alternatives:
+        alternatives(:google, :apple).map(&method(:show_alternative)),
+      criteria:
+        criteria(:battery, :ram).map(&method(:show_criterion))
     )
   end
 
+  def show_alternative(alternative)
+    {
+      id: alternative.id,
+      name: alternative.name,
+      url: alternative.url,
+      comparison_id: alternative.comparison_id,
+      created_at: String,
+      updated_at: String
+    }
+  end
+
+  def show_criterion(criterion)
+    {
+      id: criterion.id,
+      name: criterion.name,
+      description: criterion.description,
+      full_value: criterion.full_value,
+      default_estimate: criterion.default_estimate,
+      comparison_id: criterion.comparison_id,
+      created_at: String,
+      updated_at: String
+    }
+  end
+
   expect "patch update" do
-    comparison = comparisons(:plan)
-    assert_nil comparison.alternative_noun
-    assert_nil comparison.value_unit
-    patch comparison_url(comparison.id), params: {
+    assert_patch_succeeds(
+      comparisons(:plan),
+      :comparison_url,
+      name: nil,
       alternative_noun: "plan",
       value_unit: "miles"
-    }
-    assert_response :success
-    assert_equal "plan", Comparison.find(comparison.id).alternative_noun
-    assert_equal "miles", Comparison.find(comparison.id).value_unit
-    assert_equal comparison.name, Comparison.find(comparison.id).name
+    )
   end
 end

@@ -14,7 +14,10 @@ class ComparisonsController < ApplicationController
 
   def show
     comparison = Comparison.find(params[:id])
-    render json: comparison, include: :alternatives
+    render(
+      json: comparison,
+      include: %i[alternatives criteria]
+    )
   end
 
   def update

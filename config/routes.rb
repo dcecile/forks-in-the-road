@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   resources :comparisons, only: %i[index create show update] do
     resources :alternatives, only: %i[create]
+    resources :criteria, only: %i[create]
   end
 
   resources :alternatives, only: %i[update]
+  resources :criteria, only: %i[update]
 end

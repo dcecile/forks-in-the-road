@@ -25,5 +25,49 @@ module ActiveSupport
     def assert_response_json(pattern)
       assert_json_match pattern, @response.body
     end
+
+    def assert_create_succeeds(record_class, key, route, parent: nil, **params)
+      assert_nil record_class.find_by(key => params[key])
+      post method(route).call(parent), params: params
+      assert_response :success
+      assert_response_json({})
+      new_record = record_class.find_by(key => params[key])
+      assert_not_nil new_record
+      params.each do |param, value|
+        assert_equal value, new_record.send(param)
+      end
+    end
+
+    def assert_patch_succeeds(record, route, **params)
+      patch_params = params.compact
+      unchanged_params = params.keys - patch_params.keys
+      assert_patch_ready(record, patch_params)
+      assert_patch_executes(record, route, patch_params)
+      assert_patch_changes(record, patch_params, unchanged_params)
+    end
+
+    private
+
+    def assert_patch_ready(record, patch_params)
+      patch_params.each_key do |param|
+        assert_nil record.send(param)
+      end
+    end
+
+    def assert_patch_executes(record, route, patch_params)
+      patch method(route).call(record), params: patch_params
+      assert_response :success
+      assert_response_json({})
+    end
+
+    def assert_patch_changes(record, patch_params, unchanged_params)
+      new_record = record.class.find(record.id)
+      patch_params.each do |param, value|
+        assert_equal value, new_record.send(param)
+      end
+      unchanged_params.each do |param|
+        assert_equal record.send(param), new_record.send(param)
+      end
+    end
   end
 end

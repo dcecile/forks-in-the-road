@@ -5,6 +5,7 @@ battery:
   description: It's important to last one day
   comparison: phone
   full_value: 50
+  default_estimate: 0.6
 
 ram:
   name: RAM
