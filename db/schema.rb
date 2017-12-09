@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206122333) do
+ActiveRecord::Schema.define(version: 20171208232845) do
+
+  create_table "alternatives", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url"
+    t.integer "comparison_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comparison_id"], name: "index_alternatives_on_comparison_id"
+  end
 
   create_table "comparisons", force: :cascade do |t|
     t.string "name", null: false

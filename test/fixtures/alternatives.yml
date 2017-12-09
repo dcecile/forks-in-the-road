@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+google:
+  name: Google
+  comparison: phone
+
+apple:
+  name: Apple
+  url: https://www.apple.com/ca/iphone/
+  comparison: phone

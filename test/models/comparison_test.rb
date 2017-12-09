@@ -4,14 +4,23 @@ require "test_helper"
 
 class ComparisonTest < ActiveSupport::TestCase
   expect "validation fails without name" do
-    comparison = Comparison.new
-    assert_raises(ActiveRecord::RecordInvalid) do
-      comparison.validate!
-    end
+    assert_validation_fails Comparison.new
   end
 
   expect "validation passes with name" do
-    comparison = Comparison.new(name: "Test")
-    assert comparison.validate!
+    assert_validation_passes Comparison.new(
+      name: "Test"
+    )
+  end
+
+  expect "has comparisons" do
+    assert_includes(
+      comparisons(:phone).alternatives,
+      alternatives(:google)
+    )
+    assert_includes(
+      comparisons(:phone).alternatives,
+      alternatives(:apple)
+    )
   end
 end

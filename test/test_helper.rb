@@ -12,6 +12,16 @@ module ActiveSupport
       test("expect #{test_description}", &test_block)
     end
 
+    def assert_validation_fails(record)
+      assert_raises(ActiveRecord::RecordInvalid) do
+        record.validate!
+      end
+    end
+
+    def assert_validation_passes(record)
+      assert record.validate!
+    end
+
     def assert_response_json(pattern)
       assert_json_match pattern, @response.body
     end

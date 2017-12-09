@@ -4,4 +4,6 @@
 # multiple alternatives according to common criteria
 class Comparison < ApplicationRecord
   validates :name, presence: true
+
+  has_many :alternatives, dependent: :destroy
 end
