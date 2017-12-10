@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - bin/*
     - db/schema.rb
+    - node_modules/**/*
 
 Rails:
   Enabled: true
