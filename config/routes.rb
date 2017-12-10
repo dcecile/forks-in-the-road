@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   def put(_)
-    # Disable PUT route, because PATCH is more accurate
+    # Disable duplicate PUT route, because PATCH is more a more accurate verb
   end
 
   resources :comparisons, only: %i[index create show update] do
@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     resources :criteria, only: %i[create]
   end
 
-  resources :alternatives, only: %i[update]
+  resources :alternatives, only: %i[update] do
+    resources :estimates, only: %i[create]
+  end
+
   resources :criteria, only: %i[update]
+
+  resources :estimates, only: %i[update]
 end

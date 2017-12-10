@@ -4,13 +4,13 @@
 class CriteriaController < ApplicationController
   def create
     criterion = Comparison.find(params[:comparison_id])
-    criterion.criteria.create(criterion_params)
+    criterion.criteria.create!(criterion_params)
     render json: {}
   end
 
   def update
     criterion = Criterion.find(params[:id])
-    criterion.update(criterion_params)
+    criterion.update!(criterion_params)
     render json: {}
   end
 

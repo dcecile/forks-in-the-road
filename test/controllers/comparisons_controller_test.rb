@@ -49,6 +49,26 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
       url: alternative.url,
       comparison_id: alternative.comparison_id,
       created_at: String,
+      updated_at: String,
+      estimates: get_estimates(alternative).map(&method(:show_estimate))
+    }
+  end
+
+  def get_estimates(alternative)
+    if alternative == alternatives(:google)
+      estimates(:google_battery, :google_ram)
+    else
+      []
+    end
+  end
+
+  def show_estimate(estimate)
+    {
+      id: estimate.id,
+      estimate: estimate.estimate,
+      alternative_id: estimate.alternative_id,
+      criterion_id: estimate.criterion_id,
+      created_at: String,
       updated_at: String
     }
   end

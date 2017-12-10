@@ -8,7 +8,7 @@ class ComparisonsController < ApplicationController
   end
 
   def create
-    Comparison.create(comparison_params)
+    Comparison.create!(comparison_params)
     render json: {}
   end
 
@@ -16,13 +16,16 @@ class ComparisonsController < ApplicationController
     comparison = Comparison.find(params[:id])
     render(
       json: comparison,
-      include: %i[alternatives criteria]
+      include: {
+        alternatives: { include: :estimates },
+        criteria: {}
+      }
     )
   end
 
   def update
     comparison = Comparison.find(params[:id])
-    comparison.update(comparison_params)
+    comparison.update!(comparison_params)
     render json: {}
   end
 

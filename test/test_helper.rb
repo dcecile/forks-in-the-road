@@ -49,8 +49,8 @@ module ActiveSupport
     private
 
     def assert_patch_ready(record, patch_params)
-      patch_params.each_key do |param|
-        assert_nil record.send(param)
+      patch_params.each do |param, value|
+        assert_not_equal value, record.send(param)
       end
     end
 
