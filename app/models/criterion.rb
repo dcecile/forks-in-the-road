@@ -4,6 +4,11 @@
 class Criterion < ApplicationRecord
   validates :name, presence: true
   validates :full_value, presence: true
+  validates(
+    :default_estimate,
+    inclusion: { in: 0..1, message: "is not between zero and one" },
+    allow_nil: true
+  )
 
   belongs_to :comparison
 end

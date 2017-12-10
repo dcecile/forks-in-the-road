@@ -36,4 +36,15 @@ class AlternativeTest < ActiveSupport::TestCase
       name: "Test"
     )
   end
+
+  expect "has estimates" do
+    assert_includes(
+      alternatives(:google).estimates,
+      estimates(:google_battery)
+    )
+    assert_includes(
+      alternatives(:google).estimates,
+      estimates(:google_ram)
+    )
+  end
 end

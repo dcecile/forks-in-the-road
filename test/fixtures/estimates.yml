@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+google_battery:
+  estimate: 0.8
+  alternative: google
+  criterion: battery
+
+google_ram:
+  estimate: 0.9
+  alternative: google
+  criterion: ram

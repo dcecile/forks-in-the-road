@@ -6,4 +6,5 @@ class Alternative < ApplicationRecord
   validates :url, url: { allow_nil: true }
 
   belongs_to :comparison
+  has_many :estimates, dependent: :destroy
 end
