@@ -12,7 +12,6 @@ class ClientControllerTest < ActionDispatch::IntegrationTest
         script.attribute("src")
       )
     end
-    assert_select "h1", "INDEX"
-    assert_select "div[data-react-class='HelloWorld']", ""
+    assert_select "body > div[data-react-class='App']", ""
   end
 end
