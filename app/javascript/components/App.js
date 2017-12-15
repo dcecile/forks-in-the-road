@@ -9,7 +9,9 @@ function App() {
   return (
     <HashRouter>
       <div>
-        <h1><Link to="/">Forks in the Road</Link></h1>
+        <h1>
+          <Link to="/dashboard">Forks in the Road</Link>
+        </h1>
         <Switch>
           <Redirect exact from="/" to="/dashboard"/>
           <Route exact path="/dashboard" component={Dashboard}/>

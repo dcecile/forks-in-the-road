@@ -9,12 +9,13 @@ class Dashboard extends React.Component {
       isLoading: true,
       comparisonStubs: []
     }
-    this.loadComparisons()
+    this.load()
   }
 
-  async loadComparisons() {
+  async load() {
     const response = await axios.get("/comparisons");
     this.setState({
+      ...this.state,
       isLoading: false,
       comparisonStubs: response.data
     })
@@ -52,7 +53,7 @@ class Dashboard extends React.Component {
 
 function ComparisonStub({ id, name }) {
   return (
-    <Link to={'/comparison/' + id}>{name}</Link>
+    <Link to={`/comparison/${id}`}>{name}</Link>
   )
 }
 
