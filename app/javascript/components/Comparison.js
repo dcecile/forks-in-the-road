@@ -1,6 +1,9 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, Switch } from "react-router-dom"
+import { Route } from "react-router"
 import axios from "axios"
+import RouteNotFound from "./RouteNotFound"
+import Alternative from "./Alternative"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -43,9 +46,30 @@ class Comparison extends React.Component {
     return (
       <div>
         {this.renderHeader()}
-        {this.renderAlternatives()}
-        {this.renderConfig()}
+          <Switch>
+            <Route
+              exact
+              path={this.state.matchUrl}
+              render={() => this.renderSummary()}
+            />
+            <Route
+              exact
+              path={`${this.state.matchUrl}/alternative/:id`}
+              render={routeProps => this.renderAlternative(routeProps)}
+            />
+            <Route component={RouteNotFound}/>
+          </Switch>
       </div>
+    )
+  }
+
+  renderAlternative(routeProps) {
+    return (
+      <Alternative
+        {...routeProps}
+        alternatives={this.comparison.alternatives}
+        criteria={this.comparison.criteria}
+      />
     )
   }
 
@@ -54,6 +78,15 @@ class Comparison extends React.Component {
       <h2>
         <Link to={this.state.matchUrl}>{this.comparison.name}</Link>
       </h2>
+    )
+  }
+
+  renderSummary() {
+    return (
+      <div>
+        {this.renderAlternatives()}
+        {this.renderConfig()}
+      </div>
     )
   }
 

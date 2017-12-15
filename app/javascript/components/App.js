@@ -15,7 +15,7 @@ function App() {
         <Switch>
           <Redirect exact from="/" to="/dashboard"/>
           <Route exact path="/dashboard" component={Dashboard}/>
-          <Route exact path="/comparison/:id" component={Comparison}/>
+          <Route path="/comparison/:id" component={Comparison}/>
           <Route component={RouteNotFound}/>
         </Switch>
       </div>
