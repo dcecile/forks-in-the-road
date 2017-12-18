@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import NewComparison from "./NewComparison"
 
 class Dashboard extends React.Component {
   constructor() {
@@ -18,6 +19,16 @@ class Dashboard extends React.Component {
       ...this.state,
       isLoading: false,
       comparisonStubs: response.data
+    })
+  }
+
+  async handleNewComparisonSubmit(comparison) {
+    console.log("Posting new comparison", comparison)
+    const response = await axios.post("/comparisons", comparison);
+    this.setState({
+      ...this.state,
+      comparisonStubs: this.state.comparisonStubs.concat(
+        response.data)
     })
   }
 
@@ -45,6 +56,11 @@ class Dashboard extends React.Component {
                 name={comparisonStub.name}
               />
             </li>)}
+          <li>
+            <NewComparison
+              onSubmit={comparison => this.handleNewComparisonSubmit(comparison)}
+            />
+          </li>
         </ul>
       </div>
     )

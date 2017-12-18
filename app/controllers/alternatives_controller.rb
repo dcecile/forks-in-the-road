@@ -4,8 +4,8 @@
 class AlternativesController < ApplicationController
   def create
     comparison = Comparison.find(params[:comparison_id])
-    comparison.alternatives.create!(alternative_params)
-    render json: {}
+    alternative = comparison.alternatives.create!(alternative_params)
+    render json: alternative
   end
 
   def update

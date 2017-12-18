@@ -3,9 +3,9 @@
 # CriteriaController provides write access to the Criterion resource
 class CriteriaController < ApplicationController
   def create
-    criterion = Comparison.find(params[:comparison_id])
-    criterion.criteria.create!(criterion_params)
-    render json: {}
+    comparison = Comparison.find(params[:comparison_id])
+    criterion = comparison.criteria.create!(criterion_params)
+    render json: criterion
   end
 
   def update

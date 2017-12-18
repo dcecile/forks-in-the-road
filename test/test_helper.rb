@@ -27,10 +27,22 @@ module ActiveSupport
     end
 
     def assert_create_succeeds(record_class, key, route, parent: nil, **params)
+      assert_create_ready(record_class, key, params)
+      assert_create_executes(route, parent, params)
+      assert_create_changes(record_class, key, params)
+    end
+
+    def assert_create_ready(record_class, key, params)
       assert_nil record_class.find_by(key => params[key])
+    end
+
+    def assert_create_executes(route, parent, params)
       post method(route).call(parent), params: params
       assert_response :success
-      assert_response_json({})
+      assert_response_json(params.ignore_extra_keys!)
+    end
+
+    def assert_create_changes(record_class, key, params)
       new_record = record_class.find_by(key => params[key])
       assert_not_nil new_record
       params.each do |param, value|

@@ -8,8 +8,8 @@ class ComparisonsController < ApplicationController
   end
 
   def create
-    Comparison.create!(comparison_params)
-    render json: {}
+    comparison = Comparison.create!(comparison_params)
+    render json: comparison
   end
 
   def show

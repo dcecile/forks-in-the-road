@@ -4,8 +4,8 @@
 class EstimatesController < ApplicationController
   def create
     alternative = Alternative.find(params[:alternative_id])
-    alternative.estimates.create!(estimate_create_params)
-    render json: {}
+    estimate = alternative.estimates.create!(estimate_create_params)
+    render json: estimate
   end
 
   def update
