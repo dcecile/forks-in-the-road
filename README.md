@@ -9,8 +9,9 @@
 3. Run `bundler install --without production` to install project gems
 4. Run `bin/overcommit --install` to enable Git hooks
 5. Run `bin/rails db:migrate` to set up the database
-6. Run `bin/rails server` to start up Rails
-7. Visit http://localhost:3000 to view the app
+6. Optionally, run `bin/rails db:seed_fu` to seed the development DB with example data
+7. Run `bin/rails server` to start up Rails
+8. Visit http://localhost:3000 to view the app
 
 ### Ruby changes
 
