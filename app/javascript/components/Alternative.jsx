@@ -15,21 +15,20 @@ function Alternative({ match, alternatives, criteria, ...other }) {
 
   const renderHeader = () => (
     <h3>
-      <Link to={matchUrl}>{alternative.name}</Link>
-      {" "}
+      <Link to={matchUrl}>{alternative.name}</Link>{" "}
       {alternative.url && (
-        <a href={alternative.url} target="_blank">(external link)</a>
+        <a href={alternative.url} target="_blank">
+          (external link)
+        </a>
       )}
     </h3>
   )
 
   const renderEstimates = () => (
-    <ul>
-      {alternative.estimates.map(estimate => renderEstimate(estimate))}
-    </ul>
+    <ul>{alternative.estimates.map(estimate => renderEstimate(estimate))}</ul>
   )
 
-  const renderEstimate = (estimate) => {
+  const renderEstimate = estimate => {
     const criterion = criteria.find(item => item.id === estimate.criterion_id)
     return (
       <li key={estimate.id}>
@@ -38,11 +37,7 @@ function Alternative({ match, alternatives, criteria, ...other }) {
     )
   }
 
-  const renderNoEstimates = () => (
-    <p>
-      No estimates yet
-    </p>
-  )
+  const renderNoEstimates = () => <p>No estimates yet</p>
 
   return render()
 }

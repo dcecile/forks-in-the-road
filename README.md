@@ -27,6 +27,7 @@
 2. In another terminal, run `bin/rails server` to start up Rails
 3. Visit http://localhost:3000 to view the app
 4. Change a source file, and the app will reload automatically
+5. Run `yarn prettier-write` to reformat JavaScript code
 
 ## License
 

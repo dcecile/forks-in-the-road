@@ -18,7 +18,7 @@ class Comparison extends React.Component {
   }
 
   async load(id) {
-    const response = await axios.get(`/comparisons/${id}`);
+    const response = await axios.get(`/comparisons/${id}`)
     this.setState({
       ...this.state,
       isLoading: false,
@@ -31,34 +31,30 @@ class Comparison extends React.Component {
   }
 
   render() {
-    return (this.state.isLoading ?
-      this.renderLoading() :
-      this.renderLoaded())
+    return this.state.isLoading ? this.renderLoading() : this.renderLoaded()
   }
 
   renderLoading() {
-    return (
-      <h2>Loading...</h2>
-    )
+    return <h2>Loading...</h2>
   }
 
   renderLoaded() {
     return (
       <div>
         {this.renderHeader()}
-          <Switch>
-            <Route
-              exact
-              path={this.state.matchUrl}
-              render={() => this.renderSummary()}
-            />
-            <Route
-              exact
-              path={`${this.state.matchUrl}/alternative/:id`}
-              render={routeProps => this.renderAlternative(routeProps)}
-            />
-            <Route component={RouteNotFound}/>
-          </Switch>
+        <Switch>
+          <Route
+            exact
+            path={this.state.matchUrl}
+            render={() => this.renderSummary()}
+          />
+          <Route
+            exact
+            path={`${this.state.matchUrl}/alternative/:id`}
+            render={routeProps => this.renderAlternative(routeProps)}
+          />
+          <Route component={RouteNotFound} />
+        </Switch>
       </div>
     )
   }
@@ -95,8 +91,9 @@ class Comparison extends React.Component {
       <div>
         <h3>Alternatives</h3>
         <ul>
-          {this.comparison.alternatives.map(
-            alternative => this.renderAlternativeLink(alternative))}
+          {this.comparison.alternatives.map(alternative =>
+            this.renderAlternativeLink(alternative)
+          )}
         </ul>
       </div>
     )

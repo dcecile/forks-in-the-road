@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   }
 
   async load() {
-    const response = await axios.get("/comparisons");
+    const response = await axios.get("/comparisons")
     this.setState({
       ...this.state,
       isLoading: false,
@@ -24,24 +24,19 @@ class Dashboard extends React.Component {
 
   async handleNewComparisonSubmit(comparison) {
     console.log("Posting new comparison", comparison)
-    const response = await axios.post("/comparisons", comparison);
+    const response = await axios.post("/comparisons", comparison)
     this.setState({
       ...this.state,
-      comparisonStubs: this.state.comparisonStubs.concat(
-        response.data)
+      comparisonStubs: this.state.comparisonStubs.concat(response.data)
     })
   }
 
   render() {
-    return (this.state.isLoading ?
-      this.renderLoading() :
-      this.renderLoaded())
+    return this.state.isLoading ? this.renderLoading() : this.renderLoaded()
   }
 
   renderLoading() {
-    return (
-      <h2>Loading...</h2>
-    )
+    return <h2>Loading...</h2>
   }
 
   renderLoaded() {
@@ -49,16 +44,19 @@ class Dashboard extends React.Component {
       <div>
         <h2>Comparisons</h2>
         <ul>
-          {this.state.comparisonStubs.map(comparisonStub =>
+          {this.state.comparisonStubs.map(comparisonStub => (
             <li key={comparisonStub.id}>
               <ComparisonStub
                 id={comparisonStub.id}
                 name={comparisonStub.name}
               />
-            </li>)}
+            </li>
+          ))}
           <li>
             <NewComparison
-              onSubmit={comparison => this.handleNewComparisonSubmit(comparison)}
+              onSubmit={comparison =>
+                this.handleNewComparisonSubmit(comparison)
+              }
             />
           </li>
         </ul>
@@ -68,9 +66,7 @@ class Dashboard extends React.Component {
 }
 
 function ComparisonStub({ id, name }) {
-  return (
-    <Link to={`/comparison/${id}`}>{name}</Link>
-  )
+  return <Link to={`/comparison/${id}`}>{name}</Link>
 }
 
 export default Dashboard

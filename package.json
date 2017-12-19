@@ -11,6 +11,10 @@
     "react_ujs": "^2.4.3"
   },
   "devDependencies": {
+    "prettier": "1.9.2",
     "webpack-dev-server": "^2.9.7"
+  },
+  "scripts": {
+    "prettier-write": "prettier --write '**/*.js' '**/*.jsx'"
   }
 }

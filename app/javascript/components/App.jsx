@@ -13,10 +13,10 @@ function App() {
           <Link to="/dashboard">Forks in the Road</Link>
         </h1>
         <Switch>
-          <Redirect exact from="/" to="/dashboard"/>
-          <Route exact path="/dashboard" component={Dashboard}/>
-          <Route path="/comparison/:id" component={Comparison}/>
-          <Route component={RouteNotFound}/>
+          <Redirect exact from="/" to="/dashboard" />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route path="/comparison/:id" component={Comparison} />
+          <Route component={RouteNotFound} />
         </Switch>
       </div>
     </HashRouter>

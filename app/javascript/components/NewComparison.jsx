@@ -1,7 +1,7 @@
 import React from "react"
 
 const initialState = {
-  name: ''
+  name: ""
 }
 
 class NewComparison extends React.Component {
@@ -40,10 +40,7 @@ class NewComparison extends React.Component {
           value={this.state.name}
           onChange={event => this.handleChange(event)}
         />
-        <input
-          type="submit"
-          value="Add"
-        />
+        <input type="submit" value="Add" />
       </form>
     )
   }
