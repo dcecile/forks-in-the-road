@@ -17,7 +17,7 @@
 
 1. Run `bin/guard` to start continuous testing
 2. Change a source or test file, and the relevant tests will run automatically
-3. Run `bin/rubocop` to check the Ruby style of all files
+3. Run `bin/rubocop` to check all Ruby style/patterns
 4. Run `bin/rails server` to start up Rails
 5. Visit http://localhost:3000 to view the app
 
@@ -27,7 +27,8 @@
 2. In another terminal, run `bin/rails server` to start up Rails
 3. Visit http://localhost:3000 to view the app
 4. Change a source file, and the app will reload automatically
-5. Run `yarn prettier-write` to reformat JavaScript code
+5. Run `yarn eslint-all` to check all JavaScript style/patterns
+6. Run `yarn prettier-write` to reformat all JavaScript code
 
 ## License
 

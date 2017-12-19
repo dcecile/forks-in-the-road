@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-function Alternative({ match, alternatives, criteria, ...other }) {
+function Alternative({ match, alternatives, criteria }) {
   const { params: { id: stringId }, url: matchUrl } = match
   const id = parseInt(stringId)
   const alternative = alternatives.find(item => item.id === id)

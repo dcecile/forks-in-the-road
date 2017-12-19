@@ -1,0 +1,18 @@
+root: true
+env:
+  es6: true
+  node: true
+parser: babel-eslint
+parserOptions:
+  emcaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+extends:
+- eslint:recommended
+- plugin:prettier/recommended
+- plugin:react/recommended
+plugins:
+- import
+rules:
+  no-console: off
+  react/prop-types: off
