@@ -1,10 +1,11 @@
 import React from "react"
 
 const initialState = {
-  name: ""
+  name: "",
+  url: ""
 }
 
-class NewComparison extends React.Component {
+class NewAlternative extends React.Component {
   constructor({ onSubmit }) {
     super()
     this.state = {
@@ -13,17 +14,25 @@ class NewComparison extends React.Component {
     }
   }
 
-  handleChange(event) {
+  handleChangeName(event) {
     this.setState({
       ...this.state,
       name: event.target.value
     })
   }
 
+  handleChangeURL(event) {
+    this.setState({
+      ...this.state,
+      url: event.target.value
+    })
+  }
+
   handleSubmit(event) {
     event.preventDefault()
     this.state.onSubmit({
-      name: this.state.name
+      name: this.state.name,
+      url: this.state.url || null
     })
     this.setState({
       ...this.state,
@@ -37,9 +46,15 @@ class NewComparison extends React.Component {
         <input
           type="text"
           required
-          placeholder="New comparison"
+          placeholder="New alternative name"
           value={this.state.name}
-          onChange={event => this.handleChange(event)}
+          onChange={event => this.handleChangeName(event)}
+        />
+        <input
+          type="text"
+          placeholder="New alternative URL"
+          value={this.state.url}
+          onChange={event => this.handleChangeURL(event)}
         />
         <input type="submit" value="Add" />
       </form>
@@ -47,4 +62,4 @@ class NewComparison extends React.Component {
   }
 }
 
-export default NewComparison
+export default NewAlternative

@@ -4,6 +4,7 @@ import { Route } from "react-router"
 import axios from "axios"
 import RouteNotFound from "./RouteNotFound"
 import Alternative from "./Alternative"
+import NewAlternative from "./NewAlternative"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -23,6 +24,21 @@ class Comparison extends React.Component {
       ...this.state,
       isLoading: false,
       comparison: response.data
+    })
+  }
+
+  async handleNewAlternativeSubmit(alternative) {
+    console.log("Posting new alternative", alternative)
+    const response = await axios.post(
+      `/comparisons/${this.state.comparison.id}/alternatives`,
+      alternative
+    )
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        alternatives: this.comparison.alternatives.concat(response.data)
+      }
     })
   }
 
@@ -94,6 +110,13 @@ class Comparison extends React.Component {
           {this.comparison.alternatives.map(alternative =>
             this.renderAlternativeLink(alternative)
           )}
+          <li>
+            <NewAlternative
+              onSubmit={alternative =>
+                this.handleNewAlternativeSubmit(alternative)
+              }
+            />
+          </li>
         </ul>
       </div>
     )
