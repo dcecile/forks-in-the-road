@@ -26,7 +26,7 @@ class ComparisonsController < ApplicationController
   def update
     comparison = Comparison.find(params[:id])
     comparison.update!(comparison_params)
-    render json: {}
+    render json: comparison
   end
 
   private

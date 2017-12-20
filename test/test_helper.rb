@@ -69,7 +69,7 @@ module ActiveSupport
     def assert_patch_executes(record, route, patch_params)
       patch method(route).call(record), params: patch_params
       assert_response :success
-      assert_response_json({})
+      assert_response_json(patch_params.ignore_extra_keys!)
     end
 
     def assert_patch_changes(record, patch_params, unchanged_params)

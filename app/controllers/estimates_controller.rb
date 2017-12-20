@@ -11,7 +11,7 @@ class EstimatesController < ApplicationController
   def update
     estimate = Estimate.find(params[:id])
     estimate.update!(estimate_update_params)
-    render json: {}
+    render json: estimate
   end
 
   private

@@ -11,7 +11,7 @@ class CriteriaController < ApplicationController
   def update
     criterion = Criterion.find(params[:id])
     criterion.update!(criterion_params)
-    render json: {}
+    render json: criterion
   end
 
   private

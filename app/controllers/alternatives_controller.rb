@@ -11,7 +11,7 @@ class AlternativesController < ApplicationController
   def update
     alternative = Alternative.find(params[:id])
     alternative.update!(alternative_params)
-    render json: {}
+    render json: alternative
   end
 
   private

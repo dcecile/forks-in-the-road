@@ -5,6 +5,7 @@ import axios from "axios"
 import RouteNotFound from "./RouteNotFound"
 import Alternative from "./Alternative"
 import NewAlternative from "./NewAlternative"
+import EditComparison from "./EditComparison"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -13,12 +14,14 @@ class Comparison extends React.Component {
     this.state = {
       matchUrl: url,
       isLoading: true,
+      isEditing: false,
       comparison: null
     }
     this.load(id)
   }
 
   async load(id) {
+    console.log("Getting comparison")
     const response = await axios.get(`/comparisons/${id}`)
     this.setState({
       ...this.state,
@@ -27,7 +30,7 @@ class Comparison extends React.Component {
     })
   }
 
-  async handleNewAlternativeSubmit(alternative) {
+  async handleSubmitNewAlternative(alternative) {
     console.log("Posting new alternative", alternative)
     const response = await axios.post(
       `/comparisons/${this.state.comparison.id}/alternatives`,
@@ -39,6 +42,36 @@ class Comparison extends React.Component {
         ...this.comparison,
         alternatives: this.comparison.alternatives.concat(response.data)
       }
+    })
+  }
+
+  handleBeginEdit() {
+    this.setState({
+      ...this.state,
+      isEditing: true
+    })
+  }
+
+  async handleSubmitEdit(comparison) {
+    console.log("Patching comparison", comparison)
+    const response = await axios.patch(
+      `/comparisons/${this.state.comparison.id}`,
+      comparison
+    )
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        ...response.data
+      },
+      isEditing: false
+    })
+  }
+
+  handleCancelEdit() {
+    this.setState({
+      ...this.state,
+      isEditing: false
     })
   }
 
@@ -86,10 +119,28 @@ class Comparison extends React.Component {
   }
 
   renderHeader() {
+    if (!this.state.isEditing) {
+      return (
+        <h2>
+          <Link to={this.state.matchUrl}>{this.comparison.name}</Link>{" "}
+          <button onClick={() => this.handleBeginEdit()}>Edit</button>
+        </h2>
+      )
+    } else {
+      return this.renderEdit()
+    }
+  }
+
+  renderEdit() {
     return (
-      <h2>
-        <Link to={this.state.matchUrl}>{this.comparison.name}</Link>
-      </h2>
+      <div>
+        <h2>Editing comparison</h2>
+        <EditComparison
+          comparison={this.comparison}
+          onSubmit={comparison => this.handleSubmitEdit(comparison)}
+          onCancel={() => this.handleCancelEdit()}
+        />
+      </div>
     )
   }
 
@@ -97,7 +148,7 @@ class Comparison extends React.Component {
     return (
       <div>
         {this.renderAlternatives()}
-        {this.renderConfig()}
+        {this.renderCriteria()}
       </div>
     )
   }
@@ -113,7 +164,7 @@ class Comparison extends React.Component {
           <li>
             <NewAlternative
               onSubmit={alternative =>
-                this.handleNewAlternativeSubmit(alternative)
+                this.handleSubmitNewAlternative(alternative)
               }
             />
           </li>
@@ -132,10 +183,10 @@ class Comparison extends React.Component {
     )
   }
 
-  renderConfig() {
+  renderCriteria() {
     return (
       <h3>
-        <Link to={`${this.state.matchUrl}/config`}>Config</Link>
+        <Link to={`${this.state.matchUrl}/criteria`}>Criteria</Link>
       </h3>
     )
   }

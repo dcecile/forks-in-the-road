@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
   }
 
   async load() {
+    console.log("Getting comparisons")
     const response = await axios.get("/comparisons")
     this.setState({
       ...this.state,
@@ -22,7 +23,7 @@ class Dashboard extends React.Component {
     })
   }
 
-  async handleNewComparisonSubmit(comparison) {
+  async handleSubmitNewComparison(comparison) {
     console.log("Posting new comparison", comparison)
     const response = await axios.post("/comparisons", comparison)
     this.setState({
@@ -55,7 +56,7 @@ class Dashboard extends React.Component {
           <li>
             <NewComparison
               onSubmit={comparison =>
-                this.handleNewComparisonSubmit(comparison)
+                this.handleSubmitNewComparison(comparison)
               }
             />
           </li>
