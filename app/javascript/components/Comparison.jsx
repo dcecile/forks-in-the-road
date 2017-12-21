@@ -4,8 +4,9 @@ import { Route } from "react-router"
 import axios from "axios"
 import RouteNotFound from "./RouteNotFound"
 import Alternative from "./Alternative"
-import NewAlternative from "./NewAlternative"
 import EditComparison from "./EditComparison"
+import ComparisonAlternatives from "./ComparisonAlternatives"
+import ComparisonCriteria from "./ComparisonCriteria"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -95,26 +96,21 @@ class Comparison extends React.Component {
           <Route
             exact
             path={this.state.matchUrl}
-            render={() => this.renderSummary()}
+            render={() => this.renderAlternatives()}
+          />
+          <Route
+            exact
+            path={`${this.state.matchUrl}/criteria`}
+            render={() => this.renderCriteria()}
           />
           <Route
             exact
             path={`${this.state.matchUrl}/alternative/:id`}
-            render={routeProps => this.renderAlternative(routeProps)}
+            render={routeProps => this.renderOneAlternative(routeProps)}
           />
           <Route component={RouteNotFound} />
         </Switch>
       </div>
-    )
-  }
-
-  renderAlternative(routeProps) {
-    return (
-      <Alternative
-        {...routeProps}
-        alternatives={this.comparison.alternatives}
-        criteria={this.comparison.criteria}
-      />
     )
   }
 
@@ -144,50 +140,35 @@ class Comparison extends React.Component {
     )
   }
 
-  renderSummary() {
-    return (
-      <div>
-        {this.renderAlternatives()}
-        {this.renderCriteria()}
-      </div>
-    )
-  }
-
   renderAlternatives() {
     return (
-      <div>
-        <h3>Alternatives</h3>
-        <ul>
-          {this.comparison.alternatives.map(alternative =>
-            this.renderAlternativeLink(alternative)
-          )}
-          <li>
-            <NewAlternative
-              onSubmit={alternative =>
-                this.handleSubmitNewAlternative(alternative)
-              }
-            />
-          </li>
-        </ul>
-      </div>
-    )
-  }
-
-  renderAlternativeLink(alternative) {
-    return (
-      <li key={alternative.id}>
-        <Link to={`${this.state.matchUrl}/alternative/${alternative.id}`}>
-          {alternative.name}
-        </Link>
-      </li>
+      <ComparisonAlternatives
+        matchUrl={this.state.matchUrl}
+        alternatives={this.comparison.alternatives}
+        onSubmitNewAlternative={alternative =>
+          this.handleSubmitNewAlternative(alternative)
+        }
+      />
     )
   }
 
   renderCriteria() {
     return (
-      <h3>
-        <Link to={`${this.state.matchUrl}/criteria`}>Criteria</Link>
-      </h3>
+      <ComparisonCriteria
+        matchUrl={this.state.matchUrl}
+        criteria={this.comparison.criteria}
+      />
+    )
+  }
+
+  renderOneAlternative(routeProps) {
+    return (
+      <Alternative
+        {...routeProps}
+        alternatives={this.comparison.alternatives}
+        criteria={this.comparison.criteria}
+        comparisonMatchUrl={this.state.matchUrl}
+      />
     )
   }
 }

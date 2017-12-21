@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-function Alternative({ match, alternatives, criteria }) {
+function Alternative({ match, alternatives, criteria, comparisonMatchUrl }) {
   const { params: { id: stringId }, url: matchUrl } = match
   const id = parseInt(stringId)
   const alternative = alternatives.find(item => item.id === id)
@@ -10,6 +10,7 @@ function Alternative({ match, alternatives, criteria }) {
     <div>
       {renderHeader()}
       {alternative.estimates.length ? renderEstimates() : renderNoEstimates()}
+      {renderCriteriaLink()}
     </div>
   )
 
@@ -38,6 +39,12 @@ function Alternative({ match, alternatives, criteria }) {
   }
 
   const renderNoEstimates = () => <p>No estimates yet</p>
+
+  const renderCriteriaLink = () => (
+    <h3>
+      <Link to={`${comparisonMatchUrl}/criteria`}>Criteria</Link>
+    </h3>
+  )
 
   return render()
 }
