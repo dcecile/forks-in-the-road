@@ -113,6 +113,29 @@ class Comparison extends React.Component {
     })
   }
 
+  async handleSubmitEditEstimate(alternative, estimate) {
+    console.log("Patching estimate", estimate)
+    const response = await axios.patch(`/estimates/${estimate.id}`, estimate)
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        alternatives: this.comparison.alternatives.map(
+          item =>
+            item.id === alternative.id
+              ? {
+                  ...item,
+                  estimates: item.estimates.map(
+                    innerItem =>
+                      innerItem.id === estimate.id ? response.data : innerItem
+                  )
+                }
+              : item
+        )
+      }
+    })
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -246,6 +269,9 @@ class Comparison extends React.Component {
         }
         onSubmitNewEstimate={(alternative, estimate) =>
           this.handleSubmitNewEstimate(alternative, estimate)
+        }
+        onSubmitEditEstimate={(alternative, estimate) =>
+          this.handleSubmitEditEstimate(alternative, estimate)
         }
       />
     )

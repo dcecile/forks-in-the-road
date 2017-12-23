@@ -9,7 +9,8 @@ class Alternative extends React.Component {
     match,
     comparisonMatchUrl,
     onSubmitEditAlternative,
-    onSubmitNewEstimate
+    onSubmitNewEstimate,
+    onSubmitEditEstimate
   }) {
     super()
     const { params: { id: stringId }, url: matchUrl } = match
@@ -19,7 +20,8 @@ class Alternative extends React.Component {
       comparisonMatchUrl,
       isEditing: false,
       onSubmitEditAlternative,
-      onSubmitNewEstimate
+      onSubmitNewEstimate,
+      onSubmitEditEstimate
     }
   }
 
@@ -46,6 +48,10 @@ class Alternative extends React.Component {
 
   async handleSubmitNewEstimate(estimate) {
     await this.state.onSubmitNewEstimate(this.alternative, estimate)
+  }
+
+  async handleSubmitEditEstimate(estimate) {
+    await this.state.onSubmitEditEstimate(this.alternative, estimate)
   }
 
   handleBeginEdit() {
@@ -120,7 +126,11 @@ class Alternative extends React.Component {
     )
     return (
       <li key={estimate.id}>
-        <Estimate estimate={estimate} criterion={criterion} />
+        <Estimate
+          estimate={estimate}
+          criterion={criterion}
+          onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
+        />
       </li>
     )
   }
