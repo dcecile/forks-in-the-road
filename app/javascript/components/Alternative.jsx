@@ -1,9 +1,16 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import EditAlternative from "./EditAlternative"
+import Estimate from "./Estimate"
+import NewEstimate from "./NewEstimate"
 
 class Alternative extends React.Component {
-  constructor({ match, comparisonMatchUrl, onSubmitEdit }) {
+  constructor({
+    match,
+    comparisonMatchUrl,
+    onSubmitEditAlternative,
+    onSubmitNewEstimate
+  }) {
     super()
     const { params: { id: stringId }, url: matchUrl } = match
     this.state = {
@@ -11,7 +18,8 @@ class Alternative extends React.Component {
       matchUrl,
       comparisonMatchUrl,
       isEditing: false,
-      onSubmitEdit
+      onSubmitEditAlternative,
+      onSubmitNewEstimate
     }
   }
 
@@ -27,6 +35,19 @@ class Alternative extends React.Component {
     return this.props.criteria
   }
 
+  get missingCriteria() {
+    const presentCriteria = this.alternative.estimates.map(
+      item => item.criterion_id
+    )
+    return this.criteria.filter(
+      criterion => presentCriteria.indexOf(criterion.id) < 0
+    )
+  }
+
+  async handleSubmitNewEstimate(estimate) {
+    await this.state.onSubmitNewEstimate(this.alternative, estimate)
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -35,7 +56,7 @@ class Alternative extends React.Component {
   }
 
   async handleSubmitEdit(alternative) {
-    await this.state.onSubmitEdit(alternative)
+    await this.state.onSubmitEditAlternative(alternative)
     this.handleCancelEdit()
   }
 
@@ -50,9 +71,7 @@ class Alternative extends React.Component {
     return (
       <div>
         {this.renderHeader()}
-        {this.alternative.estimates.length
-          ? this.renderEstimates()
-          : this.renderNoEstimates()}
+        {this.renderEstimates()}
         {this.renderCriteriaLink()}
       </div>
     )
@@ -88,6 +107,9 @@ class Alternative extends React.Component {
         {this.alternative.estimates.map(estimate =>
           this.renderEstimate(estimate)
         )}
+        {this.missingCriteria.map(criterion =>
+          this.renderNewEstimate(criterion)
+        )}
       </ul>
     )
   }
@@ -98,13 +120,20 @@ class Alternative extends React.Component {
     )
     return (
       <li key={estimate.id}>
-        {criterion.name}: {estimate.estimate}
+        <Estimate estimate={estimate} criterion={criterion} />
       </li>
     )
   }
 
-  renderNoEstimates() {
-    return <p>No estimates yet</p>
+  renderNewEstimate(criterion) {
+    return (
+      <li key={criterion.id}>
+        <NewEstimate
+          criterion={criterion}
+          onSubmit={estimate => this.handleSubmitNewEstimate(estimate)}
+        />
+      </li>
+    )
   }
 
   renderCriteriaLink() {

@@ -93,6 +93,26 @@ class Comparison extends React.Component {
     })
   }
 
+  async handleSubmitNewEstimate(alternative, estimate) {
+    console.log("Posting new estimate", estimate)
+    const response = await axios.post(
+      `/alternatives/${alternative.id}/estimates`,
+      estimate
+    )
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        alternatives: this.comparison.alternatives.map(
+          item =>
+            item.id === alternative.id
+              ? { ...item, estimates: item.estimates.concat(response.data) }
+              : item
+        )
+      }
+    })
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -221,8 +241,11 @@ class Comparison extends React.Component {
         alternatives={this.comparison.alternatives}
         criteria={this.comparison.criteria}
         comparisonMatchUrl={this.state.matchUrl}
-        onSubmitEdit={alternative =>
+        onSubmitEditAlternative={alternative =>
           this.handleSubmitEditAlternative(alternative)
+        }
+        onSubmitNewEstimate={(alternative, estimate) =>
+          this.handleSubmitNewEstimate(alternative, estimate)
         }
       />
     )
