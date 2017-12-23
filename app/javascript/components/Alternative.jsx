@@ -1,36 +1,101 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import EditAlternative from "./EditAlternative"
 
-function Alternative({ match, alternatives, criteria, comparisonMatchUrl }) {
-  const { params: { id: stringId }, url: matchUrl } = match
-  const id = parseInt(stringId)
-  const alternative = alternatives.find(item => item.id === id)
+class Alternative extends React.Component {
+  constructor({ match, comparisonMatchUrl, onSubmitEdit }) {
+    super()
+    const { params: { id: stringId }, url: matchUrl } = match
+    this.state = {
+      id: parseInt(stringId),
+      matchUrl,
+      comparisonMatchUrl,
+      isEditing: false,
+      onSubmitEdit
+    }
+  }
 
-  const render = () => (
-    <div>
-      {renderHeader()}
-      {alternative.estimates.length ? renderEstimates() : renderNoEstimates()}
-      {renderCriteriaLink()}
-    </div>
-  )
+  get alternatives() {
+    return this.props.alternatives
+  }
 
-  const renderHeader = () => (
-    <h3>
-      <Link to={matchUrl}>{alternative.name}</Link>{" "}
-      {alternative.url && (
-        <a href={alternative.url} target="_blank">
-          (external link)
-        </a>
-      )}
-    </h3>
-  )
+  get alternative() {
+    return this.alternatives.find(item => item.id === this.state.id)
+  }
 
-  const renderEstimates = () => (
-    <ul>{alternative.estimates.map(estimate => renderEstimate(estimate))}</ul>
-  )
+  get criteria() {
+    return this.props.criteria
+  }
 
-  const renderEstimate = estimate => {
-    const criterion = criteria.find(item => item.id === estimate.criterion_id)
+  handleBeginEdit() {
+    this.setState({
+      ...this.state,
+      isEditing: true
+    })
+  }
+
+  async handleSubmitEdit(alternative) {
+    await this.state.onSubmitEdit(alternative)
+    this.handleCancelEdit()
+  }
+
+  handleCancelEdit() {
+    this.setState({
+      ...this.state,
+      isEditing: false
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderHeader()}
+        {this.alternative.estimates.length
+          ? this.renderEstimates()
+          : this.renderNoEstimates()}
+        {this.renderCriteriaLink()}
+      </div>
+    )
+  }
+
+  renderHeader() {
+    if (!this.state.isEditing) {
+      return (
+        <h3>
+          <Link to={this.state.matchUrl}>{this.alternative.name}</Link>{" "}
+          {this.alternative.url && (
+            <a href={this.alternative.url} target="_blank">
+              (external link)
+            </a>
+          )}{" "}
+          <button onClick={() => this.handleBeginEdit()}>Edit</button>
+        </h3>
+      )
+    } else {
+      return (
+        <EditAlternative
+          alternative={this.alternative}
+          onSubmit={alternative => this.handleSubmitEdit(alternative)}
+          onCancel={() => this.handleCancelEdit()}
+        />
+      )
+    }
+  }
+
+  renderEstimates() {
+    return (
+      <ul>
+        {this.alternative.estimates.map(estimate =>
+          this.renderEstimate(estimate)
+        )}
+      </ul>
+    )
+  }
+
+  renderEstimate(estimate) {
+    const criterion = this.criteria.find(
+      item => item.id === estimate.criterion_id
+    )
     return (
       <li key={estimate.id}>
         {criterion.name}: {estimate.estimate}
@@ -38,15 +103,17 @@ function Alternative({ match, alternatives, criteria, comparisonMatchUrl }) {
     )
   }
 
-  const renderNoEstimates = () => <p>No estimates yet</p>
+  renderNoEstimates() {
+    return <p>No estimates yet</p>
+  }
 
-  const renderCriteriaLink = () => (
-    <h3>
-      <Link to={`${comparisonMatchUrl}/criteria`}>Criteria</Link>
-    </h3>
-  )
-
-  return render()
+  renderCriteriaLink() {
+    return (
+      <h3>
+        <Link to={`${this.state.comparisonMatchUrl}/criteria`}>Criteria</Link>
+      </h3>
+    )
+  }
 }
 
 export default Alternative

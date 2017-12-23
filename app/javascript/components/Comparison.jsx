@@ -46,6 +46,24 @@ class Comparison extends React.Component {
     })
   }
 
+  async handleSubmitEditAlternative(alternative) {
+    console.log("Patching alternative", alternative)
+    const response = await axios.patch(
+      `/alternatives/${alternative.id}`,
+      alternative
+    )
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        alternatives: this.comparison.alternatives.map(
+          item =>
+            item.id === alternative.id ? { ...item, ...response.data } : item
+        )
+      }
+    })
+  }
+
   async handleSubmitNewCriterion(criterion) {
     console.log("Posting new criterion", criterion)
     const response = await axios.post(
@@ -203,6 +221,9 @@ class Comparison extends React.Component {
         alternatives={this.comparison.alternatives}
         criteria={this.comparison.criteria}
         comparisonMatchUrl={this.state.matchUrl}
+        onSubmitEdit={alternative =>
+          this.handleSubmitEditAlternative(alternative)
+        }
       />
     )
   }
