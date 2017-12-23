@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import NewCriterion from "./NewCriterion"
 
-function ComparisonCriteria({ matchUrl, criteria }) {
+function ComparisonCriteria({ matchUrl, criteria, onSubmitNewCriterion }) {
   const renderCriterion = criterion => (
     <li key={criterion.id}>
       {criterion.name}
@@ -31,7 +32,12 @@ function ComparisonCriteria({ matchUrl, criteria }) {
   return (
     <div>
       <h3>Criteria</h3>
-      <ul>{criteria.map(renderCriterion)}</ul>
+      <ul>
+        {criteria.map(renderCriterion)}
+        <li>
+          <NewCriterion onSubmit={onSubmitNewCriterion} />
+        </li>
+      </ul>
       {renderAlternativesLink()}
     </div>
   )

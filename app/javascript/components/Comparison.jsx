@@ -46,6 +46,21 @@ class Comparison extends React.Component {
     })
   }
 
+  async handleSubmitNewCriterion(criterion) {
+    console.log("Posting new criterion", criterion)
+    const response = await axios.post(
+      `/comparisons/${this.state.comparison.id}/criteria`,
+      criterion
+    )
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        criteria: this.comparison.criteria.concat(response.data)
+      }
+    })
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -157,6 +172,9 @@ class Comparison extends React.Component {
       <ComparisonCriteria
         matchUrl={this.state.matchUrl}
         criteria={this.comparison.criteria}
+        onSubmitNewCriterion={criterion =>
+          this.handleSubmitNewCriterion(criterion)
+        }
       />
     )
   }
