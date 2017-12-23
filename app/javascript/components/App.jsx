@@ -10,7 +10,9 @@ function App() {
     <HashRouter>
       <div>
         <h1>
-          <Link to="/dashboard">Forks in the Road</Link>
+          <Link className="f-title" to="/dashboard">
+            Forks in the Road
+          </Link>
         </h1>
         <Switch>
           <Redirect exact from="/" to="/dashboard" />

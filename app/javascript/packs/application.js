@@ -1,5 +1,6 @@
 import "babel-polyfill"
 import ReactRailsUJS from "react_ujs"
+import "Style.sass"
 
 console.log("Webpacker initialized")
 
