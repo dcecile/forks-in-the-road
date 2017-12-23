@@ -34,7 +34,7 @@ class Comparison extends React.Component {
   async handleSubmitNewAlternative(alternative) {
     console.log("Posting new alternative", alternative)
     const response = await axios.post(
-      `/comparisons/${this.state.comparison.id}/alternatives`,
+      `/comparisons/${this.comparison.id}/alternatives`,
       alternative
     )
     this.setState({
@@ -49,7 +49,7 @@ class Comparison extends React.Component {
   async handleSubmitNewCriterion(criterion) {
     console.log("Posting new criterion", criterion)
     const response = await axios.post(
-      `/comparisons/${this.state.comparison.id}/criteria`,
+      `/comparisons/${this.comparison.id}/criteria`,
       criterion
     )
     this.setState({
@@ -57,6 +57,20 @@ class Comparison extends React.Component {
       comparison: {
         ...this.comparison,
         criteria: this.comparison.criteria.concat(response.data)
+      }
+    })
+  }
+
+  async handleSubmitEditCriterion(criterion) {
+    console.log("Patching criterion", criterion)
+    const response = await axios.patch(`/criteria/${criterion.id}`, criterion)
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        criteria: this.comparison.criteria.map(
+          item => (item.id === criterion.id ? response.data : item)
+        )
       }
     })
   }
@@ -71,7 +85,7 @@ class Comparison extends React.Component {
   async handleSubmitEdit(comparison) {
     console.log("Patching comparison", comparison)
     const response = await axios.patch(
-      `/comparisons/${this.state.comparison.id}`,
+      `/comparisons/${this.comparison.id}`,
       comparison
     )
     this.setState({
@@ -79,9 +93,9 @@ class Comparison extends React.Component {
       comparison: {
         ...this.comparison,
         ...response.data
-      },
-      isEditing: false
+      }
     })
+    this.handleCancelEdit()
   }
 
   handleCancelEdit() {
@@ -174,6 +188,9 @@ class Comparison extends React.Component {
         criteria={this.comparison.criteria}
         onSubmitNewCriterion={criterion =>
           this.handleSubmitNewCriterion(criterion)
+        }
+        onSubmitEditCriterion={criterion =>
+          this.handleSubmitEditCriterion(criterion)
         }
       />
     )

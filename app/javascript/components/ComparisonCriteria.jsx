@@ -1,27 +1,19 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import Criterion from "./Criterion"
 import NewCriterion from "./NewCriterion"
 
-function ComparisonCriteria({ matchUrl, criteria, onSubmitNewCriterion }) {
+function ComparisonCriteria({
+  matchUrl,
+  criteria,
+  onSubmitNewCriterion,
+  onSubmitEditCriterion
+}) {
   const renderCriterion = criterion => (
     <li key={criterion.id}>
-      {criterion.name}
-      {renderCriterionDetails(criterion)}
+      <Criterion criterion={criterion} onSubmitEdit={onSubmitEditCriterion} />
     </li>
   )
-
-  const renderCriterionDetails = criterion => (
-    <ul>
-      {[
-        criterion.description,
-        criterion.full_value,
-        criterion.default_estimate
-      ].map(renderCriterionDetail)}
-    </ul>
-  )
-
-  const renderCriterionDetail = (detail, i) =>
-    detail !== null ? <li key={i}>{detail}</li> : null
 
   const renderAlternativesLink = () => (
     <h3>

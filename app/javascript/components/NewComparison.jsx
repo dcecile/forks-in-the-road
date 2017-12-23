@@ -13,7 +13,7 @@ class NewComparison extends React.Component {
     }
   }
 
-  handleChange(event) {
+  handleChangeName(event) {
     this.setState({
       ...this.state,
       name: event.target.value
@@ -39,7 +39,7 @@ class NewComparison extends React.Component {
           required
           placeholder="New comparison"
           value={this.state.name}
-          onChange={event => this.handleChange(event)}
+          onChange={event => this.handleChangeName(event)}
         />
         <input type="submit" value="Add" />
       </form>

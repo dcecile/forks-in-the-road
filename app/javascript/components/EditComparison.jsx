@@ -12,21 +12,21 @@ class EditComparison extends React.Component {
     }
   }
 
-  handleNameChange(event) {
+  handleChangeName(event) {
     this.setState({
       ...this.state,
       name: event.target.value
     })
   }
 
-  handleAlternativeNounChange(event) {
+  handleChangeAlternativeNoun(event) {
     this.setState({
       ...this.state,
       alternative_noun: event.target.value
     })
   }
 
-  handleValueUnitChange(event) {
+  handleChangeValueUnit(event) {
     this.setState({
       ...this.state,
       value_unit: event.target.value
@@ -57,7 +57,7 @@ class EditComparison extends React.Component {
             required
             placeholder="Comparison"
             value={this.state.name}
-            onChange={event => this.handleNameChange(event)}
+            onChange={event => this.handleChangeName(event)}
           />
         </label>
         <br />
@@ -67,7 +67,7 @@ class EditComparison extends React.Component {
             type="text"
             placeholder="alternative"
             value={this.state.alternative_noun}
-            onChange={event => this.handleAlternativeNounChange(event)}
+            onChange={event => this.handleChangeAlternativeNoun(event)}
           />
         </label>
         <br />
@@ -77,7 +77,7 @@ class EditComparison extends React.Component {
             type="text"
             placeholder="$"
             value={this.state.value_unit}
-            onChange={event => this.handleValueUnitChange(event)}
+            onChange={event => this.handleChangeValueUnit(event)}
           />
         </label>
         <br />
