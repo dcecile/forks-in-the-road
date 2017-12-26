@@ -2,11 +2,11 @@ import React from "react"
 import { Link, Switch } from "react-router-dom"
 import { Route } from "react-router"
 import axios from "axios"
-import RouteNotFound from "./RouteNotFound"
-import Alternative from "./Alternative"
-import EditComparison from "./EditComparison"
-import ComparisonAlternatives from "./ComparisonAlternatives"
-import ComparisonCriteria from "./ComparisonCriteria"
+import RouteNotFound from "RouteNotFound"
+import Alternative from "Alternative"
+import EditComparison from "EditComparison"
+import ComparisonAlternatives from "ComparisonAlternatives"
+import ComparisonCriteria from "ComparisonCriteria"
 
 class Comparison extends React.Component {
   constructor({ match }) {

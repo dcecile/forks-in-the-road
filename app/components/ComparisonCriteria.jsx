@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Criterion from "./Criterion"
-import NewCriterion from "./NewCriterion"
+import Criterion from "Criterion"
+import NewCriterion from "NewCriterion"
 
 function ComparisonCriteria({
   matchUrl,

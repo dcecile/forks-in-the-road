@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import NewComparison from "./NewComparison"
+import NewComparison from "NewComparison"
 
 class Dashboard extends React.Component {
   constructor() {

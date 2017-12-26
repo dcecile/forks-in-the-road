@@ -1,5 +1,5 @@
 import React from "react"
-import EditCriterion from "./EditCriterion"
+import EditCriterion from "EditCriterion"
 
 class Criterion extends React.Component {
   constructor({ onSubmitEdit }) {

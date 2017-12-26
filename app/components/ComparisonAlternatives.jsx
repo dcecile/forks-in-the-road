@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import NewAlternative from "./NewAlternative"
+import NewAlternative from "NewAlternative"
 
 function ComparisonAlternatives({
   matchUrl,

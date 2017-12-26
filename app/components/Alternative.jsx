@@ -1,8 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import EditAlternative from "./EditAlternative"
-import Estimate from "./Estimate"
-import NewEstimate from "./NewEstimate"
+import EditAlternative from "EditAlternative"
+import Estimate from "Estimate"
+import NewEstimate from "NewEstimate"
 
 class Alternative extends React.Component {
   constructor({

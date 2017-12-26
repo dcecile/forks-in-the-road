@@ -1,10 +1,10 @@
 import React from "react"
 import { HashRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
-import Logo from "./Logo"
-import Dashboard from "./Dashboard"
-import Comparison from "./Comparison"
-import RouteNotFound from "./RouteNotFound"
+import Logo from "Logo"
+import Dashboard from "Dashboard"
+import Comparison from "Comparison"
+import RouteNotFound from "RouteNotFound"
 
 function App() {
   return (

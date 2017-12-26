@@ -1,5 +1,5 @@
 import React from "react"
-import EditEstimate from "./EditEstimate"
+import EditEstimate from "EditEstimate"
 
 class Estimate extends React.Component {
   constructor({ onSubmitEdit }) {
