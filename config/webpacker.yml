@@ -8,7 +8,7 @@ default: &default
 
   # Additional paths webpack should lookup modules
   resolved_paths:
-    - app/css
+    - app/styles
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
