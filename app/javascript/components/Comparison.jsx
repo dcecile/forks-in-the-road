@@ -209,7 +209,12 @@ class Comparison extends React.Component {
       return (
         <h2>
           <Link to={this.state.matchUrl}>{this.comparison.name}</Link>{" "}
-          <button onClick={() => this.handleBeginEdit()}>Edit</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.handleBeginEdit()}
+          >
+            Edit
+          </button>
         </h2>
       )
     } else {

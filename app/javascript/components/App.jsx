@@ -10,7 +10,7 @@ function App() {
   return (
     <HashRouter>
       <div>
-        <header className="App--header">
+        <header className="App_header">
           <h1>
             <Logo />
           </h1>
