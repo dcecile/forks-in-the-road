@@ -1,5 +1,6 @@
 import React from "react"
-import MdLibraryAdd from "react-icons/lib/md/library-add"
+import MdViewList from "react-icons/lib/md/view-list"
+import MdAdd from "react-icons/lib/md/add"
 
 const initialState = {
   name: ""
@@ -34,10 +35,13 @@ class NewComparison extends React.Component {
 
   render() {
     return (
-      <form className="form-group col-md-6" onSubmit={event => this.handleSubmit(event)}>
+      <form
+        className="form-group col-md-6"
+        onSubmit={event => this.handleSubmit(event)}
+      >
         <div className="input-group">
           <span className="input-group-addon">
-            <MdLibraryAdd />
+            <MdViewList />
           </span>
           <input
             className="form-control"
@@ -47,7 +51,9 @@ class NewComparison extends React.Component {
             value={this.state.name}
             onChange={event => this.handleChangeName(event)}
           />
-          <input className="btn btn-primary" type="submit" value="Add" />
+          <button className="input-group-addon btn btn-primary" type="submit">
+            <MdAdd />
+          </button>
         </div>
       </form>
     )

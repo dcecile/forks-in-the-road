@@ -1,3 +1,5 @@
 plugins:
-  postcss-smart-import: {}
+  postcss-import: {}
+  postcss-inline-svg:
+    path: app/svg
   postcss-cssnext: {}

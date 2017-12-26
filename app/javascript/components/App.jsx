@@ -1,6 +1,7 @@
 import React from "react"
-import { HashRouter, Link, Redirect, Switch } from "react-router-dom"
+import { HashRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
+import Logo from "./Logo"
 import Dashboard from "./Dashboard"
 import Comparison from "./Comparison"
 import RouteNotFound from "./RouteNotFound"
@@ -9,11 +10,11 @@ function App() {
   return (
     <HashRouter>
       <div>
-        <h1>
-          <Link className="f-title" to="/dashboard">
-            Forks in the Road
-          </Link>
-        </h1>
+        <header className="App--header">
+          <h1>
+            <Logo />
+          </h1>
+        </header>
         <Switch>
           <Redirect exact from="/" to="/dashboard" />
           <Route exact path="/dashboard" component={Dashboard} />
