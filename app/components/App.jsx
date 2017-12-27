@@ -30,18 +30,20 @@ class App extends React.Component {
   render() {
     return (
       <HashRouter>
-        <div>
+        <div className="App">
           <header className="App_header">
             <Logo />
             {this.state.headerContent}
             <User />
           </header>
-          <Switch>
-            <Redirect exact from="/" to="/dashboard" />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route path="/comparison/:id" component={Comparison} />
-            <Route component={RouteNotFound} />
-          </Switch>
+          <main className="App_main">
+            <Switch>
+              <Redirect exact from="/" to="/dashboard" />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route path="/comparison/:id" component={Comparison} />
+              <Route component={RouteNotFound} />
+            </Switch>
+          </main>
         </div>
       </HashRouter>
     )

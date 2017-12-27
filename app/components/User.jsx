@@ -1,10 +1,11 @@
 import React from "react"
+import Button from "Button"
 
 function User() {
   return (
     <span className="User">
       <span className="User_name">@gh_user</span>
-      <button className="User_signOut">Sign out</button>
+      <Button className="User_signOut">Sign out</Button>
     </span>
   )
 }

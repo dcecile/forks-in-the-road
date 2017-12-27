@@ -36,46 +36,48 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    return this.state.isLoading ? this.renderLoading() : this.renderLoaded()
-  }
-
-  renderLoading() {
-    return <h2>Loading...</h2>
-  }
-
-  renderLoaded() {
     return (
-      <div>
+      <div className="Dashboard">
         <HeaderContent>
           <h1 className="App_headerContent__dashboard">
             <Link to={this.state.matchUrl}>Dashboard</Link>
           </h1>
         </HeaderContent>
-        <h2>Comparisons</h2>
-        <ul>
-          {this.state.comparisonStubs.map(comparisonStub => (
-            <li key={comparisonStub.id}>
-              <ComparisonStub
-                id={comparisonStub.id}
-                name={comparisonStub.name}
-              />
-            </li>
-          ))}
-          <li>
-            <NewComparison
-              onSubmit={comparison =>
-                this.handleSubmitNewComparison(comparison)
-              }
-            />
-          </li>
-        </ul>
+        {this.state.isLoading ? this.renderLoading() : this.renderLoaded()}
       </div>
+    )
+  }
+
+  renderLoading() {
+    return <span className="Dashboard_item">Loading...</span>
+  }
+
+  renderLoaded() {
+    return (
+      <React.Fragment>
+        <NewComparison
+          className="Dashboard_item"
+          onSubmit={comparison => this.handleSubmitNewComparison(comparison)}
+        />
+        {this.state.comparisonStubs.map(comparisonStub => (
+          <ComparisonStub
+            key={comparisonStub.id}
+            id={comparisonStub.id}
+            name={comparisonStub.name}
+          />
+        ))}
+      </React.Fragment>
     )
   }
 }
 
 function ComparisonStub({ id, name }) {
-  return <Link to={`/comparison/${id}`}>{name}</Link>
+  return (
+    <Link className="Dashboard_item" to={`/comparison/${id}`}>
+      <h2 className="Dashboard_itemHeader">{name}</h2>
+      <h3 className="Dashboard_itemSubHeader">3 alternatives</h3>
+    </Link>
+  )
 }
 
 export default Dashboard

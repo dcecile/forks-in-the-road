@@ -1,4 +1,6 @@
 .App
+  display: flex
+  flex-direction: column
   min-height: 100vh
 
 .App_header
@@ -7,10 +9,13 @@
   justify-content: space-between
   align-items: center
   padding: 3.0rem 6.0rem
-  background-color: $Theme_primary-background
+  background-color: $Theme_primaryBackground
   border-bottom: 2px solid $Theme_primary
-  margin-bottom: 1rem
 
 .App_headerContent__dashboard
   font-size: 2.6rem
   font-weight: 600
+
+.App_main
+  flex: 1
+  background: $Theme_secondaryBackground

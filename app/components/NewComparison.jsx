@@ -1,6 +1,6 @@
 import React from "react"
-import MdViewList from "react-icons/lib/md/view-list"
-import MdAdd from "react-icons/lib/md/add"
+import MdLibraryAdd from "react-icons/lib/md/library-add"
+import Button from "Button"
 
 const initialState = {
   name: ""
@@ -36,25 +36,20 @@ class NewComparison extends React.Component {
   render() {
     return (
       <form
-        className="form-group col-md-6"
+        className={`NewComparison ${this.props.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <div className="input-group">
-          <span className="input-group-addon">
-            <MdViewList />
-          </span>
-          <input
-            className="form-control"
-            type="text"
-            required
-            placeholder="New comparison"
-            value={this.state.name}
-            onChange={event => this.handleChangeName(event)}
-          />
-          <button className="input-group-addon btn btn-primary" type="submit">
-            <MdAdd />
-          </button>
-        </div>
+        <input
+          className="NewComparison_input"
+          type="text"
+          required
+          placeholder="New comparison"
+          value={this.state.name}
+          onChange={event => this.handleChangeName(event)}
+        />
+        <Button className="NewComparison_button" type="submit">
+          <MdLibraryAdd /> Add
+        </Button>
       </form>
     )
   }
