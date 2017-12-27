@@ -6,12 +6,21 @@ const initialState = {
 }
 
 class NewAlternative extends React.Component {
-  constructor({ onSubmit }) {
+  constructor() {
     super()
-    this.state = {
-      ...initialState,
-      onSubmit
-    }
+    this.state = initialState
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get name() {
+    return this.state.name
+  }
+
+  get url() {
+    return this.state.url
   }
 
   handleChangeName(event) {
@@ -30,14 +39,11 @@ class NewAlternative extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      name: this.state.name,
-      url: this.state.url || null
+    this.onSubmit({
+      name: this.name,
+      url: this.url || null
     })
-    this.setState({
-      ...this.state,
-      ...initialState
-    })
+    this.setState(initialState)
   }
 
   render() {
@@ -47,13 +53,13 @@ class NewAlternative extends React.Component {
           type="text"
           required
           placeholder="New alternative name"
-          value={this.state.name}
+          value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
         <input
           type="text"
           placeholder="New alternative URL"
-          value={this.state.url}
+          value={this.url}
           onChange={event => this.handleChangeURL(event)}
         />
         <input type="submit" value="Add" />

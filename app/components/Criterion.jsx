@@ -2,16 +2,23 @@ import React from "react"
 import EditCriterion from "EditCriterion"
 
 class Criterion extends React.Component {
-  constructor({ onSubmitEdit }) {
+  constructor() {
     super()
     this.state = {
-      onSubmitEdit,
       isEditing: false
     }
   }
 
   get criterion() {
     return this.props.criterion
+  }
+
+  get onSubmitEdit() {
+    return this.props.onSubmitEdit
+  }
+
+  get isEditing() {
+    return this.state.isEditing
   }
 
   handleBeginEdit() {
@@ -22,7 +29,7 @@ class Criterion extends React.Component {
   }
 
   async handleSubmitEdit(criterion) {
-    await this.state.onSubmitEdit(criterion)
+    await this.onSubmitEdit(criterion)
     this.handleCancelEdit()
   }
 
@@ -34,7 +41,7 @@ class Criterion extends React.Component {
   }
 
   render() {
-    return !this.state.isEditing ? this.renderShow() : this.renderEdit()
+    return !this.isEditing ? this.renderShow() : this.renderEdit()
   }
 
   renderShow() {

@@ -1,15 +1,28 @@
 import React from "react"
 
 class EditAlternative extends React.Component {
-  constructor({ alternative, onSubmit, onCancel }) {
+  constructor({ alternative }) {
     super()
     this.state = {
-      id: alternative.id,
       name: alternative.name,
-      url: alternative.url || "",
-      onSubmit,
-      onCancel
+      url: alternative.url || ""
     }
+  }
+
+  get id() {
+    return this.props.alternative.id
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get name() {
+    return this.state.name
+  }
+
+  get url() {
+    return this.state.url
   }
 
   handleChangeName(event) {
@@ -28,16 +41,16 @@ class EditAlternative extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      id: this.state.id,
-      name: this.state.name,
-      url: this.state.url || null
+    this.onSubmit({
+      id: this.id,
+      name: this.name,
+      url: this.url || null
     })
   }
 
   handleCancel(event) {
     event.preventDefault()
-    this.state.onCancel()
+    this.onCancel()
   }
 
   render() {
@@ -49,7 +62,7 @@ class EditAlternative extends React.Component {
             type="text"
             required
             placeholder="Alternative"
-            value={this.state.name}
+            value={this.name}
             onChange={event => this.handleChangeName(event)}
           />
         </label>
@@ -59,7 +72,7 @@ class EditAlternative extends React.Component {
           <input
             type="text"
             placeholder="URL"
-            value={this.state.url}
+            value={this.url}
             onChange={event => this.handleChangeUrl(event)}
           />
         </label>

@@ -6,9 +6,12 @@ class HeaderContent extends React.Component {
     headerContent: PropTypes.func
   }
 
-  constructor(_, { headerContent }) {
-    super()
-    this.headerContent = headerContent
+  get children() {
+    return this.props.children
+  }
+
+  get headerContent() {
+    return this.context.headerContent
   }
 
   componentWillMount() {
@@ -21,7 +24,7 @@ class HeaderContent extends React.Component {
 
   renderOther() {
     if (this.headerContent) {
-      this.headerContent(this.props.children)
+      this.headerContent(this.children)
     }
   }
 

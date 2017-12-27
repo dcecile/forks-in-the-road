@@ -1,17 +1,42 @@
 import React from "react"
 
 class EditCriterion extends React.Component {
-  constructor({ criterion, onSubmit, onCancel }) {
+  constructor({ criterion }) {
     super()
     this.state = {
-      id: criterion.id,
       name: criterion.name,
       description: criterion.description || "",
       full_value: this.convertFromFullValue(criterion),
-      default_estimate: this.convertFromDefaultEstimate(criterion),
-      onSubmit,
-      onCancel
+      default_estimate: this.convertFromDefaultEstimate(criterion)
     }
+  }
+
+  get id() {
+    return this.props.criterion.id
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get onCancel() {
+    return this.props.onCancel
+  }
+
+  get name() {
+    return this.state.name
+  }
+
+  get description() {
+    return this.state.description
+  }
+
+  get full_value() {
+    return this.state.full_value
+  }
+
+  get default_estimate() {
+    return this.state.default_estimate
   }
 
   convertFromFullValue(criterion) {
@@ -19,7 +44,7 @@ class EditCriterion extends React.Component {
   }
 
   convertToFullValue() {
-    return parseFloat(this.state.full_value)
+    return parseFloat(this.full_value)
   }
 
   convertFromDefaultEstimate(criterion) {
@@ -29,8 +54,8 @@ class EditCriterion extends React.Component {
   }
 
   convertToDefaultEstimate() {
-    return this.state.default_estimate !== ""
-      ? parseFloat(this.state.default_estimate) / 100
+    return this.default_estimate !== ""
+      ? parseFloat(this.default_estimate) / 100
       : null
   }
 
@@ -64,10 +89,10 @@ class EditCriterion extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      id: this.state.id,
-      name: this.state.name,
-      description: this.state.description || null,
+    this.onSubmit({
+      id: this.id,
+      name: this.name,
+      description: this.description || null,
       full_value: this.convertToFullValue(),
       default_estimate: this.convertToDefaultEstimate()
     })
@@ -75,7 +100,7 @@ class EditCriterion extends React.Component {
 
   handleCancel(event) {
     event.preventDefault()
-    this.state.onCancel()
+    this.onCancel()
   }
 
   render() {
@@ -87,7 +112,7 @@ class EditCriterion extends React.Component {
             type="text"
             required
             placeholder="Criterion"
-            value={this.state.name}
+            value={this.name}
             onChange={event => this.handleChangeName(event)}
           />
         </label>
@@ -97,7 +122,7 @@ class EditCriterion extends React.Component {
           <input
             type="text"
             placeholder="Description"
-            value={this.state.description}
+            value={this.description}
             onChange={event => this.handleChangeDescription(event)}
           />
         </label>
@@ -108,7 +133,7 @@ class EditCriterion extends React.Component {
             type="number"
             required
             placeholder="Full value"
-            value={this.state.full_value}
+            value={this.full_value}
             onChange={event => this.handleChangeFullValue(event)}
           />
         </label>
@@ -120,7 +145,7 @@ class EditCriterion extends React.Component {
             min="0"
             max="100"
             placeholder="Default estimate"
-            value={this.state.default_estimate}
+            value={this.default_estimate}
             onChange={event => this.handleChangeDefaultEstimate(event)}
           />
         </label>

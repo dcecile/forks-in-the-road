@@ -23,6 +23,10 @@ class App extends React.Component {
     }
   }
 
+  get headerContent() {
+    return this.state.headerContent
+  }
+
   getChildContext() {
     return this.childContext
   }
@@ -33,7 +37,7 @@ class App extends React.Component {
         <div className="App">
           <header className="App_header">
             <Logo />
-            {this.state.headerContent}
+            {this.headerContent}
             <User />
           </header>
           <main className="App_main">

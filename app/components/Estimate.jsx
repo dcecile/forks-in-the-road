@@ -2,10 +2,9 @@ import React from "react"
 import EditEstimate from "EditEstimate"
 
 class Estimate extends React.Component {
-  constructor({ onSubmitEdit }) {
+  constructor() {
     super()
     this.state = {
-      onSubmitEdit,
       isEditing: false
     }
   }
@@ -18,6 +17,14 @@ class Estimate extends React.Component {
     return this.props.criterion
   }
 
+  get onSubmitEdit() {
+    return this.props.onSubmitEdit
+  }
+
+  get isEditing() {
+    return this.state.isEditing
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -26,7 +33,7 @@ class Estimate extends React.Component {
   }
 
   async handleSubmitEdit(estimate) {
-    await this.state.onSubmitEdit(estimate)
+    await this.onSubmitEdit(estimate)
     this.handleCancelEdit()
   }
 
@@ -38,7 +45,7 @@ class Estimate extends React.Component {
   }
 
   render() {
-    if (!this.state.isEditing) {
+    if (!this.isEditing) {
       return (
         <div>
           {this.criterion.name}: {this.estimate.estimate}{" "}

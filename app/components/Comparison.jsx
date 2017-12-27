@@ -12,14 +12,29 @@ import HeaderContent from "HeaderContent"
 class Comparison extends React.Component {
   constructor({ match }) {
     super()
-    const { params: { id }, url } = match
+    const { params: { id } } = match
     this.state = {
-      matchUrl: url,
       isLoading: true,
       isEditing: false,
       comparison: null
     }
     this.load(id)
+  }
+
+  get matchUrl() {
+    return this.props.match.url
+  }
+
+  get isLoading() {
+    return this.state.isLoading
+  }
+
+  get isEditing() {
+    return this.state.isEditing
+  }
+
+  get comparison() {
+    return this.state.comparison
   }
 
   async load(id) {
@@ -167,12 +182,8 @@ class Comparison extends React.Component {
     })
   }
 
-  get comparison() {
-    return this.state.comparison
-  }
-
   render() {
-    return this.state.isLoading ? this.renderLoading() : this.renderLoaded()
+    return this.isLoading ? this.renderLoading() : this.renderLoaded()
   }
 
   renderLoading() {
@@ -183,7 +194,7 @@ class Comparison extends React.Component {
     return (
       <HeaderContent>
         <nav>
-          <Link to={this.state.matchUrl}>{text}</Link>
+          <Link to={this.matchUrl}>{text}</Link>
         </nav>
       </HeaderContent>
     )
@@ -197,17 +208,17 @@ class Comparison extends React.Component {
         <Switch>
           <Route
             exact
-            path={this.state.matchUrl}
+            path={this.matchUrl}
             render={() => this.renderAlternatives()}
           />
           <Route
             exact
-            path={`${this.state.matchUrl}/criteria`}
+            path={`${this.matchUrl}/criteria`}
             render={() => this.renderCriteria()}
           />
           <Route
             exact
-            path={`${this.state.matchUrl}/alternative/:id`}
+            path={`${this.matchUrl}/alternative/:id`}
             render={routeProps => this.renderOneAlternative(routeProps)}
           />
           <Route component={RouteNotFound} />
@@ -217,10 +228,10 @@ class Comparison extends React.Component {
   }
 
   renderHeader() {
-    if (!this.state.isEditing) {
+    if (!this.isEditing) {
       return (
         <h2>
-          <Link to={this.state.matchUrl}>{this.comparison.name}</Link>{" "}
+          <Link to={this.matchUrl}>{this.comparison.name}</Link>{" "}
           <button
             className="btn btn-primary"
             onClick={() => this.handleBeginEdit()}
@@ -250,7 +261,7 @@ class Comparison extends React.Component {
   renderAlternatives() {
     return (
       <ComparisonAlternatives
-        matchUrl={this.state.matchUrl}
+        matchUrl={this.matchUrl}
         alternatives={this.comparison.alternatives}
         onSubmitNewAlternative={alternative =>
           this.handleSubmitNewAlternative(alternative)
@@ -262,7 +273,7 @@ class Comparison extends React.Component {
   renderCriteria() {
     return (
       <ComparisonCriteria
-        matchUrl={this.state.matchUrl}
+        matchUrl={this.matchUrl}
         criteria={this.comparison.criteria}
         onSubmitNewCriterion={criterion =>
           this.handleSubmitNewCriterion(criterion)
@@ -280,7 +291,7 @@ class Comparison extends React.Component {
         {...routeProps}
         alternatives={this.comparison.alternatives}
         criteria={this.comparison.criteria}
-        comparisonMatchUrl={this.state.matchUrl}
+        comparisonMatchUrl={this.matchUrl}
         onSubmitEditAlternative={alternative =>
           this.handleSubmitEditAlternative(alternative)
         }

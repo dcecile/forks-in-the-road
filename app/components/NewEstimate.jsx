@@ -1,13 +1,23 @@
 import React from "react"
 
 class NewEstimate extends React.Component {
-  constructor({ criterion, onSubmit }) {
+  constructor() {
     super()
     this.state = {
-      criterion,
-      estimate: "",
-      onSubmit
+      estimate: ""
     }
+  }
+
+  get criterion() {
+    return this.props.criterion
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get estimate() {
+    return this.state.estimate
   }
 
   handleChangeEstimate(event) {
@@ -19,9 +29,9 @@ class NewEstimate extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      criterion_id: this.state.criterion.id,
-      estimate: parseFloat(this.state.estimate) / 100
+    this.onSubmit({
+      criterion_id: this.criterion.id,
+      estimate: parseFloat(this.estimate) / 100
     })
   }
 
@@ -29,14 +39,14 @@ class NewEstimate extends React.Component {
     return (
       <form onSubmit={event => this.handleSubmit(event)}>
         <label>
-          {this.state.criterion.name}:{" "}
+          {this.criterion.name}:{" "}
           <input
             type="number"
             required
             min="0"
             max="100"
             placeholder="Estimate"
-            value={this.state.estimate}
+            value={this.estimate}
             onChange={event => this.handleChangeEstimate(event)}
           />
         </label>{" "}

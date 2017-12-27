@@ -6,12 +6,21 @@ const initialState = {
 }
 
 class NewCriterion extends React.Component {
-  constructor({ onSubmit }) {
+  constructor() {
     super()
-    this.state = {
-      ...initialState,
-      onSubmit
-    }
+    this.state = initialState
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get name() {
+    return this.state.name
+  }
+
+  get full_value() {
+    return this.state.full_value
   }
 
   handleChangeName(event) {
@@ -22,7 +31,6 @@ class NewCriterion extends React.Component {
   }
 
   handleChangeFullValue(event) {
-    console.log(event.target.value, event.target.value.__proto__)
     this.setState({
       ...this.state,
       full_value: event.target.value
@@ -31,14 +39,11 @@ class NewCriterion extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      name: this.state.name,
-      full_value: parseFloat(this.state.full_value)
+    this.onSubmit({
+      name: this.name,
+      full_value: parseFloat(this.full_value)
     })
-    this.setState({
-      ...this.state,
-      ...initialState
-    })
+    this.setState(initialState)
   }
 
   render() {
@@ -48,14 +53,14 @@ class NewCriterion extends React.Component {
           type="text"
           required
           placeholder="New criterion name"
-          value={this.state.name}
+          value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
         <input
           type="number"
           required
           placeholder="New criterion full value"
-          value={this.state.full_value}
+          value={this.full_value}
           onChange={event => this.handleChangeFullValue(event)}
         />
         <input type="submit" value="Add" />

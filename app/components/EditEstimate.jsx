@@ -1,15 +1,31 @@
 import React from "react"
 
 class EditEstimate extends React.Component {
-  constructor({ estimate, criterion, onSubmit, onCancel }) {
+  constructor({ estimate }) {
     super()
     this.state = {
-      id: estimate.id,
-      estimate: estimate.estimate * 100,
-      criterion,
-      onSubmit,
-      onCancel
+      estimate: estimate.estimate * 100
     }
+  }
+
+  get id() {
+    return this.props.estimate.id
+  }
+
+  get criterion() {
+    return this.props.criterion
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get onCancel() {
+    return this.props.onCancel
+  }
+
+  get estimate() {
+    return this.state.estimate
   }
 
   handleChangeEstimate(event) {
@@ -21,29 +37,29 @@ class EditEstimate extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      id: this.state.id,
-      estimate: parseFloat(this.state.estimate) / 100
+    this.onSubmit({
+      id: this.id,
+      estimate: parseFloat(this.estimate) / 100
     })
   }
 
   handleCancel(event) {
     event.preventDefault()
-    this.state.onCancel()
+    this.onCancel()
   }
 
   render() {
     return (
       <form onSubmit={event => this.handleSubmit(event)}>
         <label>
-          {this.state.criterion.name}:{" "}
+          {this.criterion.name}:{" "}
           <input
             type="number"
             required
             min="0"
             max="100"
             placeholder="Estimate"
-            value={this.state.estimate}
+            value={this.estimate}
             onChange={event => this.handleChangeEstimate(event)}
           />
         </label>{" "}

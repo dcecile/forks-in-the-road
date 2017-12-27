@@ -5,24 +5,35 @@ import Estimate from "Estimate"
 import NewEstimate from "NewEstimate"
 
 class Alternative extends React.Component {
-  constructor({
-    match,
-    comparisonMatchUrl,
-    onSubmitEditAlternative,
-    onSubmitNewEstimate,
-    onSubmitEditEstimate
-  }) {
+  constructor() {
     super()
-    const { params: { id: stringId }, url: matchUrl } = match
     this.state = {
-      id: parseInt(stringId),
-      matchUrl,
-      comparisonMatchUrl,
-      isEditing: false,
-      onSubmitEditAlternative,
-      onSubmitNewEstimate,
-      onSubmitEditEstimate
+      isEditing: false
     }
+  }
+
+  get id() {
+    return parseInt(this.props.match.params.id)
+  }
+
+  get matchUrl() {
+    return this.props.match.url
+  }
+
+  get comparisonMatchUrl() {
+    return this.props.comparisonMatchUrl
+  }
+
+  get onSubmitEditEstimate() {
+    return this.props.onSubmitEditEstimate
+  }
+
+  get onSubmitNewEstimate() {
+    return this.props.onSubmitNewEstimate
+  }
+
+  get onSubmitEditAlternative() {
+    return this.props.onSubmitEditAlternative
   }
 
   get alternatives() {
@@ -30,7 +41,7 @@ class Alternative extends React.Component {
   }
 
   get alternative() {
-    return this.alternatives.find(item => item.id === this.state.id)
+    return this.alternatives.find(item => item.id === this.id)
   }
 
   get criteria() {
@@ -46,12 +57,16 @@ class Alternative extends React.Component {
     )
   }
 
+  get isEditing() {
+    return this.state.isEditing
+  }
+
   async handleSubmitNewEstimate(estimate) {
-    await this.state.onSubmitNewEstimate(this.alternative, estimate)
+    await this.onSubmitNewEstimate(this.alternative, estimate)
   }
 
   async handleSubmitEditEstimate(estimate) {
-    await this.state.onSubmitEditEstimate(this.alternative, estimate)
+    await this.onSubmitEditEstimate(this.alternative, estimate)
   }
 
   handleBeginEdit() {
@@ -62,7 +77,7 @@ class Alternative extends React.Component {
   }
 
   async handleSubmitEdit(alternative) {
-    await this.state.onSubmitEditAlternative(alternative)
+    await this.onSubmitEditAlternative(alternative)
     this.handleCancelEdit()
   }
 
@@ -84,10 +99,10 @@ class Alternative extends React.Component {
   }
 
   renderHeader() {
-    if (!this.state.isEditing) {
+    if (!this.isEditing) {
       return (
         <h3>
-          <Link to={this.state.matchUrl}>{this.alternative.name}</Link>{" "}
+          <Link to={this.matchUrl}>{this.alternative.name}</Link>{" "}
           {this.alternative.url && (
             <a href={this.alternative.url} target="_blank">
               (external link)
@@ -149,7 +164,7 @@ class Alternative extends React.Component {
   renderCriteriaLink() {
     return (
       <h3>
-        <Link to={`${this.state.comparisonMatchUrl}/criteria`}>Criteria</Link>
+        <Link to={`${this.comparisonMatchUrl}/criteria`}>Criteria</Link>
       </h3>
     )
   }

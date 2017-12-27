@@ -7,12 +7,21 @@ const initialState = {
 }
 
 class NewComparison extends React.Component {
-  constructor({ onSubmit }) {
+  constructor() {
     super()
-    this.state = {
-      ...initialState,
-      onSubmit
-    }
+    this.state = initialState
+  }
+
+  get className() {
+    return this.props.className
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get name() {
+    return this.state.name
   }
 
   handleChangeName(event) {
@@ -24,19 +33,16 @@ class NewComparison extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      name: this.state.name
+    this.onSubmit({
+      name: this.name
     })
-    this.setState({
-      ...this.state,
-      ...initialState
-    })
+    this.setState(initialState)
   }
 
   render() {
     return (
       <form
-        className={`NewComparison ${this.props.className}`}
+        className={`NewComparison ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
         <input
@@ -44,7 +50,7 @@ class NewComparison extends React.Component {
           type="text"
           required
           placeholder="New comparison"
-          value={this.state.name}
+          value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
         <Button className="NewComparison_button" type="submit">

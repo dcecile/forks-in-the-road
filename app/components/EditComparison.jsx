@@ -1,15 +1,33 @@
 import React from "react"
 
 class EditComparison extends React.Component {
-  constructor({ comparison, onSubmit, onCancel }) {
+  constructor({ comparison }) {
     super()
     this.state = {
       name: comparison.name,
       alternative_noun: comparison.alternative_noun || "",
-      value_unit: comparison.value_unit || "",
-      onSubmit,
-      onCancel
+      value_unit: comparison.value_unit || ""
     }
+  }
+
+  get onSubmit() {
+    return this.props.onSubmit
+  }
+
+  get onCancel() {
+    return this.props.onCancel
+  }
+
+  get name() {
+    return this.state.name
+  }
+
+  get alternative_noun() {
+    return this.state.alternative_noun
+  }
+
+  get value_unit() {
+    return this.state.value_unit
   }
 
   handleChangeName(event) {
@@ -35,16 +53,16 @@ class EditComparison extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.onSubmit({
-      name: this.state.name,
-      alternative_noun: this.state.alternative_noun || null,
-      value_unit: this.state.value_unit || null
+    this.onSubmit({
+      name: this.name,
+      alternative_noun: this.alternative_noun || null,
+      value_unit: this.value_unit || null
     })
   }
 
   handleCancel(event) {
     event.preventDefault()
-    this.state.onCancel()
+    this.onCancel()
   }
 
   render() {
@@ -56,7 +74,7 @@ class EditComparison extends React.Component {
             type="text"
             required
             placeholder="Comparison"
-            value={this.state.name}
+            value={this.name}
             onChange={event => this.handleChangeName(event)}
           />
         </label>
@@ -66,7 +84,7 @@ class EditComparison extends React.Component {
           <input
             type="text"
             placeholder="alternative"
-            value={this.state.alternative_noun}
+            value={this.alternative_noun}
             onChange={event => this.handleChangeAlternativeNoun(event)}
           />
         </label>
@@ -76,7 +94,7 @@ class EditComparison extends React.Component {
           <input
             type="text"
             placeholder="$"
-            value={this.state.value_unit}
+            value={this.value_unit}
             onChange={event => this.handleChangeValueUnit(event)}
           />
         </label>

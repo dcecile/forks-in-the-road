@@ -5,15 +5,29 @@ import NewComparison from "NewComparison"
 import HeaderContent from "HeaderContent"
 
 class Dashboard extends React.Component {
-  constructor({ match }) {
+  constructor() {
     super()
-    const { url } = match
     this.state = {
-      matchUrl: url,
       isLoading: true,
       comparisonStubs: []
     }
     this.load()
+  }
+
+  get matchUrl() {
+    return this.props.match.url
+  }
+
+  get history() {
+    return this.props.history
+  }
+
+  get isLoading() {
+    return this.state.isLoading
+  }
+
+  get comparisonStubs() {
+    return this.state.comparisonStubs
   }
 
   async load() {
@@ -31,9 +45,9 @@ class Dashboard extends React.Component {
     const response = await axios.post("/comparisons", comparison)
     this.setState({
       ...this.state,
-      comparisonStubs: this.state.comparisonStubs.concat(response.data)
+      comparisonStubs: this.comparisonStubs.concat(response.data)
     })
-    this.props.history.push(`/comparison/${response.data.id}`)
+    this.history.push(`/comparison/${response.data.id}`)
   }
 
   render() {
@@ -41,10 +55,10 @@ class Dashboard extends React.Component {
       <div className="Dashboard">
         <HeaderContent>
           <h1 className="App_headerContent__dashboard">
-            <Link to={this.state.matchUrl}>Dashboard</Link>
+            <Link to={this.matchUrl}>Dashboard</Link>
           </h1>
         </HeaderContent>
-        {this.state.isLoading ? this.renderLoading() : this.renderLoaded()}
+        {this.isLoading ? this.renderLoading() : this.renderLoaded()}
       </div>
     )
   }
@@ -60,7 +74,7 @@ class Dashboard extends React.Component {
           className="Dashboard_item"
           onSubmit={comparison => this.handleSubmitNewComparison(comparison)}
         />
-        {this.state.comparisonStubs.map(comparisonStub => (
+        {this.comparisonStubs.map(comparisonStub => (
           <ComparisonStub
             key={comparisonStub.id}
             id={comparisonStub.id}
