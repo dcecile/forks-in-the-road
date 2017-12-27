@@ -2,9 +2,9 @@ import React from "react"
 
 function User() {
   return (
-    <span>
-      <span>@gh_user</span>
-      <button className="btn btn-primary">Sign out</button>
+    <span className="User">
+      <span className="User_name">@gh_user</span>
+      <button className="User_signOut">Sign out</button>
     </span>
   )
 }

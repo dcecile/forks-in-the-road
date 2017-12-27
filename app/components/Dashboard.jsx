@@ -5,9 +5,11 @@ import NewComparison from "NewComparison"
 import HeaderContent from "HeaderContent"
 
 class Dashboard extends React.Component {
-  constructor() {
+  constructor({ match }) {
     super()
+    const { url } = match
     this.state = {
+      matchUrl: url,
       isLoading: true,
       comparisonStubs: []
     }
@@ -45,7 +47,9 @@ class Dashboard extends React.Component {
     return (
       <div>
         <HeaderContent>
-          <h1>Dashboard</h1>
+          <h1 className="App_headerContent__dashboard">
+            <Link to={this.state.matchUrl}>Dashboard</Link>
+          </h1>
         </HeaderContent>
         <h2>Comparisons</h2>
         <ul>
