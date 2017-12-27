@@ -6,6 +6,7 @@ import Logo from "Logo"
 import Dashboard from "Dashboard"
 import Comparison from "Comparison"
 import RouteNotFound from "RouteNotFound"
+import User from "User"
 
 class App extends React.Component {
   static childContextTypes = {
@@ -33,6 +34,7 @@ class App extends React.Component {
           <header className="App_header">
             <Logo />
             {this.state.headerContent}
+            <User />
           </header>
           <Switch>
             <Redirect exact from="/" to="/dashboard" />
