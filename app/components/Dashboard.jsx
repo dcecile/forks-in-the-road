@@ -33,6 +33,7 @@ class Dashboard extends React.Component {
       ...this.state,
       comparisonStubs: this.state.comparisonStubs.concat(response.data)
     })
+    this.props.history.push(`/comparison/${response.data.id}`)
   }
 
   render() {

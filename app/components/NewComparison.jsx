@@ -48,7 +48,7 @@ class NewComparison extends React.Component {
           onChange={event => this.handleChangeName(event)}
         />
         <Button className="NewComparison_button" type="submit">
-          <MdLibraryAdd /> Add
+          <MdLibraryAdd /> Create
         </Button>
       </form>
     )
