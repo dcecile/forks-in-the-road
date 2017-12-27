@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import NewComparison from "NewComparison"
+import HeaderContent from "HeaderContent"
 
 class Dashboard extends React.Component {
   constructor() {
@@ -43,6 +44,9 @@ class Dashboard extends React.Component {
   renderLoaded() {
     return (
       <div>
+        <HeaderContent>
+          <h1>Dashboard</h1>
+        </HeaderContent>
         <h2>Comparisons</h2>
         <ul>
           {this.state.comparisonStubs.map(comparisonStub => (

@@ -7,6 +7,7 @@ import Alternative from "Alternative"
 import EditComparison from "EditComparison"
 import ComparisonAlternatives from "ComparisonAlternatives"
 import ComparisonCriteria from "ComparisonCriteria"
+import HeaderContent from "HeaderContent"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -175,12 +176,23 @@ class Comparison extends React.Component {
   }
 
   renderLoading() {
-    return <h2>Loading...</h2>
+    return this.renderNavHeader("Loading...")
+  }
+
+  renderNavHeader(text) {
+    return (
+      <HeaderContent>
+        <nav>
+          <Link to={this.state.matchUrl}>{text}</Link>
+        </nav>
+      </HeaderContent>
+    )
   }
 
   renderLoaded() {
     return (
       <div>
+        {this.renderNavHeader(this.comparison.name)}
         {this.renderHeader()}
         <Switch>
           <Route
