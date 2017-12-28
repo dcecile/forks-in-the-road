@@ -1,19 +1,19 @@
 .Logo
   display: block
-  font-size: 1.6rem
-  box-sizing: content-box
-  width: 9ch
-  padding: 0.8ch 0.8ch 1.0ch 8.0ch
-  background-image: svg-load("Logo.svg")
-  background-position: 0.8ch center
-  background-repeat: no-repeat
-  background-size: auto 5.0ch
-  font-family: $Font_logoFamily
-  font-weight: $Font_logoWeight
   border: 2px solid $Theme_primary
-  color: $Theme_primary
   border-radius: 1.5ch
+  background-image: svg-load("Logo.svg")
+  background-repeat: no-repeat
+  background-position: 0.8ch center
+  background-size: auto 5.0ch
+  padding: 0.8ch 0.8ch 1.0ch 8.0ch
+  width: 9ch
   line-height: 1.0
+  color: $Theme_primary
+  font-family: $Font_logoFamily
+  font-size: 1.6rem
+  font-weight: $Font_logoWeight
+  box-sizing: content-box
 
   &::first-line
     font-size: 180%
@@ -21,5 +21,5 @@
   &:hover,
   &:visited,
   &:focus
-    color: $Theme_primary
     text-decoration: none
+    color: $Theme_primary

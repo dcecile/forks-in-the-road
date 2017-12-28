@@ -29,7 +29,7 @@
 4. Change a source file, and the app will reload automatically
 5. Run `yarn eslint-all` to check all JavaScript style/patterns
 6. Run `yarn prettier-write` to reformat all JavaScript code
-6. Run `yarn sass-lint-all` to all Sass style/patterns
+6. Run `yarn sass-lint-all` to check all Sass style/patterns
 
 ## License
 
