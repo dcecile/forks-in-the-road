@@ -21,14 +21,15 @@
 4. Run `bin/rails server` to start up Rails
 5. Visit http://localhost:3000 to view the app
 
-### JavaScript changes
+### JavaScript/Sass changes
 
-1. Run `bin/webpack-dev-server` to start incremental JavaScript compilation
+1. Run `bin/webpack-dev-server` to start incremental JavaScript/Sass compilation
 2. In another terminal, run `bin/rails server` to start up Rails
 3. Visit http://localhost:3000 to view the app
 4. Change a source file, and the app will reload automatically
 5. Run `yarn eslint-all` to check all JavaScript style/patterns
 6. Run `yarn prettier-write` to reformat all JavaScript code
+6. Run `yarn sass-lint-all` to all Sass style/patterns
 
 ## License
 
