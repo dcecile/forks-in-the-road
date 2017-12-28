@@ -1,6 +1,6 @@
 import React from "react"
 import MdLibraryAdd from "react-icons/lib/md/library-add"
-import Button from "Button"
+import SubmitButton from "SubmitButton"
 
 const initialState = {
   name: ""
@@ -53,9 +53,9 @@ class NewComparison extends React.Component {
           value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
-        <Button className="NewComparison_button" type="submit">
+        <SubmitButton className="NewComparison_button">
           <MdLibraryAdd /> Create
-        </Button>
+        </SubmitButton>
       </form>
     )
   }
