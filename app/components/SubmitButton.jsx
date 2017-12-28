@@ -2,7 +2,7 @@ import React from "react"
 import Button from "Button"
 
 function SubmitButton(props) {
-  return <Button {...props} type="submit" />
+  return <Button type="submit" {...props} />
 }
 
 export default SubmitButton

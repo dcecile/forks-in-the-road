@@ -1,6 +1,7 @@
 import React from "react"
 import MdLibraryAdd from "react-icons/lib/md/library-add"
 import SubmitButton from "SubmitButton"
+import TextInput from "TextInput"
 
 const initialState = {
   name: ""
@@ -45,7 +46,7 @@ class NewComparison extends React.Component {
         className={`NewComparison ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <input
+        <TextInput
           className="NewComparison_input"
           type="text"
           required
