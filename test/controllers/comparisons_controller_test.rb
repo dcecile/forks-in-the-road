@@ -9,7 +9,8 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
     assert_response_json(
       comparisons(:phone, :plan).map do |comparison|
         {
-          id: comparison.id
+          id: comparison.id,
+          alternatives_size: Integer
         }.ignore_extra_keys!
       end
     )

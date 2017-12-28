@@ -79,6 +79,7 @@ class Dashboard extends React.Component {
             key={comparisonStub.id}
             id={comparisonStub.id}
             name={comparisonStub.name}
+            size={comparisonStub.alternatives_size}
           />
         ))}
       </React.Fragment>
@@ -86,11 +87,11 @@ class Dashboard extends React.Component {
   }
 }
 
-function ComparisonStub({ id, name }) {
+function ComparisonStub({ id, name, size }) {
   return (
     <Link className="Dashboard_item" to={`/comparison/${id}`}>
       <h2 className="Dashboard_itemHeader">{name}</h2>
-      <h3 className="Dashboard_itemSubHeader">3 alternatives</h3>
+      <h3 className="Dashboard_itemSubHeader">{size} alternatives</h3>
     </Link>
   )
 }

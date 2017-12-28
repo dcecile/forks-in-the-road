@@ -4,7 +4,10 @@
 class ComparisonsController < ApplicationController
   def index
     comparisons = Comparison.all
-    render json: comparisons
+    render(
+      json: comparisons,
+      methods: :alternatives_size
+    )
   end
 
   def create

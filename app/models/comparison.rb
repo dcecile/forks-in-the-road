@@ -7,4 +7,6 @@ class Comparison < ApplicationRecord
 
   has_many :alternatives, dependent: :destroy
   has_many :criteria, dependent: :destroy
+
+  delegate :size, to: :alternatives, prefix: true
 end
