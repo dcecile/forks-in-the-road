@@ -9,6 +9,7 @@ import ComparisonAlternatives from "ComparisonAlternatives"
 import ComparisonCriteria from "ComparisonCriteria"
 import Header from "Header"
 import Loading from "Loading"
+import Sidebar from "Sidebar"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -186,21 +187,21 @@ class Comparison extends React.Component {
   render() {
     return (
       <div className="Comparison">
-        {this.isLoading ? this.renderLoading() : this.renderLoaded()}
+        {this.renderHeader()}
+        {this.renderSidebar()}
+        <main className="Comparison_main">
+          {this.isLoading ? this.renderLoading() : this.renderLoaded()}
+        </main>
       </div>
     )
   }
 
-  renderLoading() {
-    return (
-      <React.Fragment>
-        {this.renderNavHeader(<React.Fragment>Loading&hellip;</React.Fragment>)}
-        <Loading />
-      </React.Fragment>
+  renderHeader() {
+    const text = this.isLoading ? (
+      <React.Fragment>Loading&hellip;</React.Fragment>
+    ) : (
+      this.comparison.name
     )
-  }
-
-  renderNavHeader(text) {
     return (
       <Header className="Header__comparisonMode">
         <nav className="Header_title">
@@ -210,11 +211,18 @@ class Comparison extends React.Component {
     )
   }
 
+  renderSidebar() {
+    return <Sidebar matchUrl={this.matchUrl} />
+  }
+
+  renderLoading() {
+    return <Loading />
+  }
+
   renderLoaded() {
     return (
       <React.Fragment>
-        {this.renderNavHeader(this.comparison.name)}
-        {this.renderHeader()}
+        {this.renderMainHeader()}
         <Switch>
           <Route
             exact
@@ -237,7 +245,7 @@ class Comparison extends React.Component {
     )
   }
 
-  renderHeader() {
+  renderMainHeader() {
     if (!this.isEditing) {
       return (
         <h2>

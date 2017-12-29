@@ -53,14 +53,14 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="Dashboard">
+      <main className="Dashboard">
         <Header className="Header__dashboardMode">
           <h1 className="Header_title">
             <Link to={this.matchUrl}>Dashboard</Link>
           </h1>
         </Header>
         {this.isLoading ? this.renderLoading() : this.renderLoaded()}
-      </div>
+      </main>
     )
   }
 

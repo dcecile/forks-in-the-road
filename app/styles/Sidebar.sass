@@ -1,0 +1,57 @@
+.Sidebar
+  display: flex
+  flex-basis: 12rem
+  flex-direction: column
+  margin-top: -2px
+  border-right: 2px solid $Theme_primary
+  background: $Theme_primaryBackground
+  padding-top: 8rem
+  font-size: 1.4em
+
+.Sidebar_link
+  margin:
+    right: -2px
+    left: auto
+  border:
+    width: 2px
+    color: transparent
+    style: solid
+    top-left-radius: 1.0em
+    bottom-left-radius: 1.0em
+  border-right: 0
+  padding:
+    top: 0.3em
+    right: 1.2em
+    bottom: 0.4em
+    left: 0.7em
+  color: $Theme_primary
+  font-weight: $Font_boldWeight
+
+  &:hover,
+  &:visited,
+  &:focus
+    text-decoration: none
+    color: $Theme_primary
+
+  &:not(:first-child)
+    margin-top: 0.6em
+
+.Sidebar_link__isActive
+  border-color: $Theme_primary
+  background: $Theme_secondaryBackground
+  color: $Theme_secondary
+
+  &:hover,
+  &:visited,
+  &:focus
+    color: $Theme_secondary
+
+.Sidebar_link__toDashboard
+  font-weight: $Font_lightWeight
+
+.Sidebar_icon
+  opacity: 0.7
+  margin:
+    top: -2px
+    right: -5px
+  font-size: 24px

@@ -34,14 +34,14 @@ class App extends React.Component {
       <HashRouter>
         <div className="App">
           <HeaderSlot onRef={headerSlot => (this.headerSlot = headerSlot)} />
-          <main className="App_main">
+          <div className="App_main">
             <Switch>
               <Redirect exact from="/" to="/dashboard" />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route path="/comparison/:id" component={Comparison} />
               <Route component={RouteNotFound} />
             </Switch>
-          </main>
+          </div>
         </div>
       </HashRouter>
     )
