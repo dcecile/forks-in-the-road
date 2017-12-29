@@ -1,9 +1,10 @@
 import React from "react"
+import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
 
 class HeaderContent extends React.Component {
   static contextTypes = {
-    headerContent: PropTypes.func
+    headerContent: PropTypes.instanceOf(HTMLElement)
   }
 
   get children() {
@@ -14,22 +15,10 @@ class HeaderContent extends React.Component {
     return this.context.headerContent
   }
 
-  componentWillMount() {
-    this.renderOther()
-  }
-
-  shouldComponentUpdate() {
-    return false
-  }
-
-  renderOther() {
-    if (this.headerContent) {
-      this.headerContent(this.children)
-    }
-  }
-
   render() {
-    return null
+    return this.headerContent
+      ? ReactDOM.createPortal(this.children, this.headerContent)
+      : null
   }
 }
 

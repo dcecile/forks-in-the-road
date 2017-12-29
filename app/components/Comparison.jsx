@@ -8,6 +8,7 @@ import EditComparison from "EditComparison"
 import ComparisonAlternatives from "ComparisonAlternatives"
 import ComparisonCriteria from "ComparisonCriteria"
 import HeaderContent from "HeaderContent"
+import Loading from "Loading"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -183,11 +184,20 @@ class Comparison extends React.Component {
   }
 
   render() {
-    return this.isLoading ? this.renderLoading() : this.renderLoaded()
+    return (
+      <div className="Comparison">
+        {this.isLoading ? this.renderLoading() : this.renderLoaded()}
+      </div>
+    )
   }
 
   renderLoading() {
-    return this.renderNavHeader("Loading...")
+    return (
+      <React.Fragment>
+        {this.renderNavHeader(<React.Fragment>Loading&hellip;</React.Fragment>)}
+        <Loading />
+      </React.Fragment>
+    )
   }
 
   renderNavHeader(text) {
@@ -202,7 +212,7 @@ class Comparison extends React.Component {
 
   renderLoaded() {
     return (
-      <div>
+      <React.Fragment>
         {this.renderNavHeader(this.comparison.name)}
         {this.renderHeader()}
         <Switch>
@@ -223,7 +233,7 @@ class Comparison extends React.Component {
           />
           <Route component={RouteNotFound} />
         </Switch>
-      </div>
+      </React.Fragment>
     )
   }
 

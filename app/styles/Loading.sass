@@ -1,0 +1,24 @@
+.Loading
+  display: flex
+  flex-direction: row
+  align-items: bottom
+  animation: Loading_fadeIn $Timing_loadingFadeIn ease-in
+  color: $Theme_primaryBackground
+
+.Loading_text
+  font-size: 2.2rem
+  font-weight: $Font_boldWeight
+
+.Loading_icon
+  animation: Loading_cycle $Timing_loadingCycle linear infinite
+  margin-left: 1rem
+  padding-bottom: -0.5rem
+  font-size: 3rem
+
+@keyframes Loading_fadeIn
+  0%
+    opacity: 0
+
+@keyframes Loading_cycle
+  100%
+    transform: rotate(-360deg)

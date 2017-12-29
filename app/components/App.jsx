@@ -10,7 +10,7 @@ import User from "User"
 
 class App extends React.Component {
   static childContextTypes = {
-    headerContent: PropTypes.func
+    headerContent: PropTypes.instanceOf(HTMLElement)
   }
 
   constructor() {
@@ -18,17 +18,16 @@ class App extends React.Component {
     this.state = {
       headerContent: null
     }
-    this.childContext = {
-      headerContent: headerContent => this.setState({ headerContent })
-    }
-  }
-
-  get headerContent() {
-    return this.state.headerContent
   }
 
   getChildContext() {
-    return this.childContext
+    return this.state
+  }
+
+  componentDidMount() {
+    this.setState({
+      headerContent: this.headerContent
+    })
   }
 
   render() {
@@ -37,7 +36,7 @@ class App extends React.Component {
         <div className="App">
           <header className="App_header">
             <Logo />
-            {this.headerContent}
+            <div ref={headerContent => (this.headerContent = headerContent)} />
             <User />
           </header>
           <main className="App_main">

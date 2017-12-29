@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import NewComparison from "NewComparison"
 import HeaderContent from "HeaderContent"
+import Loading from "Loading"
 
 class Dashboard extends React.Component {
   constructor() {
@@ -64,7 +65,7 @@ class Dashboard extends React.Component {
   }
 
   renderLoading() {
-    return <span className="Dashboard_item">Loading...</span>
+    return <Loading />
   }
 
   renderLoaded() {
