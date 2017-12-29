@@ -1,9 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-function Logo() {
+function Logo({ className }) {
   return (
-    <Link className="Logo" to="/">
+    <Link className={`Logo ${className}`} to="/">
       Forks in the road
     </Link>
   )

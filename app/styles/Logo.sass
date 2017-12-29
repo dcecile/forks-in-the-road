@@ -1,18 +1,21 @@
 .Logo
   display: block
-  border: 2px solid $Theme_primary
-  border-radius: 1.5ch
-  background-image: svg-load("Logo.svg")
-  background-repeat: no-repeat
-  background-position: 0.8ch center
-  background-size: auto 5.0ch
-  padding: 0.8ch 0.8ch 1.0ch 8.0ch
+  background:
+    position: 0.8ch center
+    image: svg-load("Logo.svg")
+    repeat: no-repeat
+    size: auto 5.0ch
+  padding:
+    top: 0.8ch
+    right: 0.8ch
+    bottom: 1.0ch
+    left: 8.0ch
   width: 9ch
   line-height: 1.0
   color: $Theme_primary
-  font-family: $Font_logoFamily
-  font-size: 1.6rem
-  font-weight: $Font_logoWeight
+  font:
+    family: $Font_logoFamily
+    weight: $Font_logoWeight
   box-sizing: content-box
 
   &::first-line

@@ -5,8 +5,38 @@
   justify-content: space-between
   border-bottom: 2px solid $Theme_primary
   background-color: $Theme_primaryBackground
-  padding: 3.0rem 6.0rem
 
-.Header_dashboard
-  font-size: 2.6rem
+  &.Header__dashboardMode
+    padding: 3.0rem 6.0rem
+
+  &.Header__comparisonMode
+    padding:
+      top: 0.4rem
+      right: 1.2rem
+      bottom: 0.4rem
+      left: 0.4rem
+
+.Header_logo
+  .Header__dashboardMode &
+    border: 2px solid $Theme_primary
+    border-radius: 1.5ch
+    font-size: 1.6rem
+
+  .Header__comparisonMode &
+    font-size: 1.0rem
+
+.Header_title
   font-weight: $Font_boldWeight
+
+  .Header__dashboardMode &
+    font-size: 2.6rem
+
+  .Header__comparisonMode &
+    font-size: 1.8rem
+
+.Header_user
+  .Header__dashboardMode &
+    font-size: 1.6rem
+
+  .Header__comparisonMode &
+    font-size: 1.2rem

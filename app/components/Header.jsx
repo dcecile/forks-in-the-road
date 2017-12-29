@@ -9,6 +9,10 @@ export default class Header extends React.Component {
     headerSlot: PropTypes.instanceOf(HTMLElement)
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get children() {
     return this.props.children
   }
@@ -22,7 +26,7 @@ export default class Header extends React.Component {
       return null
     }
 
-    this.headerSlot.parentElement.className = "Header"
+    this.headerSlot.parentElement.className = `Header ${this.className}`
 
     return this.headerSlot
       ? ReactDOM.createPortal(this.children, this.headerSlot)
@@ -33,9 +37,9 @@ export default class Header extends React.Component {
 export function HeaderSlot({ onRef }) {
   return (
     <header>
-      <Logo />
+      <Logo className="Header_logo" />
       <div ref={onRef} />
-      <User />
+      <User className="Header_user" />
     </header>
   )
 }

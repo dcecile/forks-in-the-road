@@ -54,8 +54,8 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className="Dashboard">
-        <Header>
-          <h1 className="Header_dashboard">
+        <Header className="Header__dashboardMode">
+          <h1 className="Header_title">
             <Link to={this.matchUrl}>Dashboard</Link>
           </h1>
         </Header>
