@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import NewComparison from "NewComparison"
-import HeaderContent from "HeaderContent"
+import Header from "Header"
 import Loading from "Loading"
 
 class Dashboard extends React.Component {
@@ -54,11 +54,11 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className="Dashboard">
-        <HeaderContent>
-          <h1 className="App_headerContent__dashboard">
+        <Header>
+          <h1 className="Header_dashboard">
             <Link to={this.matchUrl}>Dashboard</Link>
           </h1>
-        </HeaderContent>
+        </Header>
         {this.isLoading ? this.renderLoading() : this.renderLoaded()}
       </div>
     )

@@ -2,21 +2,20 @@ import React from "react"
 import PropTypes from "prop-types"
 import { HashRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
-import Logo from "Logo"
 import Dashboard from "Dashboard"
 import Comparison from "Comparison"
 import RouteNotFound from "RouteNotFound"
-import User from "User"
+import { HeaderSlot } from "Header"
 
 class App extends React.Component {
   static childContextTypes = {
-    headerContent: PropTypes.instanceOf(HTMLElement)
+    headerSlot: PropTypes.instanceOf(HTMLElement)
   }
 
   constructor() {
     super()
     this.state = {
-      headerContent: null
+      headerSlot: null
     }
   }
 
@@ -26,7 +25,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({
-      headerContent: this.headerContent
+      headerSlot: this.headerSlot
     })
   }
 
@@ -34,11 +33,7 @@ class App extends React.Component {
     return (
       <HashRouter>
         <div className="App">
-          <header className="App_header">
-            <Logo />
-            <div ref={headerContent => (this.headerContent = headerContent)} />
-            <User />
-          </header>
+          <HeaderSlot onRef={headerSlot => (this.headerSlot = headerSlot)} />
           <main className="App_main">
             <Switch>
               <Redirect exact from="/" to="/dashboard" />
