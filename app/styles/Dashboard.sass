@@ -9,6 +9,7 @@
   flex-basis: 19rem
   flex-direction: column
   justify-content: center
+  animation: Dashboard_itemPopIn $Timing_dashboardItemPopIn ease-out
   margin: 1.0rem 1.5rem
   border: 2px solid $Theme_primary
   background: $Theme_primaryBackground
@@ -24,3 +25,7 @@
 .Dashboard_itemSubHeader
   font-size: 1.8rem
   font-weight: $Font_lightWeight
+
+@keyframes Dashboard_itemPopIn
+  0%
+    transform: scale(0)
