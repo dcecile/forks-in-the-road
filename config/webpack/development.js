@@ -1,3 +1,11 @@
 const environment = require("./environment")
 
-module.exports = environment.toWebpackConfig()
+const config = environment.toWebpackConfig()
+
+// https://webpack.js.org/configuration/stats/
+config.devServer.stats = {
+  errorDetails: true,
+  timings: true
+}
+
+module.exports = config
