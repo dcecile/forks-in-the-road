@@ -17,6 +17,10 @@ class EditAlternative extends React.Component {
     return this.props.onSubmit
   }
 
+  get onCancel() {
+    return this.props.onCancel
+  }
+
   get name() {
     return this.state.name
   }
