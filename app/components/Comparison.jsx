@@ -10,6 +10,7 @@ import ComparisonCriteria from "ComparisonCriteria"
 import Header from "Header"
 import Loading from "Loading"
 import Sidebar from "Sidebar"
+import Button from "Button"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -222,45 +223,48 @@ class Comparison extends React.Component {
   renderLoaded() {
     return (
       <React.Fragment>
-        {this.renderMainHeader()}
-        <Switch>
-          <Route
-            exact
-            path={this.matchUrl}
-            render={() => this.renderAlternatives()}
-          />
-          <Route
-            exact
-            path={`${this.matchUrl}/criteria`}
-            render={() => this.renderCriteria()}
-          />
-          <Route
-            exact
-            path={`${this.matchUrl}/alternative/:id`}
-            render={routeProps => this.renderOneAlternative(routeProps)}
-          />
-          <Route component={RouteNotFound} />
-        </Switch>
+        <div className="Comparison_section">
+          <Switch>
+            <Route
+              exact
+              path={this.matchUrl}
+              render={() => this.renderAlternatives()}
+            />
+            <Route
+              exact
+              path={`${this.matchUrl}/criteria`}
+              render={() => this.renderCriteria()}
+            />
+            <Route
+              exact
+              path={`${this.matchUrl}/alternative/:id`}
+              render={routeProps => this.renderOneAlternative(routeProps)}
+            />
+            <Route component={RouteNotFound} />
+          </Switch>
+        </div>
+        {this.renderInfo()}
       </React.Fragment>
     )
   }
 
-  renderMainHeader() {
-    if (!this.isEditing) {
-      return (
-        <h2>
-          <Link to={this.matchUrl}>{this.comparison.name}</Link>{" "}
-          <button
-            className="btn btn-primary"
-            onClick={() => this.handleBeginEdit()}
-          >
-            Edit
-          </button>
-        </h2>
-      )
-    } else {
-      return this.renderEdit()
-    }
+  renderInfo() {
+    return (
+      <section className="Comparison_section">
+        {!this.isEditing ? this.renderEditButton() : this.renderEdit()}
+      </section>
+    )
+  }
+
+  renderEditButton() {
+    return (
+      <Button
+        className="Comparison_infoEditButton"
+        onClick={() => this.handleBeginEdit()}
+      >
+        Edit comparison info
+      </Button>
+    )
   }
 
   renderEdit() {
