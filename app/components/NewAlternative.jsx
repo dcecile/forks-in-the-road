@@ -11,6 +11,10 @@ class NewAlternative extends React.Component {
     this.state = initialState
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get onSubmit() {
     return this.props.onSubmit
   }
@@ -48,7 +52,10 @@ class NewAlternative extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
+      <form
+        className={this.className}
+        onSubmit={event => this.handleSubmit(event)}
+      >
         <input
           type="text"
           required

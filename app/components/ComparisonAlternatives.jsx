@@ -8,24 +8,25 @@ function ComparisonAlternatives({
   onSubmitNewAlternative
 }) {
   const renderAlternativeLink = alternative => (
-    <li key={alternative.id}>
-      <Link to={`${matchUrl}/alternative/${alternative.id}`}>
-        {alternative.name}
-      </Link>
-    </li>
+    <Link
+      className="ComparisonAlternatives_link"
+      key={alternative.id}
+      to={`${matchUrl}/alternative/${alternative.id}`}
+    >
+      {alternative.name}
+    </Link>
   )
 
   return (
-    <div>
+    <div className="ComparisonAlternatives">
       <h1>
         <Link to={matchUrl}>Alternatives</Link>
       </h1>
-      <ul>
-        {alternatives.map(renderAlternativeLink)}
-        <li>
-          <NewAlternative onSubmit={onSubmitNewAlternative} />
-        </li>
-      </ul>
+      <NewAlternative
+        className="ComparisonAlternatives_new"
+        onSubmit={onSubmitNewAlternative}
+      />
+      {alternatives.map(renderAlternativeLink)}
     </div>
   )
 }
