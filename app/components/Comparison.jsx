@@ -60,7 +60,7 @@ class Comparison extends React.Component {
       ...this.state,
       comparison: {
         ...this.comparison,
-        alternatives: this.comparison.alternatives.concat(response.data)
+        alternatives: [response.data].concat(this.comparison.alternatives)
       }
     })
   }

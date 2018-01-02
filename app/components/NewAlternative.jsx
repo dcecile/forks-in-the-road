@@ -1,4 +1,7 @@
 import React from "react"
+import MdAdd from "react-icons/lib/md/add"
+import TextInput from "TextInput"
+import SubmitButton from "SubmitButton"
 
 const initialState = {
   name: "",
@@ -53,23 +56,25 @@ class NewAlternative extends React.Component {
   render() {
     return (
       <form
-        className={this.className}
+        className={`NewAlternative ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <input
-          type="text"
+        <TextInput
+          className="NewAlternative_name"
           required
           placeholder="New alternative name"
           value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
-        <input
-          type="text"
+        <TextInput
+          className="NewAlternative_url"
           placeholder="New alternative URL"
           value={this.url}
           onChange={event => this.handleChangeURL(event)}
         />
-        <input type="submit" value="Add" />
+        <SubmitButton className="NewAlternative_submit">
+          <MdAdd className="NewAlternative_submitIcon" /> Add
+        </SubmitButton>
       </form>
     )
   }
