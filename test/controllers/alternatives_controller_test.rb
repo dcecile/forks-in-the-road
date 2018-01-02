@@ -9,7 +9,8 @@ class AlternativesControllerTest < ActionDispatch::IntegrationTest
       :name,
       :comparison_alternatives_url,
       parent: comparisons(:phone),
-      name: "New"
+      name: "New",
+      estimates: []
     )
   end
 

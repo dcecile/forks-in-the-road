@@ -5,7 +5,10 @@ class AlternativesController < ApplicationController
   def create
     comparison = Comparison.find(params[:comparison_id])
     alternative = comparison.alternatives.create!(alternative_params)
-    render json: alternative
+    render(
+      json: alternative,
+      include: :estimates
+    )
   end
 
   def update
