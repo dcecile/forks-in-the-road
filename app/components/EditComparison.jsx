@@ -1,4 +1,7 @@
 import React from "react"
+import TextInput from "TextInput"
+import SubmitButton from "SubmitButton"
+import Button from "Button"
 
 class EditComparison extends React.Component {
   constructor({ comparison }) {
@@ -67,44 +70,47 @@ class EditComparison extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <label>
-          Name:
-          <input
-            type="text"
+      <form
+        className="EditComparison"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <label className="EditComparison_label">
+          Comparison name:
+          <TextInput
+            className="EditComparison_input"
             required
             placeholder="Comparison"
             value={this.name}
             onChange={event => this.handleChangeName(event)}
           />
         </label>
-        <br />
-        <label>
+        <label className="EditComparison_label">
           Alternative noun (optional):
-          <input
-            type="text"
+          <TextInput
+            className="EditComparison_input"
             placeholder="alternative"
             value={this.alternative_noun}
             onChange={event => this.handleChangeAlternativeNoun(event)}
           />
         </label>
-        <br />
-        <label>
+        <label className="EditComparison_label">
           Value unit (optional):
-          <input
-            type="text"
+          <TextInput
+            className="EditComparison_input"
             placeholder="$"
             value={this.value_unit}
             onChange={event => this.handleChangeValueUnit(event)}
           />
         </label>
-        <br />
-        <input type="submit" value="Save" />
-        <input
-          type="button"
-          value="Cancel"
-          onClick={event => this.handleCancel(event)}
-        />
+        <div className="EditComparison_buttonGroup">
+          <SubmitButton className="EditComparison_button">Save</SubmitButton>
+          <Button
+            className="EditComparison_button"
+            onClick={event => this.handleCancel(event)}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     )
   }

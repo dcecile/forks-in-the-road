@@ -251,7 +251,7 @@ class Comparison extends React.Component {
   renderInfo() {
     return (
       <section className="Comparison_section">
-        {!this.isEditing ? this.renderEditButton() : this.renderEdit()}
+        {!this.isEditing ? this.renderEditButton() : this.renderEditForm()}
       </section>
     )
   }
@@ -262,21 +262,18 @@ class Comparison extends React.Component {
         className="Comparison_infoEditButton"
         onClick={() => this.handleBeginEdit()}
       >
-        Edit comparison info
+        Edit comparison info for {this.comparison.name}
       </Button>
     )
   }
 
-  renderEdit() {
+  renderEditForm() {
     return (
-      <div>
-        <h2>Editing comparison</h2>
-        <EditComparison
-          comparison={this.comparison}
-          onSubmit={comparison => this.handleSubmitEdit(comparison)}
-          onCancel={() => this.handleCancelEdit()}
-        />
-      </div>
+      <EditComparison
+        comparison={this.comparison}
+        onSubmit={comparison => this.handleSubmitEdit(comparison)}
+        onCancel={() => this.handleCancelEdit()}
+      />
     )
   }
 
