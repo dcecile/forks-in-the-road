@@ -68,7 +68,7 @@ class NewAlternative extends React.Component {
         />
         <TextInput
           className="NewAlternative_url"
-          placeholder="New alternative URL"
+          placeholder="New alternative URL (optional)"
           value={this.url}
           onChange={event => this.handleChangeURL(event)}
         />

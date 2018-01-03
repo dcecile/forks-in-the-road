@@ -72,7 +72,7 @@ class EditAlternative extends React.Component {
         </label>
         <br />
         <label>
-          URL:
+          URL (optional):
           <input
             type="text"
             placeholder="URL"

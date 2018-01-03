@@ -118,7 +118,7 @@ class EditCriterion extends React.Component {
         </label>
         <br />
         <label>
-          Description:
+          Description (optional):
           <input
             type="text"
             placeholder="Description"
@@ -139,7 +139,7 @@ class EditCriterion extends React.Component {
         </label>
         <br />
         <label>
-          Default estimate:
+          Default estimate (optional):
           <input
             type="number"
             min="0"

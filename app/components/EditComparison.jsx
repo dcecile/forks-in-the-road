@@ -80,7 +80,7 @@ class EditComparison extends React.Component {
         </label>
         <br />
         <label>
-          Alternative noun:
+          Alternative noun (optional):
           <input
             type="text"
             placeholder="alternative"
@@ -90,7 +90,7 @@ class EditComparison extends React.Component {
         </label>
         <br />
         <label>
-          Value unit:
+          Value unit (optional):
           <input
             type="text"
             placeholder="$"
