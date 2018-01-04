@@ -2,6 +2,7 @@
   display: flex
   flex-basis: 12rem
   flex-direction: column
+  animation: Sidebar_slideIn $Timing_sidebarSlideIn ease-out
   margin-top: -2px
   border-right: 2px solid $Theme_primary
   background: $Theme_primaryBackground
@@ -55,3 +56,7 @@
     top: -2px
     right: -5px
   font-size: 24px
+
+@keyframes Sidebar_slideIn
+  0%
+    transform: translate(-100%, 0)
