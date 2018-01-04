@@ -205,7 +205,7 @@ class Comparison extends React.Component {
     )
     return (
       <Header className="Header__comparisonMode">
-        <nav className="Header_title">
+        <nav className="Header_titleContent">
           <Link to={this.matchUrl}>{text}</Link>
         </nav>
       </Header>

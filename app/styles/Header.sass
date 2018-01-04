@@ -17,12 +17,14 @@
       left: 0.4rem
 
 .Header_logo
+  border: 2px solid $Theme_primary
+  border-radius: 1.5ch
+
   .Header__dashboardMode &
-    border: 2px solid $Theme_primary
-    border-radius: 1.5ch
     font-size: 1.6rem
 
   .Header__comparisonMode &
+    border-width: 0
     font-size: 1.0rem
 
 .Header_title
@@ -32,8 +34,13 @@
     font-size: 2.6rem
 
   .Header__comparisonMode &
-    margin-left: 11rem
+    margin-left: 9rem
     font-size: 1.8rem
+
+.Header_titleContent
+  font:
+    weight: inherit
+    size: inherit
 
 .Header_user
   .Header__dashboardMode &
@@ -41,3 +48,11 @@
 
   .Header__comparisonMode &
     font-size: 1.2rem
+
+.Header,
+.Header_logo,
+.Header_title
+  transition:
+    property: margin, border-width, padding
+    duration: $Timing_headerTransition
+    timing-function: linear
