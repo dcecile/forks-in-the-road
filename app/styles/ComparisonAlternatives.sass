@@ -10,7 +10,30 @@
   margin:
     top: 1.2rem
     right: auto
-  border: 1px solid $Theme_primary
-  border-radius: 1.2rem
+  border:
+    width: 1px
+    color: $Theme_primary
+    style: solid
+    radius: 1.2rem
   padding: 0.5rem 1.0rem
   font-weight: $Font_boldWeight
+
+.ComparisonAlternatives_link__isNewlyCreated
+  animation: ComparisonAlternatives_growLink $Timing_comparisonAlternativesGrowLink ease-out, ComparisonAlternatives_highlightLink $Timing_comparisonAlternativesHighlightLink ease
+
+@keyframes ComparisonAlternatives_growLink
+  0%
+    margin-top: 0
+    border-color: transparent
+    padding:
+      top: 0
+      bottom: 0
+    line-height: 0
+    color: transparent
+
+  50%
+    color: transparent
+
+@keyframes ComparisonAlternatives_highlightLink
+  40%
+    box-shadow: 0 0 12px $Theme_primary

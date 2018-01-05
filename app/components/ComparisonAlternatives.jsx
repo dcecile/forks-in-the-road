@@ -5,11 +5,17 @@ import NewAlternative from "NewAlternative"
 function ComparisonAlternatives({
   matchUrl,
   alternatives,
+  isAlternativeNewlyCreated,
   onSubmitNewAlternative
 }) {
-  const renderAlternativeLink = alternative => (
+  const getNewlyCreatedClassName = i =>
+    i === 0 && isAlternativeNewlyCreated
+      ? "ComparisonAlternatives_link__isNewlyCreated"
+      : ""
+
+  const renderAlternativeLink = (alternative, i) => (
     <Link
-      className="ComparisonAlternatives_link"
+      className={`ComparisonAlternatives_link ${getNewlyCreatedClassName(i)}`}
       key={alternative.id}
       to={`${matchUrl}/alternative/${alternative.id}`}
     >

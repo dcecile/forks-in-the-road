@@ -12,6 +12,14 @@ import Loading from "Loading"
 import Sidebar from "Sidebar"
 import Button from "Button"
 
+function sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+const Timing = {
+  comparisonAlternativesHighlightLink: 2000
+}
+
 class Comparison extends React.Component {
   constructor({ match }) {
     super()
@@ -19,6 +27,7 @@ class Comparison extends React.Component {
     this.state = {
       isLoading: true,
       isEditing: false,
+      isAlternativeNewlyCreated: false,
       comparison: null
     }
     this.load(id)
@@ -34,6 +43,10 @@ class Comparison extends React.Component {
 
   get isEditing() {
     return this.state.isEditing
+  }
+
+  get isAlternativeNewlyCreated() {
+    return this.state.isAlternativeNewlyCreated
   }
 
   get comparison() {
@@ -61,7 +74,13 @@ class Comparison extends React.Component {
       comparison: {
         ...this.comparison,
         alternatives: [response.data].concat(this.comparison.alternatives)
-      }
+      },
+      isAlternativeNewlyCreated: true
+    })
+    await sleep(Timing.comparisonAlternativesHighlightLink)
+    this.setState({
+      ...this.state,
+      isAlternativeNewlyCreated: false
     })
   }
 
@@ -282,6 +301,7 @@ class Comparison extends React.Component {
       <ComparisonAlternatives
         matchUrl={this.matchUrl}
         alternatives={this.comparison.alternatives}
+        isAlternativeNewlyCreated={this.isAlternativeNewlyCreated}
         onSubmitNewAlternative={alternative =>
           this.handleSubmitNewAlternative(alternative)
         }
