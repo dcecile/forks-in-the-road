@@ -17,7 +17,8 @@ function sleep(milliseconds) {
 }
 
 const Timing = {
-  comparisonAlternativesHighlightLink: 2000
+  comparisonAlternativesHighlightLink: 2000,
+  comparisonEditStateChange: 200
 }
 
 class Comparison extends React.Component {
@@ -27,6 +28,7 @@ class Comparison extends React.Component {
     this.state = {
       isLoading: true,
       isEditing: false,
+      isEditStateChanging: false,
       isAlternativeNewlyCreated: false,
       comparison: null
     }
@@ -43,6 +45,16 @@ class Comparison extends React.Component {
 
   get isEditing() {
     return this.state.isEditing
+  }
+
+  get isEditStateChanging() {
+    return this.state.isEditStateChanging
+  }
+
+  get editStateChangingClassName() {
+    return this.isEditStateChanging
+      ? "Comparison_infoEditContent__isChangingState"
+      : ""
   }
 
   get isAlternativeNewlyCreated() {
@@ -174,10 +186,16 @@ class Comparison extends React.Component {
     })
   }
 
-  handleBeginEdit() {
+  async handleBeginEdit() {
     this.setState({
       ...this.state,
-      isEditing: true
+      isEditStateChanging: true
+    })
+    await sleep(Timing.comparisonEditStateChange)
+    this.setState({
+      ...this.state,
+      isEditing: true,
+      isEditStateChanging: false
     })
   }
 
@@ -197,10 +215,16 @@ class Comparison extends React.Component {
     this.handleCancelEdit()
   }
 
-  handleCancelEdit() {
+  async handleCancelEdit() {
     this.setState({
       ...this.state,
-      isEditing: false
+      isEditStateChanging: true
+    })
+    await sleep(Timing.comparisonEditStateChange)
+    this.setState({
+      ...this.state,
+      isEditing: false,
+      isEditStateChanging: false
     })
   }
 
@@ -269,8 +293,14 @@ class Comparison extends React.Component {
 
   renderInfo() {
     return (
-      <section className="Comparison_section">
-        {!this.isEditing ? this.renderEditButton() : this.renderEditForm()}
+      <section className="Comparison_infoEditSection">
+        <div
+          className={`Comparison_infoEditContent ${
+            this.editStateChangingClassName
+          }`}
+        >
+          {!this.isEditing ? this.renderEditButton() : this.renderEditForm()}
+        </div>
       </section>
     )
   }
