@@ -11,6 +11,10 @@ class EditCriterion extends React.Component {
     }
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get id() {
     return this.props.criterion.id
   }
@@ -105,7 +109,10 @@ class EditCriterion extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
+      <form
+        className={`${this.className} EditCriterion`}
+        onSubmit={event => this.handleSubmit(event)}
+      >
         <label>
           Name:
           <input

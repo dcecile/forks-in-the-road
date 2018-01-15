@@ -10,20 +10,22 @@ function ComparisonCriteria({
   onSubmitEditCriterion
 }) {
   const renderCriterion = criterion => (
-    <li key={criterion.id}>
-      <Criterion criterion={criterion} onSubmitEdit={onSubmitEditCriterion} />
-    </li>
+    <Criterion
+      key={criterion.id}
+      className="ComparisonCriteria_item"
+      criterion={criterion}
+      onSubmitEdit={onSubmitEditCriterion}
+    />
   )
 
   return (
-    <div>
+    <div className="ComparisonCriteria">
       <ComparisonHeader matchUrl={`${matchUrl}/criteria`} title="Criteria" />
-      <ul>
-        {criteria.map(renderCriterion)}
-        <li>
-          <NewCriterion onSubmit={onSubmitNewCriterion} />
-        </li>
-      </ul>
+      {criteria.map(renderCriterion)}
+      <NewCriterion
+        className="ComparisonCriteria_item"
+        onSubmit={onSubmitNewCriterion}
+      />
     </div>
   )
 }
