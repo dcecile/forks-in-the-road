@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import NewAlternative from "NewAlternative"
+import ComparisonHeader from "ComparisonHeader"
 
 function ComparisonAlternatives({
   matchUrl,
@@ -25,9 +26,7 @@ function ComparisonAlternatives({
 
   return (
     <div className="ComparisonAlternatives">
-      <h1>
-        <Link to={matchUrl}>Alternatives</Link>
-      </h1>
+      <ComparisonHeader matchUrl={matchUrl} title="Alternatives" />
       <NewAlternative
         className="ComparisonAlternatives_new"
         onSubmit={onSubmitNewAlternative}
