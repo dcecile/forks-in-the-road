@@ -23,7 +23,7 @@ function ComparisonCriteria({
       <ComparisonHeader matchUrl={`${matchUrl}/criteria`} title="Criteria" />
       {criteria.map(renderCriterion)}
       <NewCriterion
-        className="ComparisonCriteria_item"
+        className="ComparisonCriteria_newItem"
         onSubmit={onSubmitNewCriterion}
       />
     </div>

@@ -1,4 +1,8 @@
 import React from "react"
+import MdAdd from "react-icons/lib/md/add"
+import TextInput from "TextInput"
+import NumberInput from "NumberInput"
+import SubmitButton from "SubmitButton"
 
 const initialState = {
   name: "",
@@ -53,24 +57,26 @@ class NewCriterion extends React.Component {
   render() {
     return (
       <form
-        className={`${this.className} NewCriterion`}
+        className={`NewCriterion ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <input
-          type="text"
+        <TextInput
+          className="NewCriterion_name"
           required
           placeholder="New criterion name"
           value={this.name}
           onChange={event => this.handleChangeName(event)}
         />
-        <input
-          type="number"
+        <NumberInput
+          className="NewCriterion_fullValue"
           required
           placeholder="New criterion full value"
           value={this.full_value}
           onChange={event => this.handleChangeFullValue(event)}
         />
-        <input type="submit" value="Add" />
+        <SubmitButton className="NewCriterion_submit">
+          <MdAdd className="NewCriterion_submitIcon" /> Add
+        </SubmitButton>
       </form>
     )
   }
