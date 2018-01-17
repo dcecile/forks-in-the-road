@@ -11,15 +11,7 @@ import Header from "Header"
 import Loading from "Loading"
 import Sidebar from "Sidebar"
 import Button from "Button"
-
-function sleep(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
-const Timing = {
-  comparisonAlternativesHighlightLink: 2000,
-  comparisonEditStateChange: 200
-}
+import Timing from "Timing"
 
 class Comparison extends React.Component {
   constructor({ match }) {
@@ -89,7 +81,7 @@ class Comparison extends React.Component {
       },
       isAlternativeNewlyCreated: true
     })
-    await sleep(Timing.comparisonAlternativesHighlightLink)
+    await Timing.comparisonAlternativesHighlightLink()
     this.setState({
       ...this.state,
       isAlternativeNewlyCreated: false
@@ -191,7 +183,7 @@ class Comparison extends React.Component {
       ...this.state,
       isEditStateChanging: true
     })
-    await sleep(Timing.comparisonEditStateChange)
+    await Timing.comparisonEditStateChange()
     this.setState({
       ...this.state,
       isEditing: true,
@@ -220,7 +212,7 @@ class Comparison extends React.Component {
       ...this.state,
       isEditStateChanging: true
     })
-    await sleep(Timing.comparisonEditStateChange)
+    await Timing.comparisonEditStateChange()
     this.setState({
       ...this.state,
       isEditing: false,
