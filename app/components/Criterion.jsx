@@ -52,7 +52,7 @@ class Criterion extends React.Component {
   renderShow() {
     return (
       <div className={`${this.className} Criterion`}>
-        <div className="Criterion_top">
+        <div className="Criterion_body">
           <h2 className="Criterion_name">{this.criterion.name} </h2>
           <p className="Criterion_description">{this.criterion.description}</p>
           <ul>

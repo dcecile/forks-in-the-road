@@ -1,4 +1,8 @@
 import React from "react"
+import TextInput from "TextInput"
+import NumberInput from "NumberInput"
+import SubmitButton from "SubmitButton"
+import Button from "Button"
 
 class EditCriterion extends React.Component {
   constructor({ criterion }) {
@@ -110,59 +114,60 @@ class EditCriterion extends React.Component {
   render() {
     return (
       <form
-        className={`${this.className} EditCriterion`}
+        className={`EditCriterion ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <label>
-          Name:
-          <input
-            type="text"
-            required
-            placeholder="Criterion"
-            value={this.name}
-            onChange={event => this.handleChangeName(event)}
-          />
-        </label>
-        <br />
-        <label>
-          Description (optional):
-          <input
-            type="text"
-            placeholder="Description"
-            value={this.description}
-            onChange={event => this.handleChangeDescription(event)}
-          />
-        </label>
-        <br />
-        <label>
-          Full value:
-          <input
-            type="number"
-            required
-            placeholder="Full value"
-            value={this.full_value}
-            onChange={event => this.handleChangeFullValue(event)}
-          />
-        </label>
-        <br />
-        <label>
-          Default estimate (optional):
-          <input
-            type="number"
-            min="0"
-            max="100"
-            placeholder="Default estimate"
-            value={this.default_estimate}
-            onChange={event => this.handleChangeDefaultEstimate(event)}
-          />
-        </label>
-        <br />
-        <input type="submit" value="Save" />
-        <input
-          type="button"
-          value="Cancel"
-          onClick={event => this.handleCancel(event)}
-        />
+        <div className="EditCriterion_body">
+          <label className="EditCriterion_label">
+            Criterion name:
+            <TextInput
+              className="EditCriterion_input"
+              required
+              placeholder="Criterion"
+              value={this.name}
+              onChange={event => this.handleChangeName(event)}
+            />
+          </label>
+          <label className="EditCriterion_label">
+            Description (optional):
+            <TextInput
+              className="EditCriterion_input"
+              placeholder="Why this criterion is important"
+              value={this.description}
+              onChange={event => this.handleChangeDescription(event)}
+            />
+          </label>
+          <label className="EditCriterion_label">
+            Full value:
+            <NumberInput
+              className="EditCriterion_input"
+              required
+              placeholder="1000"
+              value={this.full_value}
+              onChange={event => this.handleChangeFullValue(event)}
+            />
+          </label>
+          <label className="EditCriterion_label">
+            Default estimate (optional):
+            <NumberInput
+              className="EditCriterion_input"
+              min="0"
+              max="100"
+              placeholder="50"
+              value={this.default_estimate}
+              onChange={event => this.handleChangeDefaultEstimate(event)}
+            />
+          </label>
+          <div className="EditCriterion_buttonGroup">
+            <SubmitButton className="EditCriterion_button">Save</SubmitButton>
+            <Button
+              className="EditCriterion_button"
+              onClick={event => this.handleCancel(event)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
       </form>
     )
   }

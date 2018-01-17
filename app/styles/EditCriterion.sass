@@ -1,0 +1,42 @@
+.EditCriterion
+  @extend .card
+  max-width: 25rem
+
+.EditCriterion_body
+  @extend .card-body
+  display: flex
+  flex-direction: column
+  align-items: stretch
+
+.EditCriterion_label
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  margin-bottom: 1.0rem
+  font-weight: $Font_boldWeight
+
+.EditCriterion_input
+  display: block
+  margin:
+    top: 0.4rem
+    right: 0.4rem
+    left: 0.4rem
+  padding-left: 0.8em
+  width: auto
+  font-weight: $Font_normalWeight
+
+.EditCriterion_buttonGroup
+  display: flex
+  flex-direction: row
+  margin-top: 0.2rem
+
+.EditCriterion_button
+  padding:
+    right: 1em
+    left: 1em
+  font:
+    size: 0.9rem
+    weight: $Font_boldWeight
+
+  &:not(:first-child)
+    margin-left: 1.0rem
