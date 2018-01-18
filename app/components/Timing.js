@@ -8,5 +8,6 @@ function timing(milliseconds) {
 
 export default {
   comparisonAlternativesHighlightLink: timing(2000),
-  comparisonEditStateChange: timing(200)
+  comparisonEditStateChange: timing(200),
+  criterionEditStateChange: timing(150)
 }

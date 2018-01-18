@@ -2,6 +2,17 @@
   @extend .card
   max-width: 25rem
 
+.Criterion_transform
+  transition:
+    property: transform, opacity
+    duration: $Timing_criterionEditStateChange
+    timing-function: ease-in
+
+.Criterion_transform__isEditChangingState
+  transform: scale(0.8)
+  opacity: 0.5
+  transition-timing-function: ease-out
+
 .Criterion_body
   @extend .card-body
 

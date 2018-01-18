@@ -204,7 +204,7 @@ class Comparison extends React.Component {
         ...response.data
       }
     })
-    this.handleCancelEdit()
+    await this.handleCancelEdit()
   }
 
   async handleCancelEdit() {
