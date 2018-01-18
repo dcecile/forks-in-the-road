@@ -10,6 +10,10 @@
   font-size: 1.4em
 
 .Sidebar_link
+  transition:
+    property: border-color, background-color, color
+    duration: $Timing_sidebarChangeActiveOff
+    timing-function: ease-out
   margin:
     right: -2px
     left: auto
@@ -39,8 +43,9 @@
 
 .Sidebar_link__isActive
   border-color: $Theme_primary
-  background: $Theme_secondaryBackground
+  background-color: $Theme_secondaryBackground
   color: $Theme_secondary
+  transition-duration: $Timing_sidebarChangeActiveOn
 
   &:hover,
   &:visited,
