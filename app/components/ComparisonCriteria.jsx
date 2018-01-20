@@ -6,13 +6,19 @@ import ComparisonHeader from "ComparisonHeader"
 function ComparisonCriteria({
   matchUrl,
   criteria,
+  isCriterionNewlyCreated,
   onSubmitNewCriterion,
   onSubmitEditCriterion
 }) {
-  const renderCriterion = criterion => (
+  const getNewlyCreatedClassName = i =>
+    i === criteria.length - 1 && isCriterionNewlyCreated
+      ? "ComparisonCriteria_item__isNewlyCreated"
+      : ""
+
+  const renderCriterion = (criterion, i) => (
     <Criterion
       key={criterion.id}
-      className="ComparisonCriteria_item"
+      className={`ComparisonCriteria_item ${getNewlyCreatedClassName(i)}`}
       criterion={criterion}
       onSubmitEdit={onSubmitEditCriterion}
     />

@@ -19,7 +19,10 @@
   font-weight: $Font_boldWeight
 
 .ComparisonAlternatives_link__isNewlyCreated
-  animation: ComparisonAlternatives_growLink $Timing_comparisonAlternativesGrowLink ease-out, ComparisonAlternatives_highlightLink $Timing_comparisonAlternativesHighlightLink ease
+  animation:
+    name: ComparisonAlternatives_growLink, ComparisonAlternatives_highlightLink
+    duration: $Timing_comparisonAlternativesGrowLink, $Timing_comparisonAlternativesHighlightLink
+    timing-function: ease-out, ease
 
 @keyframes ComparisonAlternatives_growLink
   0%

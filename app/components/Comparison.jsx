@@ -23,6 +23,7 @@ class Comparison extends React.Component {
       isEditing: false,
       isEditStateChanging: false,
       isAlternativeNewlyCreated: false,
+      isCriterionNewlyCreated: false,
       comparison: null
     }
     this.load(id)
@@ -56,6 +57,10 @@ class Comparison extends React.Component {
 
   get isAlternativeNewlyCreated() {
     return this.state.isAlternativeNewlyCreated
+  }
+
+  get isCriterionNewlyCreated() {
+    return this.state.isCriterionNewlyCreated
   }
 
   get comparison() {
@@ -122,7 +127,13 @@ class Comparison extends React.Component {
       comparison: {
         ...this.comparison,
         criteria: this.comparison.criteria.concat(response.data)
-      }
+      },
+      isCriterionNewlyCreated: true
+    })
+    await Timing.comparisonCriteriaPopIn()
+    this.setState({
+      ...this.state,
+      isCriterionNewlyCreated: false
     })
   }
 
@@ -352,6 +363,7 @@ class Comparison extends React.Component {
       <ComparisonCriteria
         matchUrl={this.matchUrl}
         criteria={this.comparison.criteria}
+        isCriterionNewlyCreated={this.isCriterionNewlyCreated}
         onSubmitNewCriterion={criterion =>
           this.handleSubmitNewCriterion(criterion)
         }
