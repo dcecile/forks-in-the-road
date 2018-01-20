@@ -2,6 +2,7 @@ import React from "react"
 import { Link, Switch } from "react-router-dom"
 import { Route } from "react-router"
 import axios from "axios"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 import RouteNotFound from "RouteNotFound"
 import Alternative from "Alternative"
 import EditComparison from "EditComparison"
@@ -29,6 +30,10 @@ class Comparison extends React.Component {
 
   get matchUrl() {
     return this.props.match.url
+  }
+
+  get location() {
+    return this.props.location
   }
 
   get isLoading() {
@@ -259,24 +264,35 @@ class Comparison extends React.Component {
     return (
       <React.Fragment>
         <div className="Comparison_section">
-          <Switch>
-            <Route
-              exact
-              path={this.matchUrl}
-              render={() => this.renderAlternatives()}
-            />
-            <Route
-              exact
-              path={`${this.matchUrl}/criteria`}
-              render={() => this.renderCriteria()}
-            />
-            <Route
-              exact
-              path={`${this.matchUrl}/alternative/:id`}
-              render={routeProps => this.renderOneAlternative(routeProps)}
-            />
-            <Route component={RouteNotFound} />
-          </Switch>
+          <TransitionGroup>
+            <CSSTransition
+              key={this.location.pathname}
+              classNames="Comparison_navigate"
+              timeout={{
+                exit: Timing.comparisonRouteChange,
+                enter: Timing.comparisonRouteChange * 2
+              }}
+            >
+              <Switch location={this.location}>
+                <Route
+                  exact
+                  path={this.matchUrl}
+                  render={() => this.renderAlternatives()}
+                />
+                <Route
+                  exact
+                  path={`${this.matchUrl}/criteria`}
+                  render={() => this.renderCriteria()}
+                />
+                <Route
+                  exact
+                  path={`${this.matchUrl}/alternative/:id`}
+                  render={routeProps => this.renderOneAlternative(routeProps)}
+                />
+                <Route component={RouteNotFound} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
         </div>
         {this.renderInfo()}
       </React.Fragment>

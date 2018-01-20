@@ -11,13 +11,33 @@
   padding: 2.2rem 2.6rem
 
 .Comparison_section
-  animation: Comparison_sectionFadeIn $Timing_comparisonSectionFadeIn ease-out
+  animation:
+    name: Comparison_fadeIn
+    duration: $Timing_comparisonSectionFadeIn
+    timing-function: ease-out
   border: 2px solid $Theme_primary
   background: $Theme_primaryBackground
   padding: 3.0rem 4.0rem
 
   &:not(:first-child)
     margin-top: 2rem
+
+.Comparison_navigate-enter
+  &:not(:only-child)
+    display: none
+
+  &:only-child
+    animation:
+      name: Comparison_fadeIn
+      duration: $Timing_comparisonRouteChange
+      timing-function: ease-in
+
+.Comparison_navigate-exit
+  animation:
+    name: Comparison_fadeIn
+    duration: $Timing_comparisonRouteChange
+    timing-function: ease-in
+    direction: reverse
 
 .Comparison_infoEditSection
   @extend .Comparison_section
@@ -37,6 +57,6 @@
   padding: 0.4rem 1.0em
   font-size: 1.2rem
 
-@keyframes Comparison_sectionFadeIn
+@keyframes Comparison_fadeIn
   0%
     opacity: 0
