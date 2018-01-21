@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import NewEstimate from "NewEstimate"
@@ -18,6 +18,14 @@ class Alternative extends React.Component {
 
   get matchUrl() {
     return this.props.match.url
+  }
+
+  get parentMatchUrl() {
+    return this.props.parentMatchUrl
+  }
+
+  get parentTitle() {
+    return this.props.parentTitle
   }
 
   get comparisonMatchUrl() {
@@ -92,24 +100,34 @@ class Alternative extends React.Component {
     return (
       <div>
         {this.renderHeader()}
+        {this.renderSubHeader()}
         {this.renderEstimates()}
-        {this.renderCriteriaLink()}
       </div>
     )
   }
 
   renderHeader() {
+    return (
+      <ComparisonHeader
+        matchUrl={this.matchUrl}
+        title={this.alternative.name}
+        parentMatchUrl={this.parentMatchUrl}
+        parentTitle={this.parentTitle}
+      />
+    )
+  }
+
+  renderSubHeader() {
     if (!this.isEditing) {
       return (
-        <h3>
-          <Link to={this.matchUrl}>{this.alternative.name}</Link>{" "}
+        <h2>
           {this.alternative.url && (
             <a href={this.alternative.url} target="_blank">
               (external link)
             </a>
           )}{" "}
           <button onClick={() => this.handleBeginEdit()}>Edit</button>
-        </h3>
+        </h2>
       )
     } else {
       return (
@@ -158,14 +176,6 @@ class Alternative extends React.Component {
           onSubmit={estimate => this.handleSubmitNewEstimate(estimate)}
         />
       </li>
-    )
-  }
-
-  renderCriteriaLink() {
-    return (
-      <h3>
-        <Link to={`${this.comparisonMatchUrl}/criteria`}>Criteria</Link>
-      </h3>
     )
   }
 }

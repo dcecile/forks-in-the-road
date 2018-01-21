@@ -378,6 +378,8 @@ class Comparison extends React.Component {
     return (
       <Alternative
         {...routeProps}
+        parentMatchUrl={this.matchUrl}
+        parentTitle="Alternatives"
         alternatives={this.comparison.alternatives}
         criteria={this.comparison.criteria}
         comparisonMatchUrl={this.matchUrl}
