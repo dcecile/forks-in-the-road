@@ -5,7 +5,8 @@ export default function ComparisonHeader({
   matchUrl,
   title,
   parentMatchUrl,
-  parentTitle
+  parentTitle,
+  children
 }) {
   return (
     <h1 className="ComparisonHeader">
@@ -17,6 +18,7 @@ export default function ComparisonHeader({
       <Link className="ComparisonHeader_part" to={matchUrl}>
         {title}
       </Link>
+      {children}
     </h1>
   )
 }

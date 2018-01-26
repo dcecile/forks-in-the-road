@@ -1,8 +1,10 @@
 import React from "react"
+import MdOpenInNew from "react-icons/lib/md/open-in-new"
 import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import NewEstimate from "NewEstimate"
+import Button from "Button"
 
 class Alternative extends React.Component {
   constructor() {
@@ -98,11 +100,19 @@ class Alternative extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.renderHeader()}
-        {this.renderSubHeader()}
+      <div className="Alternative">
+        {!this.isEditing ? this.renderHeaders() : this.renderEdit()}
         {this.renderEstimates()}
       </div>
+    )
+  }
+
+  renderHeaders() {
+    return (
+      <React.Fragment>
+        {this.renderHeader()}
+        {this.renderSubHeader()}
+      </React.Fragment>
     )
   }
 
@@ -113,31 +123,38 @@ class Alternative extends React.Component {
         title={this.alternative.name}
         parentMatchUrl={this.parentMatchUrl}
         parentTitle={this.parentTitle}
-      />
+      >
+        <Button
+          className="Alternative_editButton"
+          onClick={() => this.handleBeginEdit()}
+        >
+          Edit
+        </Button>
+      </ComparisonHeader>
     )
   }
 
   renderSubHeader() {
-    if (!this.isEditing) {
-      return (
-        <h2>
-          {this.alternative.url && (
-            <a href={this.alternative.url} target="_blank">
-              (external link)
-            </a>
-          )}{" "}
-          <button onClick={() => this.handleBeginEdit()}>Edit</button>
-        </h2>
-      )
-    } else {
-      return (
-        <EditAlternative
-          alternative={this.alternative}
-          onSubmit={alternative => this.handleSubmitEdit(alternative)}
-          onCancel={() => this.handleCancelEdit()}
-        />
-      )
-    }
+    return (
+      <h2 className="Alternative_subHeader">
+        {this.alternative.url && (
+          <a href={this.alternative.url} target="_blank">
+            (external link){" "}
+            <MdOpenInNew className="Alternative_externalLinkIcon" />
+          </a>
+        )}
+      </h2>
+    )
+  }
+
+  renderEdit() {
+    return (
+      <EditAlternative
+        alternative={this.alternative}
+        onSubmit={alternative => this.handleSubmitEdit(alternative)}
+        onCancel={() => this.handleCancelEdit()}
+      />
+    )
   }
 
   renderEstimates() {
