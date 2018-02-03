@@ -1,4 +1,7 @@
 import React from "react"
+import SubmitButton from "SubmitButton"
+import Button from "Button"
+import NumberInput from "NumberInput"
 
 class EditEstimate extends React.Component {
   constructor({ estimate }) {
@@ -59,30 +62,34 @@ class EditEstimate extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <label>
-          {this.criterion.name}:{" "}
-          <input
-            type="number"
-            required
-            min="0"
-            max="100"
-            placeholder="Estimate"
-            value={this.estimate}
-            onChange={event => this.handleChangeEstimate(event)}
-          />
-        </label>{" "}
-        <input type="submit" value="Save" />{" "}
-        <input
-          type="button"
-          value="Cancel"
-          onClick={event => this.handleCancel(event)}
+      <form
+        className="EditEstimate"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <NumberInput
+          className="EditEstimate_input"
+          required
+          min="0"
+          max="100"
+          placeholder={`Estimate: ${this.criterion.default_estimate}`}
+          value={this.estimate}
+          onChange={event => this.handleChangeEstimate(event)}
         />
-        <input
-          type="button"
-          value="Reset"
-          onClick={event => this.handleReset(event)}
-        />
+        <div className="EditEstimate_buttonGroup">
+          <SubmitButton className="EditEstimate_button">Save</SubmitButton>
+          <Button
+            className="EditEstimate_button"
+            onClick={event => this.handleCancel(event)}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="EditEstimate_resetButton"
+            onClick={event => this.handleReset(event)}
+          >
+            Reset
+          </Button>
+        </div>
       </form>
     )
   }

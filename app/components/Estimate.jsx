@@ -43,6 +43,10 @@ class Estimate extends React.Component {
     return this.state.isEditing
   }
 
+  get isEditingClassName() {
+    return this.isEditing ? "Estimate__isEditing" : ""
+  }
+
   handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -69,7 +73,7 @@ class Estimate extends React.Component {
 
   render() {
     return (
-      <div className={`Estimate ${this.className}`}>
+      <div className={`Estimate ${this.isEditingClassName} ${this.className}`}>
         <div className="Estimate_body">
           <h2 className="Estimate_name">{this.criterion.name}</h2>
           {this.isNew

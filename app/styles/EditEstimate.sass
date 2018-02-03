@@ -1,0 +1,37 @@
+.EditEstimate
+  display: flex
+  flex-direction: column
+
+.EditEstimate_input
+  align-self: stretch
+  margin:
+    right: 0.4rem
+    bottom: 0.6rem
+    left: 0.4rem
+  padding-left: 0.8em
+  width: auto
+  line-height: 1.0
+  font-weight: $Font_normalWeight
+
+.EditEstimate_buttonGroup
+  display: flex
+  flex-direction: row
+  margin-top: 0.4rem
+
+.EditEstimate_button
+  align-self: left
+  padding:
+    right: 1em
+    left: 1em
+  font:
+    size: 0.9rem
+    weight: $Font_boldWeight
+
+  &:not(:first-child)
+    margin-left: 1.0rem
+
+.EditEstimate_resetButton
+  @extend .EditEstimate_button
+
+  &:not(:first-child)
+    margin-left: auto
