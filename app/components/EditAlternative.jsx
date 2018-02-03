@@ -1,4 +1,7 @@
 import React from "react"
+import TextInput from "TextInput"
+import SubmitButton from "SubmitButton"
+import Button from "Button"
 
 class EditAlternative extends React.Component {
   constructor({ alternative }) {
@@ -59,34 +62,35 @@ class EditAlternative extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <label>
-          Name:
-          <input
-            type="text"
+      <form
+        className="EditAlternative"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <div className="EditAlternative_row">
+          <TextInput
+            className="EditAlternative_name"
             required
-            placeholder="Alternative"
+            placeholder="Alternative name"
             value={this.name}
             onChange={event => this.handleChangeName(event)}
           />
-        </label>
-        <br />
-        <label>
-          URL (optional):
-          <input
+          <TextInput
+            className="EditAlternative_url"
             type="text"
-            placeholder="URL"
+            placeholder="Alternative URL (optional)"
             value={this.url}
             onChange={event => this.handleChangeUrl(event)}
           />
-        </label>
-        <br />
-        <input type="submit" value="Save" />
-        <input
-          type="button"
-          value="Cancel"
-          onClick={event => this.handleCancel(event)}
-        />
+        </div>
+        <div className="EditAlternative_buttonRow">
+          <SubmitButton className="EditAlternative_submit">Save</SubmitButton>
+          <Button
+            className="EditAlternative_cancel"
+            onClick={event => this.handleCancel(event)}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     )
   }
