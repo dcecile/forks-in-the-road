@@ -12,6 +12,10 @@ class EditAlternative extends React.Component {
     }
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get id() {
     return this.props.alternative.id
   }
@@ -63,7 +67,7 @@ class EditAlternative extends React.Component {
   render() {
     return (
       <form
-        className="EditAlternative"
+        className={`EditAlternative ${this.className}`}
         onSubmit={event => this.handleSubmit(event)}
       >
         <div className="EditAlternative_row">

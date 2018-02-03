@@ -1,9 +1,11 @@
 import React from "react"
 import MdOpenInNew from "react-icons/lib/md/open-in-new"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Button from "Button"
+import Timing from "Timing"
 
 class Alternative extends React.Component {
   constructor() {
@@ -105,7 +107,18 @@ class Alternative extends React.Component {
   render() {
     return (
       <div className="Alternative">
-        {!this.isEditing ? this.renderHeaders() : this.renderEdit()}
+        <TransitionGroup>
+          <CSSTransition
+            key={!this.isEditing}
+            classNames="Alternative_headerTransition"
+            timeout={{
+              exit: Timing.alternativeEditStateChange,
+              enter: Timing.alternativeEditStateChange * 2
+            }}
+          >
+            {!this.isEditing ? this.renderHeaders() : this.renderEdit()}
+          </CSSTransition>
+        </TransitionGroup>
         {this.renderEstimates()}
       </div>
     )
@@ -113,10 +126,10 @@ class Alternative extends React.Component {
 
   renderHeaders() {
     return (
-      <React.Fragment>
+      <div className="Alternative_headers">
         {this.renderHeader()}
         {this.renderSubHeader()}
-      </React.Fragment>
+      </div>
     )
   }
 
@@ -154,6 +167,7 @@ class Alternative extends React.Component {
   renderEdit() {
     return (
       <EditAlternative
+        className="Alternative_edit"
         alternative={this.alternative}
         onSubmit={alternative => this.handleSubmitEdit(alternative)}
         onCancel={() => this.handleCancelEdit()}
