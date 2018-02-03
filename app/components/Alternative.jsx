@@ -37,6 +37,10 @@ class Alternative extends React.Component {
     return this.props.onSubmitEditEstimate
   }
 
+  get onSubmitResetEstimate() {
+    return this.props.onSubmitResetEstimate
+  }
+
   get onSubmitNewEstimate() {
     return this.props.onSubmitNewEstimate
   }
@@ -73,6 +77,10 @@ class Alternative extends React.Component {
 
   async handleSubmitEditEstimate(estimate) {
     await this.onSubmitEditEstimate(this.alternative, estimate)
+  }
+
+  async handleSubmitResetEstimate(estimate) {
+    await this.onSubmitResetEstimate(this.alternative, estimate)
   }
 
   handleBeginEdit() {
@@ -168,6 +176,7 @@ class Alternative extends React.Component {
         criterion={criterion}
         onSubmitNew={estimate => this.handleSubmitNewEstimate(estimate)}
         onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
+        onSubmitReset={estimate => this.handleSubmitResetEstimate(estimate)}
       />
     )
   }

@@ -31,6 +31,10 @@ class Estimate extends React.Component {
     return this.props.onSubmitEdit
   }
 
+  get onSubmitReset() {
+    return this.props.onSubmitReset
+  }
+
   get isNew() {
     return !this.estimate
   }
@@ -48,6 +52,11 @@ class Estimate extends React.Component {
 
   async handleSubmitEdit(estimate) {
     await this.onSubmitEdit(estimate)
+    this.handleCancelEdit()
+  }
+
+  async handleSubmitReset() {
+    await this.onSubmitReset(this.estimate)
     this.handleCancelEdit()
   }
 
@@ -103,6 +112,7 @@ class Estimate extends React.Component {
         criterion={this.criterion}
         onSubmit={estimate => this.handleSubmitEdit(estimate)}
         onCancel={() => this.handleCancelEdit()}
+        onReset={() => this.handleSubmitReset()}
       />
     )
   }

@@ -24,6 +24,10 @@ class EditEstimate extends React.Component {
     return this.props.onCancel
   }
 
+  get onReset() {
+    return this.props.onReset
+  }
+
   get estimate() {
     return this.state.estimate
   }
@@ -48,6 +52,11 @@ class EditEstimate extends React.Component {
     this.onCancel()
   }
 
+  handleReset(event) {
+    event.preventDefault()
+    this.onReset()
+  }
+
   render() {
     return (
       <form onSubmit={event => this.handleSubmit(event)}>
@@ -68,6 +77,11 @@ class EditEstimate extends React.Component {
           type="button"
           value="Cancel"
           onClick={event => this.handleCancel(event)}
+        />
+        <input
+          type="button"
+          value="Reset"
+          onClick={event => this.handleReset(event)}
         />
       </form>
     )

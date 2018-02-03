@@ -88,7 +88,7 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
   end
 
   expect "patch update" do
-    assert_patch_succeeds(
+    assert_update_succeeds(
       comparisons(:plan),
       :comparison_url,
       name: nil,

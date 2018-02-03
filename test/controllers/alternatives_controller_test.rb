@@ -15,7 +15,7 @@ class AlternativesControllerTest < ActionDispatch::IntegrationTest
   end
 
   expect "patch update" do
-    assert_patch_succeeds(
+    assert_update_succeeds(
       alternatives(:google),
       :alternative_url,
       name: nil,

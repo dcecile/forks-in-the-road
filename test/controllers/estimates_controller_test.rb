@@ -15,10 +15,17 @@ class EstimatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   expect "patch update" do
-    assert_patch_succeeds(
+    assert_update_succeeds(
       estimates(:google_battery),
       :estimate_url,
       estimate: 0.68
+    )
+  end
+
+  expect "delete destroy" do
+    assert_destroy_succeeds(
+      estimates(:google_battery),
+      :estimate_url
     )
   end
 end

@@ -14,6 +14,12 @@ class EstimatesController < ApplicationController
     render json: estimate
   end
 
+  def destroy
+    estimate = Estimate.find(params[:id])
+    estimate.destroy!
+    render json: {}
+  end
+
   private
 
   def estimate_create_params

@@ -15,7 +15,7 @@ class CriteriaControllerTest < ActionDispatch::IntegrationTest
   end
 
   expect "patch update" do
-    assert_patch_succeeds(
+    assert_update_succeeds(
       criteria(:ram),
       :criterion_url,
       name: nil,

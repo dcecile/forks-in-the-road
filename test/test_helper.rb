@@ -50,29 +50,27 @@ module ActiveSupport
       end
     end
 
-    def assert_patch_succeeds(record, route, **params)
+    def assert_update_succeeds(record, route, **params)
       patch_params = params.compact
       unchanged_params = params.keys - patch_params.keys
-      assert_patch_ready(record, patch_params)
-      assert_patch_executes(record, route, patch_params)
-      assert_patch_changes(record, patch_params, unchanged_params)
+      assert_update_ready(record, patch_params)
+      assert_update_executes(record, route, patch_params)
+      assert_update_changes(record, patch_params, unchanged_params)
     end
 
-    private
-
-    def assert_patch_ready(record, patch_params)
+    def assert_update_ready(record, patch_params)
       patch_params.each do |param, value|
         assert_not_equal value, record.send(param)
       end
     end
 
-    def assert_patch_executes(record, route, patch_params)
+    def assert_update_executes(record, route, patch_params)
       patch method(route).call(record), params: patch_params
       assert_response :success
       assert_response_json(patch_params.ignore_extra_keys!)
     end
 
-    def assert_patch_changes(record, patch_params, unchanged_params)
+    def assert_update_changes(record, patch_params, unchanged_params)
       new_record = record.class.find(record.id)
       patch_params.each do |param, value|
         assert_equal value, new_record.send(param)
@@ -80,6 +78,28 @@ module ActiveSupport
       unchanged_params.each do |param|
         assert_equal record.send(param), new_record.send(param)
       end
+    end
+
+    def assert_destroy_succeeds(record, route)
+      assert_destroy_ready(record)
+      assert_destroy_executes(record, route)
+      assert_destroy_changes(record)
+    end
+
+    def assert_destroy_ready(record)
+      old_record = record.class.find(record.id)
+      assert_not_nil old_record
+    end
+
+    def assert_destroy_executes(record, route)
+      delete method(route).call(record)
+      assert_response :success
+      assert_response_json({})
+    end
+
+    def assert_destroy_changes(record)
+      new_record = record.class.find_by(id: record.id)
+      assert_nil new_record
     end
   end
 end

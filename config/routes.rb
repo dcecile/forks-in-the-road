@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   resources :criteria, only: %i[update]
 
-  resources :estimates, only: %i[update]
+  resources :estimates, only: %i[update destroy]
 end

@@ -194,6 +194,28 @@ class Comparison extends React.Component {
     })
   }
 
+  async handleSubmitResetEstimate(alternative, estimate) {
+    console.log("Deleting estimate", estimate)
+    await axios.delete(`/estimates/${estimate.id}`)
+    this.setState({
+      ...this.state,
+      comparison: {
+        ...this.comparison,
+        alternatives: this.comparison.alternatives.map(
+          item =>
+            item.id === alternative.id
+              ? {
+                  ...item,
+                  estimates: item.estimates.filter(
+                    innerItem => innerItem.id !== estimate.id
+                  )
+                }
+              : item
+        )
+      }
+    })
+  }
+
   async handleBeginEdit() {
     this.setState({
       ...this.state,
@@ -391,6 +413,9 @@ class Comparison extends React.Component {
         }
         onSubmitEditEstimate={(alternative, estimate) =>
           this.handleSubmitEditEstimate(alternative, estimate)
+        }
+        onSubmitResetEstimate={(alternative, estimate) =>
+          this.handleSubmitResetEstimate(alternative, estimate)
         }
       />
     )
