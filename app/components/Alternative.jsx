@@ -3,7 +3,6 @@ import MdOpenInNew from "react-icons/lib/md/open-in-new"
 import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
-import NewEstimate from "NewEstimate"
 import Button from "Button"
 
 class Alternative extends React.Component {
@@ -58,17 +57,14 @@ class Alternative extends React.Component {
     return this.props.criteria
   }
 
-  get missingCriteria() {
-    const presentCriteria = this.alternative.estimates.map(
-      item => item.criterion_id
-    )
-    return this.criteria.filter(
-      criterion => presentCriteria.indexOf(criterion.id) < 0
-    )
-  }
-
   get isEditing() {
     return this.state.isEditing
+  }
+
+  findEstimate(criterion) {
+    return this.alternative.estimates.find(
+      estimate => estimate.criterion_id === criterion.id
+    )
   }
 
   async handleSubmitNewEstimate(estimate) {
@@ -158,39 +154,20 @@ class Alternative extends React.Component {
   }
 
   renderEstimates() {
-    return (
-      <React.Fragment>
-        {this.alternative.estimates.map(estimate =>
-          this.renderEstimate(estimate)
-        )}
-        {this.missingCriteria.map(criterion =>
-          this.renderNewEstimate(criterion)
-        )}
-      </React.Fragment>
+    return this.criteria.map(criterion =>
+      this.renderEstimate(criterion, this.findEstimate(criterion))
     )
   }
 
-  renderEstimate(estimate) {
-    const criterion = this.criteria.find(
-      item => item.id === estimate.criterion_id
-    )
+  renderEstimate(criterion, estimate) {
     return (
       <Estimate
-        key={estimate.id}
+        key={criterion.id}
         className="Alternative_item"
         estimate={estimate}
         criterion={criterion}
+        onSubmitNew={estimate => this.handleSubmitNewEstimate(estimate)}
         onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
-      />
-    )
-  }
-
-  renderNewEstimate(criterion) {
-    return (
-      <NewEstimate
-        key={criterion.id}
-        criterion={criterion}
-        onSubmit={estimate => this.handleSubmitNewEstimate(estimate)}
       />
     )
   }
