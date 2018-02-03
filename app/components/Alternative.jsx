@@ -136,14 +136,14 @@ class Alternative extends React.Component {
 
   renderSubHeader() {
     return (
-      <h2 className="Alternative_subHeader">
-        {this.alternative.url && (
+      this.alternative.url && (
+        <h2 className="Alternative_subHeader">
           <a href={this.alternative.url} target="_blank">
             (external link){" "}
             <MdOpenInNew className="Alternative_externalLinkIcon" />
           </a>
-        )}
-      </h2>
+        </h2>
+      )
     )
   }
 
@@ -159,14 +159,14 @@ class Alternative extends React.Component {
 
   renderEstimates() {
     return (
-      <ul>
+      <React.Fragment>
         {this.alternative.estimates.map(estimate =>
           this.renderEstimate(estimate)
         )}
         {this.missingCriteria.map(criterion =>
           this.renderNewEstimate(criterion)
         )}
-      </ul>
+      </React.Fragment>
     )
   }
 
@@ -175,24 +175,23 @@ class Alternative extends React.Component {
       item => item.id === estimate.criterion_id
     )
     return (
-      <li key={estimate.id}>
-        <Estimate
-          estimate={estimate}
-          criterion={criterion}
-          onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
-        />
-      </li>
+      <Estimate
+        key={estimate.id}
+        className="Alternative_item"
+        estimate={estimate}
+        criterion={criterion}
+        onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
+      />
     )
   }
 
   renderNewEstimate(criterion) {
     return (
-      <li key={criterion.id}>
-        <NewEstimate
-          criterion={criterion}
-          onSubmit={estimate => this.handleSubmitNewEstimate(estimate)}
-        />
-      </li>
+      <NewEstimate
+        key={criterion.id}
+        criterion={criterion}
+        onSubmit={estimate => this.handleSubmitNewEstimate(estimate)}
+      />
     )
   }
 }
