@@ -30,8 +30,17 @@ class Input extends React.Component {
     return this.renderProps(this.props)
   }
 
-  renderProps({ className, type, required, placeholder, value, onChange }) {
-    const props = { className, type, required, value, onChange }
+  renderProps({
+    className,
+    type,
+    required,
+    placeholder,
+    value,
+    min,
+    max,
+    onChange
+  }) {
+    const props = { className, type, required, value, min, max, onChange }
     return (
       <input
         onFocus={() => this.handleFocus()}

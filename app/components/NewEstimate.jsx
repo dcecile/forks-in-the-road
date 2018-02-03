@@ -1,4 +1,6 @@
 import React from "react"
+import SubmitButton from "SubmitButton"
+import NumberInput from "NumberInput"
 
 class NewEstimate extends React.Component {
   constructor() {
@@ -37,20 +39,20 @@ class NewEstimate extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <label>
-          {this.criterion.name}:{" "}
-          <input
-            type="number"
-            required
-            min="0"
-            max="100"
-            placeholder="Estimate"
-            value={this.estimate}
-            onChange={event => this.handleChangeEstimate(event)}
-          />
-        </label>{" "}
-        <input type="submit" value="Save" />
+      <form
+        className="NewEstimate"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <NumberInput
+          className="NewEstimate_input"
+          required
+          min="0"
+          max="100"
+          placeholder={`Estimate: ${this.criterion.default_estimate}`}
+          value={this.estimate}
+          onChange={event => this.handleChangeEstimate(event)}
+        />
+        <SubmitButton className="NewEstimate_button">Save</SubmitButton>
       </form>
     )
   }

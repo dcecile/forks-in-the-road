@@ -59,13 +59,16 @@ class Estimate extends React.Component {
   }
 
   render() {
-    if (this.isNew) {
-      return this.renderNew()
-    } else if (!this.isEditing) {
-      return this.renderShow()
-    } else {
-      return this.renderEdit()
-    }
+    return (
+      <div className={`Estimate ${this.className}`}>
+        <div className="Estimate_body">
+          <h2 className="Estimate_name">{this.criterion.name}</h2>
+          {this.isNew
+            ? this.renderNew()
+            : !this.isEditing ? this.renderShow() : this.renderEdit()}
+        </div>
+      </div>
+    )
   }
 
   renderNew() {
@@ -79,20 +82,17 @@ class Estimate extends React.Component {
 
   renderShow() {
     return (
-      <div className={`Estimate ${this.className}`}>
-        <div className="Estimate_body">
-          <h2 className="Estimate_name">{this.criterion.name}</h2>
-          <div className="Estimate_estimate">
-            Estimate: {this.estimate.estimate}
-          </div>
-          <Button
-            className="Estimate_editButton"
-            onClick={() => this.handleBeginEdit()}
-          >
-            Edit
-          </Button>
+      <React.Fragment>
+        <div className="Estimate_estimate">
+          Estimate: {this.estimate.estimate}
         </div>
-      </div>
+        <Button
+          className="Estimate_editButton"
+          onClick={() => this.handleBeginEdit()}
+        >
+          Edit
+        </Button>
+      </React.Fragment>
     )
   }
 
