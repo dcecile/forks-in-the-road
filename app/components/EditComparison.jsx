@@ -3,7 +3,7 @@ import TextInput from "TextInput"
 import SubmitButton from "SubmitButton"
 import Button from "Button"
 
-class EditComparison extends React.Component {
+export default class EditComparison extends React.Component {
   constructor({ comparison }) {
     super()
     this.state = {
@@ -115,5 +115,3 @@ class EditComparison extends React.Component {
     )
   }
 }
-
-export default EditComparison

@@ -9,7 +9,7 @@ const initialState = {
   full_value: ""
 }
 
-class NewCriterion extends React.Component {
+export default class NewCriterion extends React.Component {
   constructor() {
     super()
     this.state = initialState
@@ -81,5 +81,3 @@ class NewCriterion extends React.Component {
     )
   }
 }
-
-export default NewCriterion

@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "Button"
 
-function User({ className }) {
+export default function User({ className }) {
   return (
     <span className={`User ${className}`}>
       <span className="User_name">@gh_user</span>
@@ -9,5 +9,3 @@ function User({ className }) {
     </span>
   )
 }
-
-export default User

@@ -3,7 +3,7 @@ import Criterion from "Criterion"
 import NewCriterion from "NewCriterion"
 import ComparisonHeader from "ComparisonHeader"
 
-function ComparisonCriteria({
+export default function ComparisonCriteria({
   matchUrl,
   criteria,
   isCriterionNewlyCreated,
@@ -35,5 +35,3 @@ function ComparisonCriteria({
     </div>
   )
 }
-
-export default ComparisonCriteria

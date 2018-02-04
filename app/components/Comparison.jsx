@@ -14,7 +14,7 @@ import Sidebar from "Sidebar"
 import Button from "Button"
 import Timing from "Timing"
 
-class Comparison extends React.Component {
+export default class Comparison extends React.Component {
   constructor({ match }) {
     super()
     const { params: { id } } = match
@@ -421,5 +421,3 @@ class Comparison extends React.Component {
     )
   }
 }
-
-export default Comparison

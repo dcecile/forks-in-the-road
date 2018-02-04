@@ -1,8 +1,6 @@
 import React from "react"
 import Button from "Button"
 
-function SubmitButton(props) {
+export default function SubmitButton(props) {
   return <Button type="submit" {...props} />
 }
-
-export default SubmitButton

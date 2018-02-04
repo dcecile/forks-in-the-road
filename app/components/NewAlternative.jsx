@@ -8,7 +8,7 @@ const initialState = {
   url: ""
 }
 
-class NewAlternative extends React.Component {
+export default class NewAlternative extends React.Component {
   constructor() {
     super()
     this.state = initialState
@@ -79,5 +79,3 @@ class NewAlternative extends React.Component {
     )
   }
 }
-
-export default NewAlternative

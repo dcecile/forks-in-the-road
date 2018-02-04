@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import NewAlternative from "NewAlternative"
 import ComparisonHeader from "ComparisonHeader"
 
-function ComparisonAlternatives({
+export default function ComparisonAlternatives({
   matchUrl,
   alternatives,
   isAlternativeNewlyCreated,
@@ -35,5 +35,3 @@ function ComparisonAlternatives({
     </div>
   )
 }
-
-export default ComparisonAlternatives

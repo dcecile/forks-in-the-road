@@ -7,7 +7,7 @@ import Estimate from "Estimate"
 import Button from "Button"
 import Timing from "Timing"
 
-class Alternative extends React.Component {
+export default class Alternative extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -195,5 +195,3 @@ class Alternative extends React.Component {
     )
   }
 }
-
-export default Alternative

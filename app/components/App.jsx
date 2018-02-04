@@ -7,7 +7,7 @@ import Comparison from "Comparison"
 import RouteNotFound from "RouteNotFound"
 import { HeaderSlot } from "Header"
 
-class App extends React.Component {
+export default class App extends React.Component {
   static childContextTypes = {
     headerSlot: PropTypes.instanceOf(HTMLElement)
   }
@@ -47,5 +47,3 @@ class App extends React.Component {
     )
   }
 }
-
-export default App

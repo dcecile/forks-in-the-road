@@ -7,7 +7,7 @@ const initialState = {
   name: ""
 }
 
-class NewComparison extends React.Component {
+export default class NewComparison extends React.Component {
   constructor() {
     super()
     this.state = initialState
@@ -61,5 +61,3 @@ class NewComparison extends React.Component {
     )
   }
 }
-
-export default NewComparison

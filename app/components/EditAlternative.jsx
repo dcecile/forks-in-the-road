@@ -3,7 +3,7 @@ import TextInput from "TextInput"
 import SubmitButton from "SubmitButton"
 import Button from "Button"
 
-class EditAlternative extends React.Component {
+export default class EditAlternative extends React.Component {
   constructor({ alternative }) {
     super()
     this.state = {
@@ -99,5 +99,3 @@ class EditAlternative extends React.Component {
     )
   }
 }
-
-export default EditAlternative

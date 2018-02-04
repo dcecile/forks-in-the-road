@@ -3,7 +3,7 @@ import EditCriterion from "EditCriterion"
 import Button from "Button"
 import Timing from "Timing"
 
-class Criterion extends React.Component {
+export default class Criterion extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -121,5 +121,3 @@ class Criterion extends React.Component {
     )
   }
 }
-
-export default Criterion

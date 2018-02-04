@@ -1,6 +1,6 @@
 import React from "react"
 
-class Input extends React.Component {
+export default class Input extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -51,5 +51,3 @@ class Input extends React.Component {
     )
   }
 }
-
-export default Input

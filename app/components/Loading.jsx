@@ -1,7 +1,7 @@
 import React from "react"
 import MdCached from "react-icons/lib/md/cached"
 
-function Loading() {
+export default function Loading() {
   return (
     <div className="Loading">
       <span className="Loading_text">Loading&hellip;</span>
@@ -9,5 +9,3 @@ function Loading() {
     </div>
   )
 }
-
-export default Loading

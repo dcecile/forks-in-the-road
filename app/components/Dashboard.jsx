@@ -5,7 +5,7 @@ import NewComparison from "NewComparison"
 import Header from "Header"
 import Loading from "Loading"
 
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -75,26 +75,23 @@ class Dashboard extends React.Component {
           className="Dashboard_item"
           onSubmit={comparison => this.handleSubmitNewComparison(comparison)}
         />
-        {this.comparisonStubs.map(comparisonStub => (
-          <ComparisonStub
-            key={comparisonStub.id}
-            id={comparisonStub.id}
-            name={comparisonStub.name}
-            size={comparisonStub.alternatives_size}
-          />
-        ))}
+        {this.comparisonStubs.map(comparisonStub =>
+          this.renderComparisonStub(
+            comparisonStub.id,
+            comparisonStub.name,
+            comparisonStub.alternatives_size
+          )
+        )}
       </React.Fragment>
     )
   }
-}
 
-function ComparisonStub({ id, name, size }) {
-  return (
-    <Link className="Dashboard_item" to={`/comparison/${id}`}>
-      <h2 className="Dashboard_itemHeader">{name}</h2>
-      <h3 className="Dashboard_itemSubHeader">{size} alternatives</h3>
-    </Link>
-  )
+  renderComparisonStub(id, name, size) {
+    return (
+      <Link key={id} className="Dashboard_item" to={`/comparison/${id}`}>
+        <h2 className="Dashboard_itemHeader">{name}</h2>
+        <h3 className="Dashboard_itemSubHeader">{size} alternatives</h3>
+      </Link>
+    )
+  }
 }
-
-export default Dashboard

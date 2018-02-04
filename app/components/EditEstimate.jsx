@@ -3,7 +3,7 @@ import SubmitButton from "SubmitButton"
 import Button from "Button"
 import NumberInput from "NumberInput"
 
-class EditEstimate extends React.Component {
+export default class EditEstimate extends React.Component {
   constructor({ estimate }) {
     super()
     this.state = {
@@ -94,5 +94,3 @@ class EditEstimate extends React.Component {
     )
   }
 }
-
-export default EditEstimate

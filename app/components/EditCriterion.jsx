@@ -4,7 +4,7 @@ import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import Button from "Button"
 
-class EditCriterion extends React.Component {
+export default class EditCriterion extends React.Component {
   constructor({ criterion }) {
     super()
     this.state = {
@@ -166,5 +166,3 @@ class EditCriterion extends React.Component {
     )
   }
 }
-
-export default EditCriterion

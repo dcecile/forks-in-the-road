@@ -4,7 +4,7 @@ import NewEstimate from "NewEstimate"
 import Button from "Button"
 import Timing from "Timing"
 
-class Estimate extends React.Component {
+export default class Estimate extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -156,5 +156,3 @@ class Estimate extends React.Component {
     )
   }
 }
-
-export default Estimate
