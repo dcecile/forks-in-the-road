@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import NewAlternative from "NewAlternative"
+
 import ComparisonHeader from "ComparisonHeader"
+import NewAlternative from "NewAlternative"
 
 export default function ComparisonAlternatives({
   matchUrl,

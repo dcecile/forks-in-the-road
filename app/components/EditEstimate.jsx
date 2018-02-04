@@ -1,7 +1,8 @@
 import React from "react"
-import SubmitButton from "SubmitButton"
+
 import Button from "Button"
 import NumberInput from "NumberInput"
+import SubmitButton from "SubmitButton"
 
 export default class EditEstimate extends React.Component {
   constructor({ estimate }) {

@@ -1,9 +1,10 @@
 import React from "react"
-import { Link } from "react-router-dom"
 import axios from "axios"
-import NewComparison from "NewComparison"
+import { Link } from "react-router-dom"
+
 import Header from "Header"
 import Loading from "Loading"
+import NewComparison from "NewComparison"
 
 export default class Dashboard extends React.Component {
   constructor() {

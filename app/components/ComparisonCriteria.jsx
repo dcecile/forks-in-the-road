@@ -1,7 +1,8 @@
 import React from "react"
+
+import ComparisonHeader from "ComparisonHeader"
 import Criterion from "Criterion"
 import NewCriterion from "NewCriterion"
-import ComparisonHeader from "ComparisonHeader"
 
 export default function ComparisonCriteria({
   matchUrl,

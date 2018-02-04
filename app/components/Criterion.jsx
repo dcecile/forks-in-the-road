@@ -1,6 +1,7 @@
 import React from "react"
-import EditCriterion from "EditCriterion"
+
 import Button from "Button"
+import EditCriterion from "EditCriterion"
 import Timing from "Timing"
 
 export default class Criterion extends React.Component {

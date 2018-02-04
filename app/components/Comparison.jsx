@@ -1,17 +1,18 @@
 import React from "react"
+import axios from "axios"
 import { Link, Switch } from "react-router-dom"
 import { Route } from "react-router"
-import axios from "axios"
-import { TransitionGroup, CSSTransition } from "react-transition-group"
-import RouteNotFound from "RouteNotFound"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
+
 import Alternative from "Alternative"
-import EditComparison from "EditComparison"
+import Button from "Button"
 import ComparisonAlternatives from "ComparisonAlternatives"
 import ComparisonCriteria from "ComparisonCriteria"
+import EditComparison from "EditComparison"
 import Header from "Header"
 import Loading from "Loading"
+import RouteNotFound from "RouteNotFound"
 import Sidebar from "Sidebar"
-import Button from "Button"
 import Timing from "Timing"
 
 export default class Comparison extends React.Component {

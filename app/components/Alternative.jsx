@@ -1,10 +1,11 @@
-import React from "react"
 import MdOpenInNew from "react-icons/lib/md/open-in-new"
-import { TransitionGroup, CSSTransition } from "react-transition-group"
+import React from "react"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
+
+import Button from "Button"
 import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
-import Button from "Button"
 import Timing from "Timing"
 
 export default class Alternative extends React.Component {

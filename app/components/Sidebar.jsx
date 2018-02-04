@@ -1,7 +1,7 @@
-import React from "react"
-import { matchPath } from "react-router"
-import { Link, NavLink } from "react-router-dom"
 import MdKeyboardArrowLeft from "react-icons/lib/md/keyboard-arrow-left"
+import React from "react"
+import { Link, NavLink } from "react-router-dom"
+import { matchPath } from "react-router"
 
 export default function Sidebar({ matchUrl }) {
   const criteriaLinkIsActive = (_match, location) =>

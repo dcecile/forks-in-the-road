@@ -1,6 +1,7 @@
 import React from "react"
-import SubmitButton from "SubmitButton"
+
 import NumberInput from "NumberInput"
+import SubmitButton from "SubmitButton"
 
 export default class NewEstimate extends React.Component {
   constructor() {

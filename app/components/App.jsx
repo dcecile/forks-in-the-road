@@ -1,9 +1,10 @@
-import React from "react"
 import PropTypes from "prop-types"
+import React from "react"
 import { HashRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
-import Dashboard from "Dashboard"
+
 import Comparison from "Comparison"
+import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
 import { HeaderSlot } from "Header"
 

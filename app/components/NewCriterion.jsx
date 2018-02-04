@@ -1,8 +1,9 @@
-import React from "react"
 import MdAdd from "react-icons/lib/md/add"
-import TextInput from "TextInput"
+import React from "react"
+
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
+import TextInput from "TextInput"
 
 const initialState = {
   name: "",

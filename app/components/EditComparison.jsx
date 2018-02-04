@@ -1,7 +1,8 @@
 import React from "react"
-import TextInput from "TextInput"
-import SubmitButton from "SubmitButton"
+
 import Button from "Button"
+import SubmitButton from "SubmitButton"
+import TextInput from "TextInput"
 
 export default class EditComparison extends React.Component {
   constructor({ comparison }) {

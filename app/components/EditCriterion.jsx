@@ -1,8 +1,9 @@
 import React from "react"
-import TextInput from "TextInput"
+
+import Button from "Button"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
-import Button from "Button"
+import TextInput from "TextInput"
 
 export default class EditCriterion extends React.Component {
   constructor({ criterion }) {

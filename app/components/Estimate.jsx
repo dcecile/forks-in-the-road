@@ -1,7 +1,8 @@
 import React from "react"
+
+import Button from "Button"
 import EditEstimate from "EditEstimate"
 import NewEstimate from "NewEstimate"
-import Button from "Button"
 import Timing from "Timing"
 
 export default class Estimate extends React.Component {
