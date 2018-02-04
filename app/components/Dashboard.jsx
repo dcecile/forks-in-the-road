@@ -87,7 +87,7 @@ export default class Dashboard extends React.Component {
 
   renderComparisonStub(id, name, size) {
     return (
-      <Link key={id} className="Dashboard_item" to={`/comparison/${id}`}>
+      <Link key={id} className="Dashboard_item" to={`/app/comparison/${id}`}>
         <h2 className="Dashboard_itemHeader">{name}</h2>
         <h3 className="Dashboard_itemSubHeader">{size} alternatives</h3>
       </Link>

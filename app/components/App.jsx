@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { HashRouter, Redirect, Switch } from "react-router-dom"
+import { BrowserRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
 import Comparison from "Comparison"
@@ -32,19 +32,19 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <div className="App">
           <HeaderSlot onRef={headerSlot => (this.headerSlot = headerSlot)} />
           <div className="App_main">
             <Switch>
-              <Redirect exact from="/" to="/dashboard" />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route path="/comparison/:id" component={Comparison} />
+              <Redirect exact from="/" to="/app/dashboard" />
+              <Route exact path="/app/dashboard" component={Dashboard} />
+              <Route path="/app/comparison/:id" component={Comparison} />
               <Route component={RouteNotFound} />
             </Switch>
           </div>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     )
   }
 }

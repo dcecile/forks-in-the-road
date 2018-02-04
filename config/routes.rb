@@ -5,8 +5,9 @@ Rails.application.routes.draw do
     # Disable duplicate PUT route, because PATCH is more a more accurate verb
   end
 
-  root "client#index"
   resources :client, only: %i[index]
+  root "client#index"
+  get "app(/*route)", to: "client#index"
 
   resources :comparisons, only: %i[index create show update] do
     resources :alternatives, only: %i[create]

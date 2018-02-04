@@ -10,7 +10,10 @@ export default function Sidebar({ matchUrl }) {
     !criteriaLinkIsActive(match, location)
   return (
     <nav className="Sidebar">
-      <Link className="Sidebar_link Sidebar_link__toDashboard" to="/dashboard">
+      <Link
+        className="Sidebar_link Sidebar_link__toDashboard"
+        to="/app/dashboard"
+      >
         <MdKeyboardArrowLeft className="Sidebar_icon" /> Dashboard
       </Link>
       <NavLink
