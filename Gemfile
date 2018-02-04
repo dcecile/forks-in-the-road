@@ -20,6 +20,8 @@ gem "validate_url"
 gem "webpacker"
 # Use React-Rails to integrate React
 gem "react-rails"
+# Use official GitHub client
+gem "octokit", "~> 4.0"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production

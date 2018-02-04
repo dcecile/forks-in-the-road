@@ -56,6 +56,8 @@ GEM
     crass (1.0.3)
     erubi (1.7.0)
     execjs (2.7.0)
+    faraday (0.14.0)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     formatador (0.2.5)
     globalid (0.4.1)
@@ -91,6 +93,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    multipart-post (2.0.0)
     nenv (0.3.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
@@ -98,6 +101,8 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    octokit (4.8.0)
+      sawyer (~> 0.8.0, >= 0.5.3)
     overcommit (0.41.0)
       childprocess (~> 0.6, >= 0.6.3)
       iniparse (~> 1.4)
@@ -159,6 +164,9 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     seed-fu (2.3.7)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
@@ -202,6 +210,7 @@ DEPENDENCIES
   guard-minitest
   json_expressions
   listen (>= 3.0.5, < 3.2)
+  octokit (~> 4.0)
   overcommit
   puma (~> 3.7)
   rails (~> 5.1.4)

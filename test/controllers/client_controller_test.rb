@@ -4,7 +4,7 @@ require "test_helper"
 
 class ClientControllerTest < ActionDispatch::IntegrationTest
   expect "get index" do
-    get client_index_url, as: :html
+    get root_url, as: :html
     assert_response :success
     assert_select "script" do |script|
       assert_match(

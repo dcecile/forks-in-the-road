@@ -5,9 +5,15 @@ Rails.application.routes.draw do
     # Disable duplicate PUT route, because PATCH is more a more accurate verb
   end
 
-  resources :client, only: %i[index]
   root "client#index"
   get "app(/*route)", to: "client#index"
+
+  resources :users, only: %i[] do
+    collection do
+      get "authorize"
+    end
+  end
+  get "callback", to: "users#authorize_callback"
 
   resources :comparisons, only: %i[index create show update] do
     resources :alternatives, only: %i[create]
