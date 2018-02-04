@@ -2,12 +2,14 @@ import React from "react"
 import EditEstimate from "EditEstimate"
 import NewEstimate from "NewEstimate"
 import Button from "Button"
+import Timing from "Timing"
 
 class Estimate extends React.Component {
   constructor() {
     super()
     this.state = {
-      isEditing: false
+      isEditing: false,
+      isEditStateChanging: false
     }
   }
 
@@ -35,46 +37,79 @@ class Estimate extends React.Component {
     return this.props.onSubmitReset
   }
 
-  get isNew() {
-    return !this.estimate
-  }
-
   get isEditing() {
     return this.state.isEditing
+  }
+
+  get isEditStateChanging() {
+    return this.state.isEditStateChanging
+  }
+
+  get isNew() {
+    return !this.estimate
   }
 
   get isEditingClassName() {
     return this.isEditing ? "Estimate__isEditing" : ""
   }
 
-  handleBeginEdit() {
+  get editStateChangingClassName() {
+    return this.isEditStateChanging ? "Estimate_body__isEditChangingState" : ""
+  }
+
+  async handleBeginEdit() {
     this.setState({
       ...this.state,
-      isEditing: true
+      isEditStateChanging: true
+    })
+    await Timing.estimateEditStateChange()
+    this.setState({
+      ...this.state,
+      isEditing: true,
+      isEditStateChanging: false
+    })
+  }
+
+  async handleSubmitNew(estimate) {
+    await this.onSubmitNew(estimate)
+    this.setState({
+      ...this.state,
+      isEditStateChanging: true
+    })
+    await Timing.estimateEditStateChange()
+    this.setState({
+      ...this.state,
+      isEditStateChanging: false
     })
   }
 
   async handleSubmitEdit(estimate) {
     await this.onSubmitEdit(estimate)
-    this.handleCancelEdit()
+    await this.handleCancelEdit()
   }
 
   async handleSubmitReset() {
     await this.onSubmitReset(this.estimate)
-    this.handleCancelEdit()
+    await this.handleCancelEdit()
   }
 
-  handleCancelEdit() {
+  async handleCancelEdit() {
     this.setState({
       ...this.state,
-      isEditing: false
+      isEditStateChanging: true
+    })
+    await Timing.estimateEditStateChange()
+    this.setState({
+      ...this.state,
+      isEditing: false,
+      isEditStateChanging: false
     })
   }
 
   render() {
     return (
       <div className={`Estimate ${this.isEditingClassName} ${this.className}`}>
-        <div className="Estimate_body">
+        <div className={`Estimate_body ${this.editStateChangingClassName}`}>
           <h2 className="Estimate_name">{this.criterion.name}</h2>
           {this.isNew
             ? this.renderNew()
@@ -88,7 +123,7 @@ class Estimate extends React.Component {
     return (
       <NewEstimate
         criterion={this.criterion}
-        onSubmit={estimate => this.onSubmitNew(estimate)}
+        onSubmit={estimate => this.handleSubmitNew(estimate)}
       />
     )
   }

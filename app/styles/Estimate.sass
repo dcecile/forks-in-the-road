@@ -7,6 +7,15 @@
 
 .Estimate_body
   @extend .card-body
+  transition:
+    property: transform, opacity
+    duration: $Timing_estimateEditStateChange
+    timing-function: ease-in
+
+.Estimate_body__isEditChangingState
+  transform: scale(0.8)
+  opacity: 0.5
+  transition-timing-function: ease-out
 
 .Estimate_name
   @extend .card-title

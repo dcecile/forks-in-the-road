@@ -12,5 +12,6 @@ export default {
   comparisonCriteriaPopIn: timing(800),
   comparisonEditStateChange: timing(200),
   comparisonRouteChange: 100,
-  criterionEditStateChange: timing(150)
+  criterionEditStateChange: timing(150),
+  estimateEditStateChange: timing(100)
 }
