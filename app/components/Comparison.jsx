@@ -67,6 +67,26 @@ export default class Comparison extends React.Component {
     return this.state.comparison
   }
 
+  setComparisonState(comparisonChanges) {
+    this.setState({
+      comparison: {
+        ...this.comparison,
+        ...comparisonChanges
+      }
+    })
+  }
+
+  setAlternativeState(alternative, alternativeChanges) {
+    this.setComparisonState({
+      alternatives: this.comparison.alternatives.map(
+        item =>
+          item === alternative
+            ? { ...alternative, ...alternativeChanges }
+            : item
+      )
+    })
+  }
+
   async load(id) {
     console.log("Getting comparison")
     const response = await axios.get(`/comparisons/${id}`)
@@ -82,11 +102,10 @@ export default class Comparison extends React.Component {
       `/comparisons/${this.comparison.id}/alternatives`,
       alternative
     )
+    this.setComparisonState({
+      alternatives: [response.data].concat(this.comparison.alternatives)
+    })
     this.setState({
-      comparison: {
-        ...this.comparison,
-        alternatives: [response.data].concat(this.comparison.alternatives)
-      },
       isAlternativeNewlyCreated: true
     })
     await Timing.comparisonAlternativesHighlightLink()
@@ -101,15 +120,7 @@ export default class Comparison extends React.Component {
       `/alternatives/${alternative.id}`,
       alternative
     )
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        alternatives: this.comparison.alternatives.map(
-          item =>
-            item.id === alternative.id ? { ...item, ...response.data } : item
-        )
-      }
-    })
+    this.setAlternativeState(alternative, response.data)
   }
 
   async handleSubmitNewCriterion(criterion) {
@@ -118,11 +129,10 @@ export default class Comparison extends React.Component {
       `/comparisons/${this.comparison.id}/criteria`,
       criterion
     )
+    this.setComparisonState({
+      criteria: this.comparison.criteria.concat(response.data)
+    })
     this.setState({
-      comparison: {
-        ...this.comparison,
-        criteria: this.comparison.criteria.concat(response.data)
-      },
       isCriterionNewlyCreated: true
     })
     await Timing.comparisonCriteriaPopIn()
@@ -134,13 +144,10 @@ export default class Comparison extends React.Component {
   async handleSubmitEditCriterion(criterion) {
     console.log("Patching criterion", criterion)
     const response = await axios.patch(`/criteria/${criterion.id}`, criterion)
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        criteria: this.comparison.criteria.map(
-          item => (item.id === criterion.id ? response.data : item)
-        )
-      }
+    this.setComparisonState({
+      criteria: this.comparison.criteria.map(
+        item => (item === criterion ? { ...criterion, ...response.data } : item)
+      )
     })
   }
 
@@ -150,59 +157,26 @@ export default class Comparison extends React.Component {
       `/alternatives/${alternative.id}/estimates`,
       estimate
     )
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        alternatives: this.comparison.alternatives.map(
-          item =>
-            item.id === alternative.id
-              ? { ...item, estimates: item.estimates.concat(response.data) }
-              : item
-        )
-      }
+    this.setAlternativeState(alternative, {
+      estimates: alternative.estimates.concat(response.data)
     })
   }
 
   async handleSubmitEditEstimate(alternative, estimate) {
     console.log("Patching estimate", estimate)
     const response = await axios.patch(`/estimates/${estimate.id}`, estimate)
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        alternatives: this.comparison.alternatives.map(
-          item =>
-            item.id === alternative.id
-              ? {
-                  ...item,
-                  estimates: item.estimates.map(
-                    innerItem =>
-                      innerItem.id === estimate.id ? response.data : innerItem
-                  )
-                }
-              : item
-        )
-      }
+    this.setAlternativeState(alternative, {
+      estimates: alternative.estimates.map(
+        item => (item === estimate ? { ...estimate, ...response.data } : item)
+      )
     })
   }
 
   async handleSubmitResetEstimate(alternative, estimate) {
     console.log("Deleting estimate", estimate)
     await axios.delete(`/estimates/${estimate.id}`)
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        alternatives: this.comparison.alternatives.map(
-          item =>
-            item.id === alternative.id
-              ? {
-                  ...item,
-                  estimates: item.estimates.filter(
-                    innerItem => innerItem.id !== estimate.id
-                  )
-                }
-              : item
-        )
-      }
+    this.setAlternativeState(alternative, {
+      estimates: alternative.estimates.filter(item => item !== estimate)
     })
   }
 
@@ -223,12 +197,7 @@ export default class Comparison extends React.Component {
       `/comparisons/${this.comparison.id}`,
       comparison
     )
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        ...response.data
-      }
-    })
+    this.setComparisonState(response.data)
     await this.handleCancelEdit()
   }
 
