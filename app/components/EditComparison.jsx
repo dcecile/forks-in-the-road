@@ -35,21 +35,18 @@ export default class EditComparison extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }
 
   handleChangeAlternativeNoun(event) {
     this.setState({
-      ...this.state,
       alternative_noun: event.target.value
     })
   }
 
   handleChangeValueUnit(event) {
     this.setState({
-      ...this.state,
       value_unit: event.target.value
     })
   }

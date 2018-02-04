@@ -65,28 +65,24 @@ export default class EditCriterion extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }
 
   handleChangeDescription(event) {
     this.setState({
-      ...this.state,
       description: event.target.value
     })
   }
 
   handleChangeFullValue(event) {
     this.setState({
-      ...this.state,
       full_value: event.target.value
     })
   }
 
   handleChangeDefaultEstimate(event) {
     this.setState({
-      ...this.state,
       default_estimate: event.target.value
     })
   }

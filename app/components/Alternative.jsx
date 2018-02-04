@@ -87,7 +87,6 @@ export default class Alternative extends React.Component {
 
   handleBeginEdit() {
     this.setState({
-      ...this.state,
       isEditing: true
     })
   }
@@ -99,7 +98,6 @@ export default class Alternative extends React.Component {
 
   handleCancelEdit() {
     this.setState({
-      ...this.state,
       isEditing: false
     })
   }

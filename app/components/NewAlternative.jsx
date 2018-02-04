@@ -32,14 +32,12 @@ export default class NewAlternative extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }
 
   handleChangeURL(event) {
     this.setState({
-      ...this.state,
       url: event.target.value
     })
   }

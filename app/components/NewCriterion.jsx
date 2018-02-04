@@ -33,14 +33,12 @@ export default class NewCriterion extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }
 
   handleChangeFullValue(event) {
     this.setState({
-      ...this.state,
       full_value: event.target.value
     })
   }

@@ -35,7 +35,6 @@ export default class Dashboard extends React.Component {
     console.log("Getting comparisons")
     const response = await axios.get("/comparisons")
     this.setState({
-      ...this.state,
       isLoading: false,
       comparisonStubs: response.data
     })
@@ -45,7 +44,6 @@ export default class Dashboard extends React.Component {
     console.log("Posting new comparison", comparison)
     const response = await axios.post("/comparisons", comparison)
     this.setState({
-      ...this.state,
       comparisonStubs: this.comparisonStubs.concat(response.data)
     })
     this.history.push(`/comparison/${response.data.id}`)

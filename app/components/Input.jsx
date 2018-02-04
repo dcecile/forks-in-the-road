@@ -14,14 +14,12 @@ export default class Input extends React.Component {
 
   handleFocus() {
     this.setState({
-      ...this.state,
       hasFocus: true
     })
   }
 
   handleBlur() {
     this.setState({
-      ...this.state,
       hasFocus: false
     })
   }

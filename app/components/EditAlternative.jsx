@@ -38,14 +38,12 @@ export default class EditAlternative extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }
 
   handleChangeUrl(event) {
     this.setState({
-      ...this.state,
       url: event.target.value
     })
   }

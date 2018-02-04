@@ -24,7 +24,6 @@ export default class NewEstimate extends React.Component {
 
   handleChangeEstimate(event) {
     this.setState({
-      ...this.state,
       estimate: event.target.value
     })
   }

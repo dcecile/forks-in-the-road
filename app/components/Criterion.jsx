@@ -40,12 +40,10 @@ export default class Criterion extends React.Component {
 
   async handleBeginEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.criterionEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: true,
       isEditStateChanging: false
     })
@@ -58,12 +56,10 @@ export default class Criterion extends React.Component {
 
   async handleCancelEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.criterionEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: false,
       isEditStateChanging: false
     })

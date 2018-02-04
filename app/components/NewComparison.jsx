@@ -27,7 +27,6 @@ export default class NewComparison extends React.Component {
 
   handleChangeName(event) {
     this.setState({
-      ...this.state,
       name: event.target.value
     })
   }

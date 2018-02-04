@@ -59,12 +59,10 @@ export default class Estimate extends React.Component {
 
   async handleBeginEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.estimateEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: true,
       isEditStateChanging: false
     })
@@ -73,12 +71,10 @@ export default class Estimate extends React.Component {
   async handleSubmitNew(estimate) {
     await this.onSubmitNew(estimate)
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.estimateEditStateChange()
     this.setState({
-      ...this.state,
       isEditStateChanging: false
     })
   }
@@ -95,12 +91,10 @@ export default class Estimate extends React.Component {
 
   async handleCancelEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.estimateEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: false,
       isEditStateChanging: false
     })

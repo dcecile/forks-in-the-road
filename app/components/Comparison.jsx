@@ -71,7 +71,6 @@ export default class Comparison extends React.Component {
     console.log("Getting comparison")
     const response = await axios.get(`/comparisons/${id}`)
     this.setState({
-      ...this.state,
       isLoading: false,
       comparison: response.data
     })
@@ -84,7 +83,6 @@ export default class Comparison extends React.Component {
       alternative
     )
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         alternatives: [response.data].concat(this.comparison.alternatives)
@@ -93,7 +91,6 @@ export default class Comparison extends React.Component {
     })
     await Timing.comparisonAlternativesHighlightLink()
     this.setState({
-      ...this.state,
       isAlternativeNewlyCreated: false
     })
   }
@@ -105,7 +102,6 @@ export default class Comparison extends React.Component {
       alternative
     )
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         alternatives: this.comparison.alternatives.map(
@@ -123,7 +119,6 @@ export default class Comparison extends React.Component {
       criterion
     )
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         criteria: this.comparison.criteria.concat(response.data)
@@ -132,7 +127,6 @@ export default class Comparison extends React.Component {
     })
     await Timing.comparisonCriteriaPopIn()
     this.setState({
-      ...this.state,
       isCriterionNewlyCreated: false
     })
   }
@@ -141,7 +135,6 @@ export default class Comparison extends React.Component {
     console.log("Patching criterion", criterion)
     const response = await axios.patch(`/criteria/${criterion.id}`, criterion)
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         criteria: this.comparison.criteria.map(
@@ -158,7 +151,6 @@ export default class Comparison extends React.Component {
       estimate
     )
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         alternatives: this.comparison.alternatives.map(
@@ -175,7 +167,6 @@ export default class Comparison extends React.Component {
     console.log("Patching estimate", estimate)
     const response = await axios.patch(`/estimates/${estimate.id}`, estimate)
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         alternatives: this.comparison.alternatives.map(
@@ -198,7 +189,6 @@ export default class Comparison extends React.Component {
     console.log("Deleting estimate", estimate)
     await axios.delete(`/estimates/${estimate.id}`)
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         alternatives: this.comparison.alternatives.map(
@@ -218,12 +208,10 @@ export default class Comparison extends React.Component {
 
   async handleBeginEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.comparisonEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: true,
       isEditStateChanging: false
     })
@@ -236,7 +224,6 @@ export default class Comparison extends React.Component {
       comparison
     )
     this.setState({
-      ...this.state,
       comparison: {
         ...this.comparison,
         ...response.data
@@ -247,12 +234,10 @@ export default class Comparison extends React.Component {
 
   async handleCancelEdit() {
     this.setState({
-      ...this.state,
       isEditStateChanging: true
     })
     await Timing.comparisonEditStateChange()
     this.setState({
-      ...this.state,
       isEditing: false,
       isEditStateChanging: false
     })
