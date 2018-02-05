@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   resources :users, only: %i[] do
     collection do
       get "authorize"
+      post "authorize_callback"
     end
   end
-  get "callback", to: "users#authorize_callback"
 
   resources :comparisons, only: %i[index create show update] do
     resources :alternatives, only: %i[create]

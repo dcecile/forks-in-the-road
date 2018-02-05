@@ -3,6 +3,7 @@ import React from "react"
 import { BrowserRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
+import Callback from "Callback"
 import Comparison from "Comparison"
 import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
@@ -38,6 +39,7 @@ export default class App extends React.Component {
           <div className="App_main">
             <Switch>
               <Redirect exact from="/" to="/app/dashboard" />
+              <Route exact path="/app/callback" component={Callback} />
               <Route exact path="/app/dashboard" component={Dashboard} />
               <Route path="/app/comparison/:id" component={Comparison} />
               <Route component={RouteNotFound} />
