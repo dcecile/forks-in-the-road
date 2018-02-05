@@ -2,6 +2,8 @@
 
 # EstimatesController provides write access to the Estimate resource
 class EstimatesController < ApplicationController
+  before_action :authenticate_user
+
   def create
     alternative = Alternative.find(params[:alternative_id])
     estimate = alternative.estimates.create!(estimate_create_params)

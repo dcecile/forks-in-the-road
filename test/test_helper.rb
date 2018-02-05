@@ -12,6 +12,14 @@ module ActiveSupport
       test("expect #{test_description}", &test_block)
     end
 
+    def jwt_header
+      token_payload = { sub: users(:gh_lucky).id }
+      token = Knock::AuthToken.new(payload: token_payload).token
+      {
+        'Authorization': "Bearer #{token}"
+      }
+    end
+
     def assert_validation_fails(record)
       assert_raises(ActiveRecord::RecordInvalid) do
         record.validate!
@@ -37,7 +45,11 @@ module ActiveSupport
     end
 
     def assert_create_executes(route, parent, params)
-      post method(route).call(parent), params: params
+      post(
+        method(route).call(parent),
+        params: params,
+        headers: jwt_header
+      )
       assert_response :success
       assert_response_json(params.ignore_extra_keys!)
     end
@@ -65,7 +77,11 @@ module ActiveSupport
     end
 
     def assert_update_executes(record, route, patch_params)
-      patch method(route).call(record), params: patch_params
+      patch(
+        method(route).call(record),
+        params: patch_params,
+        headers: jwt_header
+      )
       assert_response :success
       assert_response_json(patch_params.ignore_extra_keys!)
     end
@@ -92,7 +108,10 @@ module ActiveSupport
     end
 
     def assert_destroy_executes(record, route)
-      delete method(route).call(record)
+      delete(
+        method(route).call(record),
+        headers: jwt_header
+      )
       assert_response :success
       assert_response_json({})
     end

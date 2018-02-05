@@ -2,6 +2,8 @@
 
 # CriteriaController provides write access to the Criterion resource
 class CriteriaController < ApplicationController
+  before_action :authenticate_user
+
   def create
     comparison = Comparison.find(params[:comparison_id])
     criterion = comparison.criteria.create!(criterion_params)

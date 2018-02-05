@@ -4,7 +4,7 @@ require "test_helper"
 
 class ComparisonsControllerTest < ActionDispatch::IntegrationTest
   expect "get index" do
-    get comparisons_url
+    get comparisons_url, headers: jwt_header
     assert_response :success
     assert_response_json(
       comparisons(:phone, :plan).map do |comparison|
@@ -27,7 +27,7 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
 
   expect "get show" do
     comparison = comparisons(:phone)
-    get comparison_url(comparison.id)
+    get comparison_url(comparison.id), headers: jwt_header
     assert_response :success
     assert_response_json(
       id: comparison.id,

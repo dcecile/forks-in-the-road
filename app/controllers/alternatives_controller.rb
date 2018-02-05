@@ -2,6 +2,8 @@
 
 # AlternativesController provides write access to the Alternative resource
 class AlternativesController < ApplicationController
+  before_action :authenticate_user
+
   def create
     comparison = Comparison.find(params[:comparison_id])
     alternative = comparison.alternatives.create!(alternative_params)
