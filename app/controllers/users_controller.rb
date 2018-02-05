@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "base64"
+
 # UsersController handles GitHub authorization
 class UsersController < ApplicationController
   def initialize
@@ -14,17 +16,24 @@ class UsersController < ApplicationController
   end
 
   def authorize_callback
-    token = application_github_client.exchange_code_for_token(params[:code])
-    user_github_client = create_user_github_client(token)
+    github_token = retrieve_github_token(params[:code])
+    user_github_client = create_user_github_client(github_token)
     user = find_or_create_user(user_github_client.user)
-    render(json: user)
+    app_token = create_app_token(user)
+    render(json: build_authorize_response(app_token, user))
   end
 
-  def create_user_github_client(token)
+  private
+
+  def retrieve_github_token(code)
+    application_github_client.exchange_code_for_token(code)
+  end
+
+  def create_user_github_client(github_token)
     Octokit::Client.new(
       client_id: application_github_client.client_id,
       client_secret: application_github_client.client_secret,
-      access_token: token.access_token
+      access_token: github_token.access_token
     )
   end
 
@@ -57,7 +66,17 @@ class UsersController < ApplicationController
     User.create!(github_id: github_id, **info)
   end
 
-  private
+  def create_app_token(user)
+    Knock::AuthToken.new(payload: { sub: user.id }).token
+  end
+
+  def build_authorize_response(app_token, user)
+    {
+      jwt: app_token,
+      github_login: user.github_login,
+      github_avatar_url: user.github_avatar_url
+    }
+  end
 
   attr_reader :application_github_client
 end
