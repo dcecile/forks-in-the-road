@@ -36,6 +36,7 @@ class ComparisonsControllerTest < ActionDispatch::IntegrationTest
       value_unit: comparison.value_unit,
       created_at: String,
       updated_at: String,
+      user_id: users(:gh_lucky).id,
       alternatives:
         alternatives(:google, :apple).map(&method(:show_alternative)),
       criteria:

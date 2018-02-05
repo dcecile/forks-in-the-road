@@ -3,7 +3,8 @@
 # ComparisonsController provides access to the Comparison resource
 class ComparisonsController < ApplicationController
   def index
-    comparisons = Comparison.all
+    user = User.find_by(github_login: "gh_lucky")
+    comparisons = user.comparisons
     render(
       json: comparisons,
       methods: :alternatives_size
@@ -11,7 +12,8 @@ class ComparisonsController < ApplicationController
   end
 
   def create
-    comparison = Comparison.create!(comparison_params)
+    user = User.find_by(github_login: "gh_lucky")
+    comparison = Comparison.create!(comparison_params.merge(user: user))
     render json: comparison
   end
 

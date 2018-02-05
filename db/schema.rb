@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171210021139) do
+ActiveRecord::Schema.define(version: 20180205003509) do
 
   create_table "alternatives", force: :cascade do |t|
     t.string "name", null: false
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20171210021139) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "value_unit"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_comparisons_on_user_id"
   end
 
   create_table "criteria", force: :cascade do |t|
@@ -49,6 +51,14 @@ ActiveRecord::Schema.define(version: 20171210021139) do
     t.index ["alternative_id", "criterion_id"], name: "index_estimates_on_alternative_id_and_criterion_id", unique: true
     t.index ["alternative_id"], name: "index_estimates_on_alternative_id"
     t.index ["criterion_id"], name: "index_estimates_on_criterion_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "github_login", null: false
+    t.integer "github_id", null: false
+    t.string "github_avatar_url", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

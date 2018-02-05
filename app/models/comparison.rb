@@ -9,4 +9,6 @@ class Comparison < ApplicationRecord
   has_many :criteria, dependent: :destroy
 
   delegate :size, to: :alternatives, prefix: true
+
+  belongs_to :user
 end

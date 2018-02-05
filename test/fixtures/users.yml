@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+gh_lucky:
+  github_login: gh_lucky
+  github_id: 300
+  github_avatar_url: http://example.org/ab8.png
+
+gh_happy:
+  github_login: gh_happy
+  github_id: 301
+  github_avatar_url: http://example.org/ib0.png
