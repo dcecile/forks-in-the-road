@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios"
 import queryString from "query-string"
 
 export default class Callback extends React.Component {
@@ -8,7 +7,14 @@ export default class Callback extends React.Component {
     this.state = {
       user: "?"
     }
-    this.authorize()
+  }
+
+  get server() {
+    return this.props.server
+  }
+
+  get onUserAuthorized() {
+    return this.props.onUserAuthorized
   }
 
   get history() {
@@ -19,16 +25,23 @@ export default class Callback extends React.Component {
     return this.state.user
   }
 
+  componentDidMount() {
+    this.authorize()
+  }
+
   async authorize() {
     const parameters = queryString.parse(window.location.search)
     const code = parameters["code"]
     if (code) {
       console.log("Authorizing", code)
-      const response = await axios.post("/users/authorize_callback", { code })
+      const response = await this.server.post("/users/authorize_callback", {
+        code
+      })
       this.setState({
         user: response.data
       })
       console.log("Authorized", this.user)
+      this.onUserAuthorized(this.user)
       this.history.replace("/app/callback")
     }
   }

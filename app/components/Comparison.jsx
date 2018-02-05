@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios"
 import { Link, Switch } from "react-router-dom"
 import { Route } from "react-router"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
@@ -16,9 +15,8 @@ import Sidebar from "Sidebar"
 import Timing from "Timing"
 
 export default class Comparison extends React.Component {
-  constructor({ match }) {
+  constructor() {
     super()
-    const { params: { id } } = match
     this.state = {
       isLoading: true,
       isEditing: false,
@@ -27,11 +25,14 @@ export default class Comparison extends React.Component {
       isCriterionNewlyCreated: false,
       comparison: null
     }
-    this.load(id)
   }
 
-  get matchUrl() {
-    return this.props.match.url
+  get server() {
+    return this.props.server
+  }
+
+  get match() {
+    return this.props.match
   }
 
   get location() {
@@ -50,12 +51,6 @@ export default class Comparison extends React.Component {
     return this.state.isEditStateChanging
   }
 
-  get editStateChangingClassName() {
-    return this.isEditStateChanging
-      ? "Comparison_infoEditContent__isChangingState"
-      : ""
-  }
-
   get isAlternativeNewlyCreated() {
     return this.state.isAlternativeNewlyCreated
   }
@@ -66,6 +61,16 @@ export default class Comparison extends React.Component {
 
   get comparison() {
     return this.state.comparison
+  }
+
+  get matchUrl() {
+    return this.match.url
+  }
+
+  get editStateChangingClassName() {
+    return this.isEditStateChanging
+      ? "Comparison_infoEditContent__isChangingState"
+      : ""
   }
 
   setComparisonState(comparisonChanges) {
@@ -88,9 +93,14 @@ export default class Comparison extends React.Component {
     })
   }
 
+  componentDidMount() {
+    const { params: { id } } = this.match
+    this.load(id)
+  }
+
   async load(id) {
     console.log("Getting comparison")
-    const response = await axios.get(`/comparisons/${id}`)
+    const response = await this.server.get(`/comparisons/${id}`)
     this.setState({
       isLoading: false,
       comparison: response.data
@@ -99,7 +109,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitNewAlternative(alternative) {
     console.log("Posting new alternative", alternative)
-    const response = await axios.post(
+    const response = await this.server.post(
       `/comparisons/${this.comparison.id}/alternatives`,
       alternative
     )
@@ -117,7 +127,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitEditAlternative(alternative) {
     console.log("Patching alternative", alternative)
-    const response = await axios.patch(
+    const response = await this.server.patch(
       `/alternatives/${alternative.id}`,
       alternative
     )
@@ -126,7 +136,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitNewCriterion(criterion) {
     console.log("Posting new criterion", criterion)
-    const response = await axios.post(
+    const response = await this.server.post(
       `/comparisons/${this.comparison.id}/criteria`,
       criterion
     )
@@ -144,7 +154,10 @@ export default class Comparison extends React.Component {
 
   async handleSubmitEditCriterion(criterion) {
     console.log("Patching criterion", criterion)
-    const response = await axios.patch(`/criteria/${criterion.id}`, criterion)
+    const response = await this.server.patch(
+      `/criteria/${criterion.id}`,
+      criterion
+    )
     this.setComparisonState({
       criteria: this.comparison.criteria.map(
         item => (item === criterion ? { ...criterion, ...response.data } : item)
@@ -154,7 +167,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitNewEstimate(alternative, estimate) {
     console.log("Posting new estimate", estimate)
-    const response = await axios.post(
+    const response = await this.server.post(
       `/alternatives/${alternative.id}/estimates`,
       estimate
     )
@@ -165,7 +178,10 @@ export default class Comparison extends React.Component {
 
   async handleSubmitEditEstimate(alternative, estimate) {
     console.log("Patching estimate", estimate)
-    const response = await axios.patch(`/estimates/${estimate.id}`, estimate)
+    const response = await this.server.patch(
+      `/estimates/${estimate.id}`,
+      estimate
+    )
     this.setAlternativeState(alternative, {
       estimates: alternative.estimates.map(
         item => (item === estimate ? { ...estimate, ...response.data } : item)
@@ -175,7 +191,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitResetEstimate(alternative, estimate) {
     console.log("Deleting estimate", estimate)
-    await axios.delete(`/estimates/${estimate.id}`)
+    await this.server.delete(`/estimates/${estimate.id}`)
     this.setAlternativeState(alternative, {
       estimates: alternative.estimates.filter(item => item !== estimate)
     })
@@ -194,7 +210,7 @@ export default class Comparison extends React.Component {
 
   async handleSubmitEdit(comparison) {
     console.log("Patching comparison", comparison)
-    const response = await axios.patch(
+    const response = await this.server.patch(
       `/comparisons/${this.comparison.id}`,
       comparison
     )

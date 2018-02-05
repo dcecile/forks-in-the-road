@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios"
 import { Link } from "react-router-dom"
 
 import Header from "Header"
@@ -13,7 +12,10 @@ export default class Dashboard extends React.Component {
       isLoading: true,
       comparisonStubs: []
     }
-    this.load()
+  }
+
+  get server() {
+    return this.props.server
   }
 
   get matchUrl() {
@@ -32,9 +34,13 @@ export default class Dashboard extends React.Component {
     return this.state.comparisonStubs
   }
 
+  componentDidMount() {
+    this.load()
+  }
+
   async load() {
     console.log("Getting comparisons")
-    const response = await axios.get("/comparisons")
+    const response = await this.server.get("/comparisons")
     this.setState({
       isLoading: false,
       comparisonStubs: response.data
@@ -43,7 +49,7 @@ export default class Dashboard extends React.Component {
 
   async handleSubmitNewComparison(comparison) {
     console.log("Posting new comparison", comparison)
-    const response = await axios.post("/comparisons", comparison)
+    const response = await this.server.post("/comparisons", comparison)
     this.setState({
       comparisonStubs: this.comparisonStubs.concat(response.data)
     })
