@@ -75,26 +75,24 @@ export default class App extends React.Component {
             onUserSignIn={() => this.handleUserSignIn()}
             onUserSignOut={() => this.handleUserSignOut()}
           />
-          <div className="App_main">
-            <Switch>
-              <Redirect exact from="/" to="/app/dashboard" />
-              <Route
-                exact
-                path="/app/callback"
-                render={routeProps => this.renderCallback(routeProps)}
-              />
-              <Route
-                exact
-                path="/app/dashboard"
-                render={routeProps => this.renderDashboard(routeProps)}
-              />
-              <Route
-                path="/app/comparison/:id"
-                render={routeProps => this.renderComparison(routeProps)}
-              />
-              <Route component={RouteNotFound} />
-            </Switch>
-          </div>
+          <Switch>
+            <Redirect exact from="/" to="/app/dashboard" />
+            <Route
+              exact
+              path="/app/callback"
+              render={routeProps => this.renderCallback(routeProps)}
+            />
+            <Route
+              exact
+              path="/app/dashboard"
+              render={routeProps => this.renderDashboard(routeProps)}
+            />
+            <Route
+              path="/app/comparison/:id"
+              render={routeProps => this.renderComparison(routeProps)}
+            />
+            <Route component={RouteNotFound} />
+          </Switch>
         </div>
       </BrowserRouter>
     )
@@ -103,6 +101,7 @@ export default class App extends React.Component {
   renderCallback(routeProps) {
     return (
       <Callback
+        className="App_main"
         user={this.user}
         onUserSignIn={() => this.handleUserSignIn()}
         onUserAuthorized={user => this.handleUserAuthorized(user)}
@@ -113,10 +112,14 @@ export default class App extends React.Component {
   }
 
   renderDashboard(routeProps) {
-    return <Dashboard server={this.server} {...routeProps} />
+    return (
+      <Dashboard className="App_main" server={this.server} {...routeProps} />
+    )
   }
 
   renderComparison(routeProps) {
-    return <Comparison server={this.server} {...routeProps} />
+    return (
+      <Comparison className="App_main" server={this.server} {...routeProps} />
+    )
   }
 }

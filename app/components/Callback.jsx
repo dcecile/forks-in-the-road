@@ -8,6 +8,10 @@ export default class Callback extends React.Component {
     super()
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get user() {
     return this.props.user
   }
@@ -49,7 +53,7 @@ export default class Callback extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={this.className}>
         <div>Authorized: {JSON.stringify(this.user)}</div>
         <div>
           <Button onClick={this.onUserSignIn}>Sign in</Button>

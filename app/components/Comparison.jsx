@@ -27,6 +27,10 @@ export default class Comparison extends React.Component {
     }
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get server() {
     return this.props.server
   }
@@ -231,7 +235,7 @@ export default class Comparison extends React.Component {
 
   render() {
     return (
-      <div className="Comparison">
+      <div className={`Comparison ${this.className}`}>
         {this.renderHeader()}
         {this.renderSidebar()}
         <main className="Comparison_main">

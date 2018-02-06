@@ -14,6 +14,10 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  get className() {
+    return this.props.className
+  }
+
   get server() {
     return this.props.server
   }
@@ -58,7 +62,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <main className="Dashboard">
+      <main className={`Dashboard ${this.className}`}>
         <Header className="Header__dashboardMode">
           <h1 className="Header_titleContent">
             <Link to={this.matchUrl}>Dashboard</Link>
