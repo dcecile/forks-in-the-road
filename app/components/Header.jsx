@@ -35,12 +35,17 @@ export default class Header extends React.Component {
   }
 }
 
-export function HeaderSlot({ onRef }) {
+export function HeaderSlot({ user, onRef, onUserSignIn, onUserSignOut }) {
   return (
     <header>
       <Logo className="Header_logo" />
       <span ref={onRef} className="Header_title" />
-      <User className="Header_user" />
+      <User
+        className="Header_user"
+        user={user}
+        onSignIn={onUserSignIn}
+        onSignOut={onUserSignOut}
+      />
     </header>
   )
 }

@@ -1,28 +1,31 @@
 import React from "react"
 import queryString from "query-string"
 
+import Button from "Button"
+
 export default class Callback extends React.Component {
   constructor() {
     super()
-    this.state = {
-      user: "?"
-    }
   }
 
-  get server() {
-    return this.props.server
+  get user() {
+    return this.props.user
+  }
+
+  get onUserSignIn() {
+    return this.props.onUserSignIn
   }
 
   get onUserAuthorized() {
     return this.props.onUserAuthorized
   }
 
-  get history() {
-    return this.props.history
+  get server() {
+    return this.props.server
   }
 
-  get user() {
-    return this.state.user
+  get history() {
+    return this.props.history
   }
 
   componentDidMount() {
@@ -37,11 +40,9 @@ export default class Callback extends React.Component {
       const response = await this.server.post("/users/authorize_callback", {
         code
       })
-      this.setState({
-        user: response.data
-      })
-      console.log("Authorized", this.user)
-      this.onUserAuthorized(this.user)
+      const user = response.data
+      console.log("Authorized", user)
+      this.onUserAuthorized(user)
       this.history.replace("/app/callback")
     }
   }
@@ -51,7 +52,7 @@ export default class Callback extends React.Component {
       <div>
         <div>Authorized: {JSON.stringify(this.user)}</div>
         <div>
-          <a href="/users/authorize">Authorize</a>
+          <Button onClick={this.onUserSignIn}>Sign in</Button>
         </div>
       </div>
     )

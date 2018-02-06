@@ -25,6 +25,10 @@ export default class App extends React.Component {
     this.server = new Server(user)
   }
 
+  get user() {
+    return this.state.user
+  }
+
   getChildContext() {
     return { headerSlot: this.state.headerSlot }
   }
@@ -43,7 +47,19 @@ export default class App extends React.Component {
     })
   }
 
+  handleUserSignIn() {
+    window.location.href = "/users/authorize"
+  }
+
+  handleUserSignOut() {
+    this.handleUserChange(null)
+  }
+
   handleUserAuthorized(user) {
+    this.handleUserChange(user)
+  }
+
+  handleUserChange(user) {
     this.writeUserToLocalStorage(user)
     this.server.user = user
     this.setState({ user })
@@ -53,7 +69,12 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <HeaderSlot onRef={headerSlot => (this.headerSlot = headerSlot)} />
+          <HeaderSlot
+            user={this.user}
+            onRef={headerSlot => (this.headerSlot = headerSlot)}
+            onUserSignIn={() => this.handleUserSignIn()}
+            onUserSignOut={() => this.handleUserSignOut()}
+          />
           <div className="App_main">
             <Switch>
               <Redirect exact from="/" to="/app/dashboard" />
@@ -82,8 +103,10 @@ export default class App extends React.Component {
   renderCallback(routeProps) {
     return (
       <Callback
-        server={this.server}
+        user={this.user}
+        onUserSignIn={() => this.handleUserSignIn()}
         onUserAuthorized={user => this.handleUserAuthorized(user)}
+        server={this.server}
         {...routeProps}
       />
     )
