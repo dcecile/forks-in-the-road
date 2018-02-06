@@ -3,7 +3,7 @@ import React from "react"
 import { BrowserRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
-import Callback from "Callback"
+import Authorization from "Authorization"
 import Comparison from "Comparison"
 import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
@@ -80,7 +80,7 @@ export default class App extends React.Component {
             <Route
               exact
               path="/app/callback"
-              render={routeProps => this.renderCallback(routeProps)}
+              render={routeProps => this.renderAuthorization(routeProps)}
             />
             <Route
               exact
@@ -98,9 +98,9 @@ export default class App extends React.Component {
     )
   }
 
-  renderCallback(routeProps) {
+  renderAuthorization(routeProps) {
     return (
-      <Callback
+      <Authorization
         className="App_main"
         user={this.user}
         onUserSignIn={() => this.handleUserSignIn()}
@@ -112,14 +112,24 @@ export default class App extends React.Component {
   }
 
   renderDashboard(routeProps) {
-    return (
+    return this.renderSignInRequired(
+      routeProps,
       <Dashboard className="App_main" server={this.server} {...routeProps} />
     )
   }
 
   renderComparison(routeProps) {
-    return (
+    return this.renderSignInRequired(
+      routeProps,
       <Comparison className="App_main" server={this.server} {...routeProps} />
     )
+  }
+
+  renderSignInRequired(routeProps, component) {
+    if (!this.user) {
+      return this.renderAuthorization(routeProps)
+    } else {
+      return component
+    }
   }
 }
