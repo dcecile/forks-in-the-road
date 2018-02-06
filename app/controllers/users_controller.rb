@@ -12,10 +12,6 @@ class UsersController < ApplicationController
   end
 
   def authorize
-    redirect_to application_github_client.authorize_url, status: 303
-  end
-
-  def authorize_callback
     github_token = retrieve_github_token(params[:code])
     user_github_client = create_user_github_client(github_token)
     user = find_or_create_user(user_github_client.user)

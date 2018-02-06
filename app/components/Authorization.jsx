@@ -53,9 +53,7 @@ export default class Authorization extends React.Component {
     this.removeSearchParameter()
     this.setState({ isAuthorizing: true })
     console.log("Authorizing", code)
-    const response = await this.server.post("/users/authorize_callback", {
-      code
-    })
+    const response = await this.server.post("/users/authorize", { code })
     const user = response.data
     console.log("Authorized", user)
     this.onUserAuthorized(user)

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
+import queryString from "query-string"
 import { BrowserRouter, Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
@@ -48,7 +49,10 @@ export default class App extends React.Component {
   }
 
   handleUserSignIn() {
-    window.location.href = "/users/authorize"
+    const clientID = process.env.FORKSINTHEROAD_GITHUB_CLIENT_ID
+    const params = queryString.stringify({ client_id: clientID })
+    const authorizeURL = `https://github.com/login/oauth/authorize?${params}`
+    window.location.href = authorizeURL
   }
 
   handleUserSignOut() {

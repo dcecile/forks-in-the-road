@@ -10,8 +10,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[] do
     collection do
-      get "authorize"
-      post "authorize_callback"
+      post "authorize"
     end
   end
 
