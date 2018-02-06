@@ -57,7 +57,7 @@ export default class Dashboard extends React.Component {
     this.setState({
       comparisonStubs: this.comparisonStubs.concat(response.data)
     })
-    this.history.push(`/comparison/${response.data.id}`)
+    this.history.push(`/app/comparison/${response.data.id}`)
   }
 
   render() {
