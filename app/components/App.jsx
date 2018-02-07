@@ -1,10 +1,10 @@
 import PropTypes from "prop-types"
 import React from "react"
 import queryString from "query-string"
-import { BrowserRouter, Redirect, Switch } from "react-router-dom"
+import { Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
-import Authorization from "Authorization"
+import SignIn from "SignIn"
 import Comparison from "Comparison"
 import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
@@ -21,13 +21,22 @@ export default class App extends React.Component {
     const user = this.readUserFromLocalStorage()
     this.state = {
       headerSlot: null,
-      user
+      user,
+      isUserSigningIn: false
     }
     this.server = new Server(user)
   }
 
+  get history() {
+    return this.props.history
+  }
+
   get user() {
     return this.state.user
+  }
+
+  get isUserSigningIn() {
+    return this.state.isUserSigningIn
   }
 
   getChildContext() {
@@ -46,21 +55,36 @@ export default class App extends React.Component {
     this.setState({
       headerSlot: this.headerSlot
     })
+    this.handleUserSignInCallback()
   }
 
   handleUserSignIn() {
+    this.setState({ isUserSigningIn: true })
     const clientID = process.env.FORKSINTHEROAD_GITHUB_CLIENT_ID
     const params = queryString.stringify({ client_id: clientID })
     const authorizeURL = `https://github.com/login/oauth/authorize?${params}`
     window.location.href = authorizeURL
   }
 
-  handleUserSignOut() {
-    this.handleUserChange(null)
+  async handleUserSignInCallback() {
+    const code = this.parseSearchParameter()
+    if (!code) {
+      return
+    }
+
+    this.setState({ isUserSigningIn: true })
+    console.log("Authorizing", code)
+    const response = await this.server.post("/users/authorize", { code })
+    const user = response.data
+    console.log("Authorized", user)
+    this.handleUserChange(user)
+    this.history.replace("/")
+    this.setState({ isUserSigningIn: false })
   }
 
-  handleUserAuthorized(user) {
-    this.handleUserChange(user)
+  parseSearchParameter() {
+    const parameters = queryString.parse(window.location.search)
+    return parameters["code"]
   }
 
   handleUserChange(user) {
@@ -69,69 +93,66 @@ export default class App extends React.Component {
     this.setState({ user })
   }
 
+  handleUserSignOut() {
+    this.handleUserChange(null)
+  }
+
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <HeaderSlot
-            user={this.user}
-            onRef={headerSlot => (this.headerSlot = headerSlot)}
-            onUserSignIn={() => this.handleUserSignIn()}
-            onUserSignOut={() => this.handleUserSignOut()}
+      <div className="App">
+        <HeaderSlot
+          user={this.user}
+          onRef={headerSlot => (this.headerSlot = headerSlot)}
+          onUserSignIn={() => this.handleUserSignIn()}
+          onUserSignOut={() => this.handleUserSignOut()}
+        />
+        <Switch>
+          <Redirect exact from="/" to="/app/dashboard" />
+          <Route
+            exact
+            path="/app/callback"
+            render={() => this.renderSignIn()}
           />
-          <Switch>
-            <Redirect exact from="/" to="/app/dashboard" />
-            <Route
-              exact
-              path="/app/callback"
-              render={routeProps => this.renderAuthorization(routeProps)}
-            />
-            <Route
-              exact
-              path="/app/dashboard"
-              render={routeProps => this.renderDashboard(routeProps)}
-            />
-            <Route
-              path="/app/comparison/:id"
-              render={routeProps => this.renderComparison(routeProps)}
-            />
-            <Route component={RouteNotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+          <Route
+            exact
+            path="/app/dashboard"
+            render={routeProps => this.renderDashboard(routeProps)}
+          />
+          <Route
+            path="/app/comparison/:id"
+            render={routeProps => this.renderComparison(routeProps)}
+          />
+          <Route component={RouteNotFound} />
+        </Switch>
+      </div>
     )
   }
 
-  renderAuthorization(routeProps) {
+  renderSignIn() {
     return (
-      <Authorization
+      <SignIn
         className="App_main"
-        user={this.user}
+        isUserSigningIn={this.isUserSigningIn}
         onUserSignIn={() => this.handleUserSignIn()}
-        onUserAuthorized={user => this.handleUserAuthorized(user)}
-        server={this.server}
-        {...routeProps}
       />
     )
   }
 
   renderDashboard(routeProps) {
     return this.renderSignInRequired(
-      routeProps,
       <Dashboard className="App_main" server={this.server} {...routeProps} />
     )
   }
 
   renderComparison(routeProps) {
     return this.renderSignInRequired(
-      routeProps,
       <Comparison className="App_main" server={this.server} {...routeProps} />
     )
   }
 
-  renderSignInRequired(routeProps, component) {
+  renderSignInRequired(component) {
     if (!this.user) {
-      return this.renderAuthorization(routeProps)
+      return this.renderSignIn()
     } else {
       return component
     }

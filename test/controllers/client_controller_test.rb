@@ -12,6 +12,6 @@ class ClientControllerTest < ActionDispatch::IntegrationTest
         script.attribute("src")
       )
     end
-    assert_select "body > div[data-react-class='App']", ""
+    assert_select "body > div[data-react-class='AppRouter']", ""
   end
 end
