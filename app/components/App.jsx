@@ -102,6 +102,7 @@ export default class App extends React.Component {
       <div className="App">
         <HeaderSlot
           user={this.user}
+          isUserSigningIn={this.isUserSigningIn}
           onRef={headerSlot => (this.headerSlot = headerSlot)}
           onUserSignIn={() => this.handleUserSignIn()}
           onUserSignOut={() => this.handleUserSignOut()}
