@@ -61,7 +61,10 @@ export default class App extends React.Component {
   handleUserSignIn() {
     this.setState({ isUserSigningIn: true })
     const clientID = process.env.FORKSINTHEROAD_GITHUB_CLIENT_ID
-    const params = queryString.stringify({ client_id: clientID })
+    const params = queryString.stringify({
+      client_id: clientID,
+      redirect_uri: window.location.href
+    })
     const authorizeURL = `https://github.com/login/oauth/authorize?${params}`
     window.location.href = authorizeURL
   }
@@ -78,13 +81,17 @@ export default class App extends React.Component {
     const user = response.data
     console.log("Authorized", user)
     this.handleUserChange(user)
-    this.history.replace("/")
+    this.removeSearchParameter()
     this.setState({ isUserSigningIn: false })
   }
 
   parseSearchParameter() {
     const parameters = queryString.parse(window.location.search)
     return parameters["code"]
+  }
+
+  removeSearchParameter() {
+    this.history.replace(window.location.pathname)
   }
 
   handleUserChange(user) {
@@ -111,11 +118,6 @@ export default class App extends React.Component {
           <Redirect exact from="/" to="/app/dashboard" />
           <Route
             exact
-            path="/app/callback"
-            render={() => this.renderSignIn()}
-          />
-          <Route
-            exact
             path="/app/dashboard"
             render={routeProps => this.renderDashboard(routeProps)}
           />
@@ -126,16 +128,6 @@ export default class App extends React.Component {
           <Route component={RouteNotFound} />
         </Switch>
       </div>
-    )
-  }
-
-  renderSignIn() {
-    return (
-      <SignIn
-        className="App_main"
-        isUserSigningIn={this.isUserSigningIn}
-        onUserSignIn={() => this.handleUserSignIn()}
-      />
     )
   }
 
@@ -152,10 +144,20 @@ export default class App extends React.Component {
   }
 
   renderSignInRequired(component) {
-    if (!this.user) {
+    if (this.isUserSigningIn || !this.user) {
       return this.renderSignIn()
     } else {
       return component
     }
+  }
+
+  renderSignIn() {
+    return (
+      <SignIn
+        className="App_main"
+        isUserSigningIn={this.isUserSigningIn}
+        onUserSignIn={() => this.handleUserSignIn()}
+      />
+    )
   }
 }
