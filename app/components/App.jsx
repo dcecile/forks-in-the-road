@@ -11,6 +11,8 @@ import RouteNotFound from "RouteNotFound"
 import Server from "Server"
 import { HeaderSlot } from "Header"
 
+const UserStorageKey = "user"
+
 export default class App extends React.Component {
   static childContextTypes = {
     headerSlot: PropTypes.instanceOf(HTMLElement)
@@ -44,11 +46,11 @@ export default class App extends React.Component {
   }
 
   readUserFromLocalStorage() {
-    return JSON.parse(window.localStorage.getItem("user") || null)
+    return JSON.parse(window.localStorage.getItem(UserStorageKey) || null)
   }
 
   writeUserToLocalStorage(user) {
-    window.localStorage.setItem("user", JSON.stringify(user))
+    window.localStorage.setItem(UserStorageKey, JSON.stringify(user))
   }
 
   componentDidMount() {
@@ -56,6 +58,7 @@ export default class App extends React.Component {
       headerSlot: this.headerSlot
     })
     this.handleUserSignInCallback()
+    this.handleOtherTabUserChange()
   }
 
   handleUserSignIn() {
@@ -102,6 +105,17 @@ export default class App extends React.Component {
 
   handleUserSignOut() {
     this.handleUserChange(null)
+  }
+
+  handleOtherTabUserChange() {
+    window.addEventListener("storage", event => {
+      if (event.key === UserStorageKey) {
+        const user = JSON.parse(event.newValue)
+        console.log("Other tab user change", user)
+        this.server.user = user
+        this.setState({ user })
+      }
+    })
   }
 
   render() {
