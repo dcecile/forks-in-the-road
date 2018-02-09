@@ -1,3 +1,4 @@
+import MdAutorenew from "react-icons/lib/md/autorenew"
 import React from "react"
 
 import Button from "Button"
@@ -7,17 +8,39 @@ export default function SignIn({ className, isUserSigningIn, onUserSignIn }) {
   const isSigningInClassName = isUserSigningIn ? "Header__isSigningIn" : ""
 
   const renderSigningIn = () => {
-    return <span>Signing in...</span>
+    return (
+      <React.Fragment>
+        <h1 className="SignIn_header">Please wait</h1>
+        <div className="SignIn_progress">
+          <span className="SignIn_progressText">Signing in&hellip;</span>
+          <MdAutorenew className="SignIn_progressIcon" />
+        </div>
+      </React.Fragment>
+    )
   }
 
   const renderSignInRequired = () => {
-    return <Button onClick={onUserSignIn}>Sign in</Button>
+    return (
+      <React.Fragment>
+        <h1 className="SignIn_header">Sign in required</h1>
+        <p className="SignIn_text">
+          To continue from where you left off, please sign in:
+        </p>
+        <Button className="SignIn_button" onClick={onUserSignIn}>
+          Sign in now
+        </Button>
+      </React.Fragment>
+    )
   }
 
   return (
-    <main className={`Dashboard ${className}`}>
+    <main className={`SignIn ${className}`}>
       <Header className={`Header__comparisonMode ${isSigningInClassName}`} />
-      {isUserSigningIn ? renderSigningIn() : renderSignInRequired()}
+      <div className="SignIn_card">
+        <div className="SignIn_body">
+          {isUserSigningIn ? renderSigningIn() : renderSignInRequired()}
+        </div>
+      </div>
     </main>
   )
 }
