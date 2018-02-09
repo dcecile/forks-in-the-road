@@ -2,7 +2,7 @@
   display: flex
   flex-direction: row
   align-items: center
-  justify-content: space-between
+  justify-content: stretch
   border-bottom: 2px solid $Theme_primary
   background-color: $Theme_primaryBackground
 
@@ -15,6 +15,14 @@
       right: 1.2rem
       bottom: 0.4rem
       left: 0.4rem
+
+.Header_logoArea
+  flex:
+    basis: 0
+    grow: 1
+
+  .Header__comparisonMode &
+    flex-basis: 6rem
 
 .Header_logo
   border: 2px solid $Theme_primary
@@ -33,11 +41,9 @@
   font-weight: $Font_boldWeight
 
   .Header__dashboardMode &
-    margin-left: 6rem
     font-size: 2.6rem
 
   .Header__comparisonMode &
-    margin-left: 9rem
     font-size: 1.8rem
 
 .Header_titleContent
@@ -46,6 +52,10 @@
     size: inherit
 
 .Header_user
+  flex:
+    basis: 0
+    grow: 1
+
   .Header__dashboardMode &
     font-size: 1.6rem
 
@@ -53,9 +63,10 @@
     font-size: 1.2rem
 
 .Header,
+.Header_logoArea,
 .Header_logo,
 .Header_title
   transition:
-    property: margin, border-width, padding
+    property: flex-basis, border-width, padding
     duration: $Timing_headerTransition
     timing-function: linear

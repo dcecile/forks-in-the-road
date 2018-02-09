@@ -44,7 +44,9 @@ export function HeaderSlot({
 }) {
   return (
     <header>
-      <Logo className="Header_logo" />
+      <span className="Header_logoArea">
+        <Logo className="Header_logo" />
+      </span>
       <span ref={onRef} className="Header_title" />
       <User
         className="Header_user"
