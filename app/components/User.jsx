@@ -9,6 +9,16 @@ export default function User({
   onSignIn,
   onSignOut
 }) {
+  const renderAvatar = () =>
+    user && (
+      <img
+        className="User_avatar"
+        width="32"
+        height="32"
+        src={`${user.github_avatar_url}&s=32`}
+      />
+    )
+
   const renderName = () => {
     if (isUserSigningIn) {
       return "Signing in..."
@@ -39,6 +49,7 @@ export default function User({
 
   return (
     <span className={`User ${className}`}>
+      {renderAvatar()}
       <span className="User_name">{renderName()}</span>
       {renderButton()}
     </span>
