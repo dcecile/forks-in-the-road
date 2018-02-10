@@ -235,10 +235,10 @@ export default class Comparison extends React.Component {
 
   render() {
     return (
-      <div className={`Comparison ${this.className}`}>
+      <div className="Comparison">
         {this.renderHeader()}
         {this.renderSidebar()}
-        <main className="Comparison_main">
+        <main className={`Comparison_main ${this.className}`}>
           {this.isLoading ? this.renderLoading() : this.renderLoaded()}
         </main>
       </div>

@@ -9,6 +9,7 @@ import Comparison from "Comparison"
 import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
 import Server from "Server"
+import Timing from "Timing"
 import { HeaderSlot } from "Header"
 
 const UserStorageKey = "user"
@@ -24,7 +25,8 @@ export default class App extends React.Component {
     this.state = {
       headerSlot: null,
       user,
-      isUserSigningIn: false
+      isUserSigningIn: false,
+      isUserSigningOut: false
     }
     this.server = new Server(user)
   }
@@ -39,6 +41,14 @@ export default class App extends React.Component {
 
   get isUserSigningIn() {
     return this.state.isUserSigningIn
+  }
+
+  get isUserSigningOut() {
+    return this.state.isUserSigningOut
+  }
+
+  get isUserSigningOutClassName() {
+    return this.isUserSigningOut ? "App_main__isUserSigningOut" : ""
   }
 
   getChildContext() {
@@ -103,8 +113,11 @@ export default class App extends React.Component {
     this.setState({ user })
   }
 
-  handleUserSignOut() {
+  async handleUserSignOut() {
+    this.setState({ isUserSigningOut: true })
+    await Timing.appUserSigningOut()
     this.handleUserChange(null)
+    this.setState({ isUserSigningOut: false })
   }
 
   handleOtherTabUserChange() {
@@ -147,13 +160,21 @@ export default class App extends React.Component {
 
   renderDashboard(routeProps) {
     return this.renderSignInRequired(
-      <Dashboard className="App_main" server={this.server} {...routeProps} />
+      <Dashboard
+        className={`App_main ${this.isUserSigningOutClassName}`}
+        server={this.server}
+        {...routeProps}
+      />
     )
   }
 
   renderComparison(routeProps) {
     return this.renderSignInRequired(
-      <Comparison className="App_main" server={this.server} {...routeProps} />
+      <Comparison
+        className={`App_main ${this.isUserSigningOutClassName}`}
+        server={this.server}
+        {...routeProps}
+      />
     )
   }
 

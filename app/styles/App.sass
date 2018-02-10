@@ -1,8 +1,13 @@
 .App
   display: flex
   flex-direction: column
+  background: $Theme_secondaryBackground
   min-height: 100vh
 
-.App_main
-  flex-grow: 1
-  background: $Theme_secondaryBackground
+.App_main__isUserSigningOut
+  animation: App_userSigningOut $Timing_appUserSigningOut ease-out forwards
+
+@keyframes App_userSigningOut
+  100%
+    opacity: 0
+
