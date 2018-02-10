@@ -4,13 +4,15 @@
 
 ### Getting started
 
-1. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-2. Run `gem install bundler` to install project gem manager
-3. Run `bundler install --without production` to install project gems
-4. Run `bin/overcommit --install` to enable Git hooks
-5. Run `bin/rails db:migrate` to set up the database
-6. Run `bin/rails server` to start up Rails
-7. Visit http://localhost:3000 to view the app
+1. Register a [new GitHub OAuth application](https://github.com/settings/applications/new)
+2. Copy your application's client ID and client secret into two new environment variables: `FORKSINTHEROAD_GITHUB_CLIENT_ID` and `FORKSINTHEROAD_GITHUB_CLIENT_SECRET`
+3. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+4. Run `gem install bundler` to install project gem manager
+5. Run `bundler install --without production` to install project gems
+6. Run `bin/overcommit --install` to enable Git hooks
+7. Run `bin/rails db:migrate` to set up the database
+8. Run `bin/rails server` to start up Rails
+9. Visit http://localhost:3000 to view the app
 
 ### Ruby changes
 
