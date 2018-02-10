@@ -7,6 +7,10 @@
 
 .SignIn_card
   @extend .card
+  transition:
+    property: transform, opacity
+    duration: $Timing_appUserSigningInChanging
+    timing-function: ease
   border:
     width: 2px
     color: $Theme_primary
@@ -14,6 +18,10 @@
     radius: 0
   background: $Theme_primaryBackground
   max-width: 25rem
+
+.SignIn_card__isSigningInChanging
+  transform: scale(0)
+  opacity: 0
 
 .SignIn_card__isSignInRequired
   animation: SignIn_popIn $Timing_signInPopIn ease-in

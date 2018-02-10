@@ -4,10 +4,17 @@ import React from "react"
 import Button from "Button"
 import Header from "Header"
 
-export default function SignIn({ className, isUserSigningIn, onUserSignIn }) {
-  const stateClassName = isUserSigningIn
-    ? "SignIn_card__isSigningIn"
-    : "SignIn_card__isSignInRequired"
+export default function SignIn({
+  className,
+  isUserSigningInChanging,
+  isUserSigningIn,
+  onUserSignIn
+}) {
+  const stateClassName = isUserSigningInChanging
+    ? "SignIn_card__isSigningInChanging"
+    : isUserSigningIn
+      ? "SignIn_card__isSigningIn"
+      : "SignIn_card__isSignInRequired"
 
   const renderSigningIn = () => {
     return (

@@ -25,6 +25,7 @@ export default class App extends React.Component {
     this.state = {
       headerSlot: null,
       user,
+      isUserSigningInChanging: false,
       isUserSigningIn: false,
       isUserSigningOut: false
     }
@@ -37,6 +38,10 @@ export default class App extends React.Component {
 
   get user() {
     return this.state.user
+  }
+
+  get isUserSigningInChanging() {
+    return this.state.isUserSigningInChanging
   }
 
   get isUserSigningIn() {
@@ -71,8 +76,10 @@ export default class App extends React.Component {
     this.handleOtherTabUserChange()
   }
 
-  handleUserSignIn() {
-    this.setState({ isUserSigningIn: true })
+  async handleUserSignIn() {
+    this.setState({ isUserSigningInChanging: true })
+    await Timing.appUserSigningInChanging()
+    this.setState({ isUserSigningInChanging: false, isUserSigningIn: true })
     const clientID = process.env.FORKSINTHEROAD_GITHUB_CLIENT_ID
     const params = queryString.stringify({
       client_id: clientID,
@@ -93,6 +100,9 @@ export default class App extends React.Component {
     const response = await this.server.post("/users/authorize", { code })
     const user = response.data
     console.log("Authorized", user)
+    this.setState({ isUserSigningInChanging: true })
+    await Timing.appUserSigningInChanging()
+    this.setState({ isUserSigningInChanging: false })
     this.handleUserChange(user)
     this.removeSearchParameter()
     this.setState({ isUserSigningIn: false })
@@ -136,6 +146,7 @@ export default class App extends React.Component {
       <div className="App">
         <HeaderSlot
           user={this.user}
+          isUserSigningInChanging={this.isUserSigningInChanging}
           isUserSigningIn={this.isUserSigningIn}
           onRef={headerSlot => (this.headerSlot = headerSlot)}
           onUserSignIn={() => this.handleUserSignIn()}
@@ -190,6 +201,7 @@ export default class App extends React.Component {
     return (
       <SignIn
         className="App_main"
+        isUserSigningInChanging={this.isUserSigningInChanging}
         isUserSigningIn={this.isUserSigningIn}
         onUserSignIn={() => this.handleUserSignIn()}
       />

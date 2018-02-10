@@ -3,6 +3,13 @@
   flex-direction: row
   align-items: baseline
   justify-content: flex-end
+  transition:
+    property: opacity
+    duration: $Timing_appUserSigningInChanging
+    timing-function: ease
+
+.User__isSigningInChanging
+  opacity: 0
 
 .User_avatar
   align-self: center

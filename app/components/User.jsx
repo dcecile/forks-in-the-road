@@ -5,10 +5,15 @@ import Button from "Button"
 export default function User({
   className,
   user,
+  isUserSigningInChanging,
   isUserSigningIn,
   onSignIn,
   onSignOut
 }) {
+  const isUserSigningInChangingClassName = isUserSigningInChanging
+    ? "User__isSigningInChanging"
+    : ""
+
   const renderAvatar = () =>
     user && (
       <img
@@ -48,7 +53,7 @@ export default function User({
   }
 
   return (
-    <span className={`User ${className}`}>
+    <span className={`User ${isUserSigningInChangingClassName} ${className}`}>
       {renderAvatar()}
       <span className="User_name">{renderName()}</span>
       {renderButton()}

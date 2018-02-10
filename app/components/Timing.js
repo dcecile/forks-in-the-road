@@ -7,6 +7,7 @@ function timing(milliseconds) {
 }
 
 export default {
+  appUserSigningInChanging: timing(200),
   appUserSigningOut: timing(400),
   alternativeEditStateChange: 200,
   comparisonAlternativesHighlightLink: timing(2000),
