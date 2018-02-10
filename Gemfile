@@ -57,8 +57,6 @@ group :development do
   # background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
-  # Use Seed Fu to set up development seed data
-  gem "seed-fu", "~> 2.3"
   # Use Capistrano for deployment
   # gem 'capistrano-rails'
 end
