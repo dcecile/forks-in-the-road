@@ -5,7 +5,9 @@ import Button from "Button"
 import Header from "Header"
 
 export default function SignIn({ className, isUserSigningIn, onUserSignIn }) {
-  const isSigningInClassName = isUserSigningIn ? "Header__isSigningIn" : ""
+  const stateClassName = isUserSigningIn
+    ? "SignIn_card__isSigningIn"
+    : "SignIn_card__isSignInRequired"
 
   const renderSigningIn = () => {
     return (
@@ -35,8 +37,8 @@ export default function SignIn({ className, isUserSigningIn, onUserSignIn }) {
 
   return (
     <main className={`SignIn ${className}`}>
-      <Header className={`Header__comparisonMode ${isSigningInClassName}`} />
-      <div className="SignIn_card">
+      <Header className="Header__comparisonMode" />
+      <div className={`SignIn_card ${stateClassName}`}>
         <div className="SignIn_body">
           {isUserSigningIn ? renderSigningIn() : renderSignInRequired()}
         </div>

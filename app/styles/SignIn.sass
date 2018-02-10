@@ -15,6 +15,9 @@
   background: $Theme_primaryBackground
   max-width: 25rem
 
+.SignIn_card__isSignInRequired
+  animation: SignIn_popIn $Timing_signInPopIn ease-in
+
 .SignIn_body
   @extend .card-body
   display: flex
@@ -52,6 +55,11 @@
   animation: SignIn_progressCycle $Timing_signInProgressCycle linear infinite
   margin-left: 0.4rem
   font-size: 24px
+
+@keyframes SignIn_popIn
+  0%
+    transform: scale(0.5)
+    opacity: 0
 
 @keyframes SignIn_progressCycle
   100%
