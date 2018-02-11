@@ -5,7 +5,7 @@ import { Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
 import SignIn from "SignIn"
-import Comparison from "Comparison"
+import ComparisonState from "ComparisonState"
 import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
 import Server from "Server"
@@ -181,7 +181,7 @@ export default class App extends React.Component {
 
   renderComparison(routeProps) {
     return this.renderSignInRequired(
-      <Comparison
+      <ComparisonState
         className={`App_main ${this.isUserSigningOutClassName}`}
         server={this.server}
         {...routeProps}

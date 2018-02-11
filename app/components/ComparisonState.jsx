@@ -1,20 +1,9 @@
 import React from "react"
-import { Link, Switch } from "react-router-dom"
-import { Route } from "react-router"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
 
-import Alternative from "Alternative"
-import Button from "Button"
-import ComparisonAlternatives from "ComparisonAlternatives"
-import ComparisonCriteria from "ComparisonCriteria"
-import EditComparison from "EditComparison"
-import Header from "Header"
-import Loading from "Loading"
-import RouteNotFound from "RouteNotFound"
-import Sidebar from "Sidebar"
+import ComparisonRender from "ComparisonRender"
 import Timing from "Timing"
 
-export default class Comparison extends React.Component {
+export default class ComparisonState extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -71,10 +60,26 @@ export default class Comparison extends React.Component {
     return this.match.url
   }
 
-  get editStateChangingClassName() {
-    return this.isEditStateChanging
-      ? "Comparison_infoEditContent__isChangingState"
-      : ""
+  get handlers() {
+    return {
+      handleBeginEdit: () => this.handleBeginEdit(),
+      handleCancelEdit: () => this.handleCancelEdit(),
+      handleSubmitEdit: comparison => this.handleSubmitEdit(comparison),
+      handleSubmitEditAlternative: alternative =>
+        this.handleSubmitEditAlternative(alternative),
+      handleSubmitEditCriterion: criterion =>
+        this.handleSubmitEditCriterion(criterion),
+      handleSubmitEditEstimate: (alternative, estimate) =>
+        this.handleSubmitEditEstimate(alternative, estimate),
+      handleSubmitNewAlternative: alternative =>
+        this.handleSubmitNewAlternative(alternative),
+      handleSubmitNewCriterion: criterion =>
+        this.handleSubmitNewCriterion(criterion),
+      handleSubmitNewEstimate: (alternative, estimate) =>
+        this.handleSubmitNewEstimate(alternative, estimate),
+      handleSubmitResetEstimate: (alternative, estimate) =>
+        this.handleSubmitResetEstimate(alternative, estimate)
+    }
   }
 
   setComparisonState(comparisonChanges) {
@@ -235,163 +240,17 @@ export default class Comparison extends React.Component {
 
   render() {
     return (
-      <div className="Comparison">
-        {this.renderHeader()}
-        {this.renderSidebar()}
-        <main className={`Comparison_main ${this.className}`}>
-          {this.isLoading ? this.renderLoading() : this.renderLoaded()}
-        </main>
-      </div>
-    )
-  }
-
-  renderHeader() {
-    const text = this.isLoading ? (
-      <React.Fragment>Loading&hellip;</React.Fragment>
-    ) : (
-      this.comparison.name
-    )
-    return (
-      <Header className="Header__comparisonMode">
-        <nav className="Header_titleContent">
-          <Link to={this.matchUrl}>{text}</Link>
-        </nav>
-      </Header>
-    )
-  }
-
-  renderSidebar() {
-    return <Sidebar matchUrl={this.matchUrl} />
-  }
-
-  renderLoading() {
-    return <Loading />
-  }
-
-  renderLoaded() {
-    return (
-      <React.Fragment>
-        <div className="Comparison_section">
-          <TransitionGroup>
-            <CSSTransition
-              key={this.location.pathname}
-              classNames="Comparison_navigate"
-              timeout={{
-                exit: Timing.comparisonRouteChange,
-                enter: Timing.comparisonRouteChange * 2
-              }}
-            >
-              <Switch location={this.location}>
-                <Route
-                  exact
-                  path={this.matchUrl}
-                  render={() => this.renderAlternatives()}
-                />
-                <Route
-                  exact
-                  path={`${this.matchUrl}/criteria`}
-                  render={() => this.renderCriteria()}
-                />
-                <Route
-                  exact
-                  path={`${this.matchUrl}/alternative/:id`}
-                  render={routeProps => this.renderOneAlternative(routeProps)}
-                />
-                <Route component={RouteNotFound} />
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
-        </div>
-        {this.renderInfo()}
-      </React.Fragment>
-    )
-  }
-
-  renderInfo() {
-    return (
-      <section className="Comparison_infoEditSection">
-        <div
-          className={`Comparison_infoEditContent ${
-            this.editStateChangingClassName
-          }`}
-        >
-          {!this.isEditing ? this.renderEditButton() : this.renderEditForm()}
-        </div>
-      </section>
-    )
-  }
-
-  renderEditButton() {
-    return (
-      <Button
-        className="Comparison_infoEditButton"
-        onClick={() => this.handleBeginEdit()}
-      >
-        Edit comparison info for {this.comparison.name}
-      </Button>
-    )
-  }
-
-  renderEditForm() {
-    return (
-      <EditComparison
+      <ComparisonRender
+        className={this.className}
         comparison={this.comparison}
-        onSubmit={comparison => this.handleSubmitEdit(comparison)}
-        onCancel={() => this.handleCancelEdit()}
-      />
-    )
-  }
-
-  renderAlternatives() {
-    return (
-      <ComparisonAlternatives
-        matchUrl={this.matchUrl}
-        alternatives={this.comparison.alternatives}
+        handlers={this.handlers}
         isAlternativeNewlyCreated={this.isAlternativeNewlyCreated}
-        onSubmitNewAlternative={alternative =>
-          this.handleSubmitNewAlternative(alternative)
-        }
-      />
-    )
-  }
-
-  renderCriteria() {
-    return (
-      <ComparisonCriteria
-        matchUrl={this.matchUrl}
-        criteria={this.comparison.criteria}
         isCriterionNewlyCreated={this.isCriterionNewlyCreated}
-        onSubmitNewCriterion={criterion =>
-          this.handleSubmitNewCriterion(criterion)
-        }
-        onSubmitEditCriterion={criterion =>
-          this.handleSubmitEditCriterion(criterion)
-        }
-      />
-    )
-  }
-
-  renderOneAlternative(routeProps) {
-    return (
-      <Alternative
-        {...routeProps}
-        parentMatchUrl={this.matchUrl}
-        parentTitle="Alternatives"
-        alternatives={this.comparison.alternatives}
-        criteria={this.comparison.criteria}
-        comparisonMatchUrl={this.matchUrl}
-        onSubmitEditAlternative={alternative =>
-          this.handleSubmitEditAlternative(alternative)
-        }
-        onSubmitNewEstimate={(alternative, estimate) =>
-          this.handleSubmitNewEstimate(alternative, estimate)
-        }
-        onSubmitEditEstimate={(alternative, estimate) =>
-          this.handleSubmitEditEstimate(alternative, estimate)
-        }
-        onSubmitResetEstimate={(alternative, estimate) =>
-          this.handleSubmitResetEstimate(alternative, estimate)
-        }
+        isEditStateChanging={this.isEditStateChanging}
+        isEditing={this.isEditing}
+        isLoading={this.isLoading}
+        location={this.location}
+        matchUrl={this.matchUrl}
       />
     )
   }
