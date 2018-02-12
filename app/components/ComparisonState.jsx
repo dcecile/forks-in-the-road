@@ -91,13 +91,11 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  setAlternativeState(alternative, alternativeChanges) {
+  setAlternativeState(alternativeID, alternativeChanges) {
     this.setComparisonState({
       alternatives: this.comparison.alternatives.map(
         item =>
-          item === alternative
-            ? { ...alternative, ...alternativeChanges }
-            : item
+          item.id === alternativeID ? { ...item, ...alternativeChanges } : item
       )
     })
   }
@@ -140,7 +138,7 @@ export default class ComparisonState extends React.Component {
       `/alternatives/${alternative.id}`,
       alternative
     )
-    this.setAlternativeState(alternative, response.data)
+    this.setAlternativeState(alternative.id, response.data)
   }
 
   async handleSubmitNewCriterion(criterion) {
@@ -169,7 +167,8 @@ export default class ComparisonState extends React.Component {
     )
     this.setComparisonState({
       criteria: this.comparison.criteria.map(
-        item => (item === criterion ? { ...criterion, ...response.data } : item)
+        item =>
+          item.id === criterion.id ? { ...item, ...response.data } : item
       )
     })
   }
@@ -180,7 +179,7 @@ export default class ComparisonState extends React.Component {
       `/alternatives/${alternative.id}/estimates`,
       estimate
     )
-    this.setAlternativeState(alternative, {
+    this.setAlternativeState(alternative.id, {
       estimates: alternative.estimates.concat(response.data)
     })
   }
@@ -191,9 +190,9 @@ export default class ComparisonState extends React.Component {
       `/estimates/${estimate.id}`,
       estimate
     )
-    this.setAlternativeState(alternative, {
+    this.setAlternativeState(alternative.id, {
       estimates: alternative.estimates.map(
-        item => (item === estimate ? { ...estimate, ...response.data } : item)
+        item => (item.id === estimate.id ? { ...item, ...response.data } : item)
       )
     })
   }
@@ -201,8 +200,8 @@ export default class ComparisonState extends React.Component {
   async handleSubmitResetEstimate(alternative, estimate) {
     console.log("Deleting estimate", estimate)
     await this.server.delete(`/estimates/${estimate.id}`)
-    this.setAlternativeState(alternative, {
-      estimates: alternative.estimates.filter(item => item !== estimate)
+    this.setAlternativeState(alternative.id, {
+      estimates: alternative.estimates.filter(item => item.id !== estimate.id)
     })
   }
 
