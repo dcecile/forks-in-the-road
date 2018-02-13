@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import ComparisonHeader from "ComparisonHeader"
 import NewAlternative from "NewAlternative"
 
-export default function ComparisonAlternatives({
+export default function AlternativeIndex({
   matchUrl,
   alternatives,
   isAlternativeNewlyCreated,
@@ -12,12 +12,12 @@ export default function ComparisonAlternatives({
 }) {
   const getNewlyCreatedClassName = i =>
     i === 0 && isAlternativeNewlyCreated
-      ? "ComparisonAlternatives_link__isNewlyCreated"
+      ? "AlternativeIndex_link__isNewlyCreated"
       : ""
 
   const renderAlternativeLink = (alternative, i) => (
     <Link
-      className={`ComparisonAlternatives_link ${getNewlyCreatedClassName(i)}`}
+      className={`AlternativeIndex_link ${getNewlyCreatedClassName(i)}`}
       key={alternative.id}
       to={`${matchUrl}/alternative/${alternative.id}`}
     >
@@ -26,10 +26,10 @@ export default function ComparisonAlternatives({
   )
 
   return (
-    <div className="ComparisonAlternatives">
+    <div className="AlternativeIndex">
       <ComparisonHeader matchUrl={matchUrl} title="Alternatives" />
       <NewAlternative
-        className="ComparisonAlternatives_new"
+        className="AlternativeIndex_new"
         onSubmit={onSubmitNewAlternative}
       />
       {alternatives.map(renderAlternativeLink)}

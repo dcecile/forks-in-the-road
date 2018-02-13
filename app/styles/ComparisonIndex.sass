@@ -1,4 +1,4 @@
-.Dashboard
+.ComparisonIndex
   display: flex
   flex-flow: row wrap
   flex-grow: 1
@@ -6,12 +6,12 @@
   justify-content: center
   padding: 3.0rem 4.0rem
 
-.Dashboard_item
+.ComparisonIndex_item
   display: flex
   flex-basis: 19rem
   flex-direction: column
   justify-content: center
-  animation: Dashboard_itemPopIn $Timing_dashboardItemPopIn ease-out
+  animation: ComparisonIndex_itemPopIn $Timing_comparisonIndexItemPopIn ease-out
   margin: 1.0rem 1.5rem
   border: 2px solid $Theme_primary
   background: $Theme_primaryBackground
@@ -19,15 +19,15 @@
   min-height: 11rem
   text-align: center
 
-.Dashboard_itemHeader
+.ComparisonIndex_itemHeader
   margin-bottom: 0.5rem
   font-size: 1.8rem
   font-weight: $Font_boldWeight
 
-.Dashboard_itemSubHeader
+.ComparisonIndex_itemSubHeader
   font-size: 1.8rem
   font-weight: $Font_lightWeight
 
-@keyframes Dashboard_itemPopIn
+@keyframes ComparisonIndex_itemPopIn
   0%
     transform: scale(0)

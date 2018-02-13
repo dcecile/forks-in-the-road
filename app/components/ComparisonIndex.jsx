@@ -5,7 +5,7 @@ import Header from "Header"
 import Loading from "Loading"
 import NewComparison from "NewComparison"
 
-export default class Dashboard extends React.Component {
+export default class ComparisonIndex extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -62,7 +62,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <main className={`Dashboard ${this.className}`}>
+      <main className={`ComparisonIndex ${this.className}`}>
         <Header className="Header__dashboardMode">
           <h1 className="Header_titleContent">
             <Link to={this.matchUrl}>Dashboard</Link>
@@ -81,7 +81,7 @@ export default class Dashboard extends React.Component {
     return (
       <React.Fragment>
         <NewComparison
-          className="Dashboard_item"
+          className="ComparisonIndex_item"
           onSubmit={comparison => this.handleSubmitNewComparison(comparison)}
         />
         {this.comparisonStubs.map(comparisonStub =>
@@ -97,9 +97,13 @@ export default class Dashboard extends React.Component {
 
   renderComparisonStub(id, name, size) {
     return (
-      <Link key={id} className="Dashboard_item" to={`/app/comparison/${id}`}>
-        <h2 className="Dashboard_itemHeader">{name}</h2>
-        <h3 className="Dashboard_itemSubHeader">{size} alternatives</h3>
+      <Link
+        key={id}
+        className="ComparisonIndex_item"
+        to={`/app/comparison/${id}`}
+      >
+        <h2 className="ComparisonIndex_itemHeader">{name}</h2>
+        <h3 className="ComparisonIndex_itemSubHeader">{size} alternatives</h3>
       </Link>
     )
   }

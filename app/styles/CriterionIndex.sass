@@ -1,0 +1,26 @@
+.CriterionIndex
+  display: flex
+  flex-direction: column
+
+.CriterionIndex_item
+  margin-top: 2.0rem
+
+  &:first-of-type
+    margin-top: 1.0rem
+
+.CriterionIndex_item__isNewlyCreated
+  animation:
+    name: CriterionIndex_popIn
+    duration: $Timing_criterionIndexPopIn
+    timing-function: ease-out
+
+.CriterionIndex_newItem
+  margin-top: 0.5rem
+
+  .CriterionIndex_item + &
+    margin-top: 1.8rem
+
+@keyframes CriterionIndex_popIn
+  0%
+    transform: scale(0)
+    opacity: 0

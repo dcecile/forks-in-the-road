@@ -4,9 +4,9 @@ import { Route } from "react-router"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 import Alternative from "Alternative"
+import AlternativeIndex from "AlternativeIndex"
 import Button from "Button"
-import ComparisonAlternatives from "ComparisonAlternatives"
-import ComparisonCriteria from "ComparisonCriteria"
+import CriterionIndex from "CriterionIndex"
 import EditComparison from "EditComparison"
 import Header from "Header"
 import Loading from "Loading"
@@ -139,7 +139,7 @@ export default function ComparisonRender({
 
   function renderAlternatives() {
     return (
-      <ComparisonAlternatives
+      <AlternativeIndex
         matchUrl={matchUrl}
         alternatives={comparison.alternatives}
         isAlternativeNewlyCreated={isAlternativeNewlyCreated}
@@ -152,7 +152,7 @@ export default function ComparisonRender({
 
   function renderCriteria() {
     return (
-      <ComparisonCriteria
+      <CriterionIndex
         matchUrl={matchUrl}
         criteria={comparison.criteria}
         isCriterionNewlyCreated={isCriterionNewlyCreated}

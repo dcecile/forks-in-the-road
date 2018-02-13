@@ -4,11 +4,11 @@ import queryString from "query-string"
 import { Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
-import SignIn from "SignIn"
+import ComparisonIndex from "ComparisonIndex"
 import ComparisonState from "ComparisonState"
-import Dashboard from "Dashboard"
 import RouteNotFound from "RouteNotFound"
 import Server from "Server"
+import SignIn from "SignIn"
 import Timing from "Timing"
 import { HeaderSlot } from "Header"
 
@@ -157,7 +157,7 @@ export default class App extends React.Component {
           <Route
             exact
             path="/app/dashboard"
-            render={routeProps => this.renderDashboard(routeProps)}
+            render={routeProps => this.renderComparisonIndex(routeProps)}
           />
           <Route
             path="/app/comparison/:id"
@@ -169,9 +169,9 @@ export default class App extends React.Component {
     )
   }
 
-  renderDashboard(routeProps) {
+  renderComparisonIndex(routeProps) {
     return this.renderSignInRequired(
-      <Dashboard
+      <ComparisonIndex
         className={`App_main ${this.isUserSigningOutClassName}`}
         server={this.server}
         {...routeProps}
