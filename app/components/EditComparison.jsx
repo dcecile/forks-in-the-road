@@ -1,115 +1,111 @@
 import React from "react"
 
 import Button from "Button"
+import EditComparisonState from "EditComparisonState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default class EditComparison extends React.Component {
-  constructor({ comparison }) {
-    super()
-    this.state = {
-      name: comparison.name,
-      alternative_noun: comparison.alternative_noun || "",
-      value_unit: comparison.value_unit || ""
-    }
-  }
+export default function EditComparison(props) {
+  return (
+    <EditComparisonState
+      render={stateProps => render({ ...props, ...stateProps })}
+      {...props}
+    />
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function render({
+  name,
+  alternative_noun,
+  value_unit,
+  onChangeName,
+  onChangeAlternativeNoun,
+  onChangeValueUnit,
+  onSubmit,
+  onCancel
+}) {
+  return (
+    <form
+      className="EditComparison"
+      onSubmit={event =>
+        handleSubmit(event, name, alternative_noun, value_unit, onSubmit)
+      }
+    >
+      {renderName(name, onChangeName)}
+      {renderAlternativeNoun(alternative_noun, onChangeAlternativeNoun)}
+      {renderValueUnit(value_unit, onChangeValueUnit)}
+      {renderButtons(onCancel)}
+    </form>
+  )
+}
 
-  get onCancel() {
-    return this.props.onCancel
-  }
+function renderName(name, onChangeName) {
+  return (
+    <label className="EditComparison_label">
+      Comparison name:
+      <TextInput
+        className="EditComparison_input"
+        required
+        placeholder="Comparison"
+        value={name}
+        onChange={onChangeName}
+      />
+    </label>
+  )
+}
 
-  get name() {
-    return this.state.name
-  }
+function renderAlternativeNoun(alternative_noun, onChangeAlternativeNoun) {
+  return (
+    <label className="EditComparison_label">
+      Alternative noun (optional):
+      <TextInput
+        className="EditComparison_input"
+        placeholder="alternative"
+        value={alternative_noun}
+        onChange={onChangeAlternativeNoun}
+      />
+    </label>
+  )
+}
 
-  get alternative_noun() {
-    return this.state.alternative_noun
-  }
+function renderValueUnit(value_unit, onChangeValueUnit) {
+  return (
+    <label className="EditComparison_label">
+      Value unit (optional):
+      <TextInput
+        className="EditComparison_input"
+        placeholder="$"
+        value={value_unit}
+        onChange={onChangeValueUnit}
+      />
+    </label>
+  )
+}
 
-  get value_unit() {
-    return this.state.value_unit
-  }
-
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleChangeAlternativeNoun(event) {
-    this.setState({
-      alternative_noun: event.target.value
-    })
-  }
-
-  handleChangeValueUnit(event) {
-    this.setState({
-      value_unit: event.target.value
-    })
-  }
-
-  handleSubmit(event) {
-    event.preventDefault()
-    this.onSubmit({
-      name: this.name,
-      alternative_noun: this.alternative_noun || null,
-      value_unit: this.value_unit || null
-    })
-  }
-
-  handleCancel(event) {
-    event.preventDefault()
-    this.onCancel()
-  }
-
-  render() {
-    return (
-      <form
-        className="EditComparison"
-        onSubmit={event => this.handleSubmit(event)}
+function renderButtons(onCancel) {
+  return (
+    <div className="EditComparison_buttonGroup">
+      <SubmitButton className="EditComparison_button">Save</SubmitButton>
+      <Button
+        className="EditComparison_button"
+        onClick={event => handleCancel(event, onCancel)}
       >
-        <label className="EditComparison_label">
-          Comparison name:
-          <TextInput
-            className="EditComparison_input"
-            required
-            placeholder="Comparison"
-            value={this.name}
-            onChange={event => this.handleChangeName(event)}
-          />
-        </label>
-        <label className="EditComparison_label">
-          Alternative noun (optional):
-          <TextInput
-            className="EditComparison_input"
-            placeholder="alternative"
-            value={this.alternative_noun}
-            onChange={event => this.handleChangeAlternativeNoun(event)}
-          />
-        </label>
-        <label className="EditComparison_label">
-          Value unit (optional):
-          <TextInput
-            className="EditComparison_input"
-            placeholder="$"
-            value={this.value_unit}
-            onChange={event => this.handleChangeValueUnit(event)}
-          />
-        </label>
-        <div className="EditComparison_buttonGroup">
-          <SubmitButton className="EditComparison_button">Save</SubmitButton>
-          <Button
-            className="EditComparison_button"
-            onClick={event => this.handleCancel(event)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    )
-  }
+        Cancel
+      </Button>
+    </div>
+  )
+}
+
+function handleSubmit(event, name, alternative_noun, value_unit, onSubmit) {
+  event.preventDefault()
+  onSubmit({
+    name: name,
+    alternative_noun: alternative_noun || null,
+    value_unit: value_unit || null
+  })
+}
+
+function handleCancel(event, onCancel) {
+  event.preventDefault()
+  onCancel()
 }
