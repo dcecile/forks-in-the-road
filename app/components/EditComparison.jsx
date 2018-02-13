@@ -1,45 +1,43 @@
 import React from "react"
 
 import Button from "Button"
-import EditComparisonState from "EditComparisonState"
+import FieldType from "FieldType"
+import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditComparison(props) {
+  const { comparison } = props
+  const fields = {
+    name: FieldType.string,
+    alternative_noun: FieldType.nullString,
+    value_unit: FieldType.nullString
+  }
+
   return (
-    <EditComparisonState
+    <FormState
+      input={comparison}
+      fields={fields}
       render={stateProps => render({ ...props, ...stateProps })}
-      {...props}
     />
   )
 }
 
-function render({
-  name,
-  alternative_noun,
-  value_unit,
-  onChangeName,
-  onChangeAlternativeNoun,
-  onChangeValueUnit,
-  onSubmit,
-  onCancel
-}) {
+function render({ fields, onSubmit, onCancel }) {
   return (
     <form
       className="EditComparison"
-      onSubmit={event =>
-        handleSubmit(event, name, alternative_noun, value_unit, onSubmit)
-      }
+      onSubmit={event => handleSubmit(event, fields, onSubmit)}
     >
-      {renderName(name, onChangeName)}
-      {renderAlternativeNoun(alternative_noun, onChangeAlternativeNoun)}
-      {renderValueUnit(value_unit, onChangeValueUnit)}
+      {renderName(fields.name)}
+      {renderAlternativeNoun(fields.alternative_noun)}
+      {renderValueUnit(fields.value_unit)}
       {renderButtons(onCancel)}
     </form>
   )
 }
 
-function renderName(name, onChangeName) {
+function renderName({ value, onChange }) {
   return (
     <label className="EditComparison_label">
       Comparison name:
@@ -47,36 +45,36 @@ function renderName(name, onChangeName) {
         className="EditComparison_input"
         required
         placeholder="Comparison"
-        value={name}
-        onChange={onChangeName}
+        value={value}
+        onChange={onChange}
       />
     </label>
   )
 }
 
-function renderAlternativeNoun(alternative_noun, onChangeAlternativeNoun) {
+function renderAlternativeNoun({ value, onChange }) {
   return (
     <label className="EditComparison_label">
       Alternative noun (optional):
       <TextInput
         className="EditComparison_input"
         placeholder="alternative"
-        value={alternative_noun}
-        onChange={onChangeAlternativeNoun}
+        value={value}
+        onChange={onChange}
       />
     </label>
   )
 }
 
-function renderValueUnit(value_unit, onChangeValueUnit) {
+function renderValueUnit({ value, onChange }) {
   return (
     <label className="EditComparison_label">
       Value unit (optional):
       <TextInput
         className="EditComparison_input"
         placeholder="$"
-        value={value_unit}
-        onChange={onChangeValueUnit}
+        value={value}
+        onChange={onChange}
       />
     </label>
   )
@@ -96,12 +94,12 @@ function renderButtons(onCancel) {
   )
 }
 
-function handleSubmit(event, name, alternative_noun, value_unit, onSubmit) {
+function handleSubmit(event, fields, onSubmit) {
   event.preventDefault()
   onSubmit({
-    name: name,
-    alternative_noun: alternative_noun || null,
-    value_unit: value_unit || null
+    name: fields.name.output(),
+    alternative_noun: fields.alternative_noun.output(),
+    value_unit: fields.value_unit.output()
   })
 }
 
