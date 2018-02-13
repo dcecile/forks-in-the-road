@@ -37,44 +37,46 @@ function render({ fields, onSubmit, onCancel }) {
   )
 }
 
-function renderName({ value, onChange }) {
+function renderName(field) {
   return (
-    <label className="EditComparison_label">
-      Comparison name:
-      <TextInput
-        className="EditComparison_input"
-        required
-        placeholder="Comparison"
-        value={value}
-        onChange={onChange}
-      />
-    </label>
+    <CustomLabeledTextInput
+      field={field}
+      labelText="Comparison name"
+      required
+      placeholder="Comparison"
+    />
   )
 }
 
-function renderAlternativeNoun({ value, onChange }) {
+function renderAlternativeNoun(field) {
   return (
-    <label className="EditComparison_label">
-      Alternative noun (optional):
-      <TextInput
-        className="EditComparison_input"
-        placeholder="alternative"
-        value={value}
-        onChange={onChange}
-      />
-    </label>
+    <CustomLabeledTextInput
+      field={field}
+      labelText="Alternative noun (optional)"
+      placeholder="alternative"
+    />
   )
 }
 
-function renderValueUnit({ value, onChange }) {
+function renderValueUnit(field) {
+  return (
+    <CustomLabeledTextInput
+      field={field}
+      labelText="Value unit (optional)"
+      placeholder="$"
+    />
+  )
+}
+
+function CustomLabeledTextInput({ field, labelText, ...props }) {
   return (
     <label className="EditComparison_label">
-      Value unit (optional):
+      {labelText}:
       <TextInput
         className="EditComparison_input"
-        placeholder="$"
-        value={value}
-        onChange={onChange}
+        value={field.value}
+        onChange={field.onChange}
+        {...props}
       />
     </label>
   )
