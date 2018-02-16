@@ -11,7 +11,7 @@
     "jquery": "^3.3.1",
     "node-sass": "^4.5.3",
     "popper.js": "^1.12.3",
-    "postcss-import": "^11.0.0",
+    "postcss-import": "^11.1.0",
     "postcss-inline-svg": "^3.0.0",
     "prop-types": "^15.6.0",
     "query-string": "^5.1.0",
