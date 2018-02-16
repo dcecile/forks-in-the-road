@@ -80,7 +80,7 @@ export default class App extends React.Component {
     this.setState({ isUserSigningInChanging: true })
     await Timing.appUserSigningInChanging()
     this.setState({ isUserSigningInChanging: false, isUserSigningIn: true })
-    const clientID = process.env.FORKSINTHEROAD_GITHUB_CLIENT_ID
+    const clientID = process.env.GITHUB_CLIENT_ID
     const params = queryString.stringify({
       client_id: clientID,
       redirect_uri: window.location.href

@@ -1,6 +1,15 @@
+const webpack = require("webpack")
+
 const environment = require("./environment")
 
 const config = environment.toWebpackConfig()
+
+// Set development environment variables
+config.plugins.push(
+  new webpack.EnvironmentPlugin({
+    GITHUB_CLIENT_ID: process.env.FORKSINTHEROAD_GITHUB_DEV_CLIENT_ID
+  })
+)
 
 // Show build stats
 // https://webpack.js.org/configuration/stats/

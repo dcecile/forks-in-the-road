@@ -5,10 +5,18 @@ require "base64"
 # UsersController handles GitHub authorization
 class UsersController < ApplicationController
   def initialize
+    client_id, client_secret = github_client_keys
     @application_github_client = Octokit::Client.new(
-      client_id: ENV["FORKSINTHEROAD_GITHUB_CLIENT_ID"],
-      client_secret: ENV["FORKSINTHEROAD_GITHUB_CLIENT_SECRET"]
+      client_id: client_id,
+      client_secret: client_secret
     )
+  end
+
+  def github_client_keys
+    env = Rails.env.development? ? "DEV" : "PROD"
+    %w[ID SECRET].map do |key|
+      ENV["FORKSINTHEROAD_GITHUB_#{env}_CLIENT_#{key}"]
+    end
   end
 
   def authorize
