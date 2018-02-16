@@ -120,7 +120,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.1)
-    puma (3.11.0)
+    puma (3.11.2)
     rack (2.0.4)
     rack-proxy (0.6.3)
       rack
@@ -215,7 +215,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   octokit (~> 4.0)
   overcommit
-  puma (~> 3.7)
+  puma (~> 3.11)
   rails (~> 5.1.4)
   react-rails
   rubocop
