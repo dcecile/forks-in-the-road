@@ -1,82 +1,75 @@
 import MdAdd from "react-icons/lib/md/add"
 import React from "react"
 
+import FieldType from "FieldType"
+import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-const initialState = {
-  name: "",
-  full_value: ""
+export default function NewCriterion(props) {
+  const fields = {
+    name: FieldType.string,
+    full_value: FieldType.float
+  }
+
+  return (
+    <FormState
+      fields={fields}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
 }
 
-export default class NewCriterion extends React.Component {
-  constructor() {
-    super()
-    this.state = initialState
-  }
+function render({ className, fields, onSubmit, onReinitForm }) {
+  return (
+    <form
+      className={`NewCriterion ${className}`}
+      onSubmit={event => handleSubmit(event, fields, onSubmit, onReinitForm)}
+    >
+      {renderName(fields.name)}
+      {renderFullValue(fields.full_value)}
+      {renderButton()}
+    </form>
+  )
+}
 
-  get className() {
-    return this.props.className
-  }
+function renderName({ value, onChange }) {
+  return (
+    <TextInput
+      className="NewCriterion_name"
+      required
+      placeholder="New criterion name"
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
+function renderFullValue({ value, onChange }) {
+  return (
+    <NumberInput
+      className="NewCriterion_fullValue"
+      required
+      placeholder="New criterion full value"
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function renderButton() {
+  return (
+    <SubmitButton className="NewCriterion_submit">
+      <MdAdd className="NewCriterion_submitIcon" /> Add
+    </SubmitButton>
+  )
+}
 
-  get name() {
-    return this.state.name
-  }
-
-  get full_value() {
-    return this.state.full_value
-  }
-
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleChangeFullValue(event) {
-    this.setState({
-      full_value: event.target.value
-    })
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault()
-    await this.onSubmit({
-      name: this.name,
-      full_value: parseFloat(this.full_value)
-    })
-    this.setState(initialState)
-  }
-
-  render() {
-    return (
-      <form
-        className={`NewCriterion ${this.className}`}
-        onSubmit={event => this.handleSubmit(event)}
-      >
-        <TextInput
-          className="NewCriterion_name"
-          required
-          placeholder="New criterion name"
-          value={this.name}
-          onChange={event => this.handleChangeName(event)}
-        />
-        <NumberInput
-          className="NewCriterion_fullValue"
-          required
-          placeholder="New criterion full value"
-          value={this.full_value}
-          onChange={event => this.handleChangeFullValue(event)}
-        />
-        <SubmitButton className="NewCriterion_submit">
-          <MdAdd className="NewCriterion_submitIcon" /> Add
-        </SubmitButton>
-      </form>
-    )
-  }
+async function handleSubmit(event, fields, onSubmit, onReinitForm) {
+  event.preventDefault()
+  await onSubmit({
+    name: fields.name.output(),
+    full_value: fields.full_value.output()
+  })
+  onReinitForm()
 }

@@ -1,96 +1,86 @@
 import React from "react"
 
 import Button from "Button"
+import FieldType from "FieldType"
+import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
-export default class EditEstimate extends React.Component {
-  constructor({ estimate }) {
-    super()
-    this.state = {
-      estimate: estimate.estimate * 100
-    }
+export default function EditComparison(props) {
+  const { estimate } = props
+  const fields = {
+    estimate: FieldType.floatPercent
   }
 
-  get id() {
-    return this.props.estimate.id
-  }
+  return (
+    <FormState
+      input={estimate}
+      fields={fields}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
+}
 
-  get criterion() {
-    return this.props.criterion
-  }
+function render({ estimate, criterion, fields, onSubmit, onCancel, onReset }) {
+  return (
+    <form
+      className="EditEstimate"
+      onSubmit={event => handleSubmit(event, estimate, fields, onSubmit)}
+    >
+      {renderEstimate(criterion, fields.estimate)}
+      {renderButtons(onCancel, onReset)}
+    </form>
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function renderEstimate(criterion, { value, onChange }) {
+  return (
+    <NumberInput
+      className="EditEstimate_input"
+      required
+      min="0"
+      max="100"
+      placeholder={`Estimate: ${criterion.default_estimate}`}
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
 
-  get onCancel() {
-    return this.props.onCancel
-  }
-
-  get onReset() {
-    return this.props.onReset
-  }
-
-  get estimate() {
-    return this.state.estimate
-  }
-
-  handleChangeEstimate(event) {
-    this.setState({
-      estimate: event.target.value
-    })
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault()
-    await this.onSubmit({
-      id: this.id,
-      estimate: parseFloat(this.estimate) / 100
-    })
-  }
-
-  handleCancel(event) {
-    event.preventDefault()
-    this.onCancel()
-  }
-
-  handleReset(event) {
-    event.preventDefault()
-    this.onReset()
-  }
-
-  render() {
-    return (
-      <form
-        className="EditEstimate"
-        onSubmit={event => this.handleSubmit(event)}
+function renderButtons(onCancel, onReset) {
+  return (
+    <div className="EditEstimate_buttonGroup">
+      <SubmitButton className="EditEstimate_button">Save</SubmitButton>
+      <Button
+        className="EditEstimate_button"
+        onClick={event => handleCancel(event, onCancel)}
       >
-        <NumberInput
-          className="EditEstimate_input"
-          required
-          min="0"
-          max="100"
-          placeholder={`Estimate: ${this.criterion.default_estimate}`}
-          value={this.estimate}
-          onChange={event => this.handleChangeEstimate(event)}
-        />
-        <div className="EditEstimate_buttonGroup">
-          <SubmitButton className="EditEstimate_button">Save</SubmitButton>
-          <Button
-            className="EditEstimate_button"
-            onClick={event => this.handleCancel(event)}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="EditEstimate_resetButton"
-            onClick={event => this.handleReset(event)}
-          >
-            Reset
-          </Button>
-        </div>
-      </form>
-    )
-  }
+        Cancel
+      </Button>
+      <Button
+        className="EditEstimate_resetButton"
+        onClick={event => handleReset(event, onReset)}
+      >
+        Reset
+      </Button>
+    </div>
+  )
+}
+
+async function handleSubmit(event, estimate, fields, onSubmit) {
+  event.preventDefault()
+  await onSubmit({
+    id: estimate.id,
+    estimate: fields.estimate.output()
+  })
+}
+
+function handleCancel(event, onCancel) {
+  event.preventDefault()
+  onCancel()
+}
+
+function handleReset(event, onReset) {
+  event.preventDefault()
+  onReset()
 }

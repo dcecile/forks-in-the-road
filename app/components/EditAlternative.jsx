@@ -1,100 +1,90 @@
 import React from "react"
 
 import Button from "Button"
+import FieldType from "FieldType"
+import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default class EditAlternative extends React.Component {
-  constructor({ alternative }) {
-    super()
-    this.state = {
-      name: alternative.name,
-      url: alternative.url || ""
-    }
+export default function EditAlternative(props) {
+  const { alternative } = props
+  const fields = {
+    name: FieldType.string,
+    url: FieldType.nullString
   }
 
-  get className() {
-    return this.props.className
-  }
+  return (
+    <FormState
+      input={alternative}
+      fields={fields}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
+}
 
-  get id() {
-    return this.props.alternative.id
-  }
+function render({ className, alternative, fields, onSubmit, onCancel }) {
+  return (
+    <form
+      className={`EditAlternative ${className}`}
+      onSubmit={event => handleSubmit(event, alternative, fields, onSubmit)}
+    >
+      <div className="EditAlternative_row">
+        {renderName(fields.name)}
+        {renderURL(fields.url)}
+      </div>
+      <div className="EditAlternative_buttonRow">{renderButtons(onCancel)}</div>
+    </form>
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function renderName({ value, onChange }) {
+  return (
+    <TextInput
+      className="EditAlternative_name"
+      required
+      placeholder="Alternative name"
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
 
-  get onCancel() {
-    return this.props.onCancel
-  }
+function renderURL({ value, onChange }) {
+  return (
+    <TextInput
+      className="EditAlternative_url"
+      type="text"
+      placeholder="Alternative URL (optional)"
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
 
-  get name() {
-    return this.state.name
-  }
-
-  get url() {
-    return this.state.url
-  }
-
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleChangeUrl(event) {
-    this.setState({
-      url: event.target.value
-    })
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault()
-    await this.onSubmit({
-      id: this.id,
-      name: this.name,
-      url: this.url || null
-    })
-  }
-
-  handleCancel(event) {
-    event.preventDefault()
-    this.onCancel()
-  }
-
-  render() {
-    return (
-      <form
-        className={`EditAlternative ${this.className}`}
-        onSubmit={event => this.handleSubmit(event)}
+function renderButtons(onCancel) {
+  return (
+    <React.Fragment>
+      <SubmitButton className="EditAlternative_submit">Save</SubmitButton>
+      <Button
+        className="EditAlternative_cancel"
+        onClick={event => handleCancel(event, onCancel)}
       >
-        <div className="EditAlternative_row">
-          <TextInput
-            className="EditAlternative_name"
-            required
-            placeholder="Alternative name"
-            value={this.name}
-            onChange={event => this.handleChangeName(event)}
-          />
-          <TextInput
-            className="EditAlternative_url"
-            type="text"
-            placeholder="Alternative URL (optional)"
-            value={this.url}
-            onChange={event => this.handleChangeUrl(event)}
-          />
-        </div>
-        <div className="EditAlternative_buttonRow">
-          <SubmitButton className="EditAlternative_submit">Save</SubmitButton>
-          <Button
-            className="EditAlternative_cancel"
-            onClick={event => this.handleCancel(event)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    )
-  }
+        Cancel
+      </Button>
+    </React.Fragment>
+  )
+}
+
+async function handleSubmit(event, alternative, fields, onSubmit) {
+  event.preventDefault()
+  await onSubmit({
+    id: alternative.id,
+    name: fields.name.output(),
+    url: fields.url.output()
+  })
+}
+
+function handleCancel(event, onCancel) {
+  event.preventDefault()
+  onCancel()
 }

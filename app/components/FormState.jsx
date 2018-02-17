@@ -29,8 +29,7 @@ export default class FormState extends React.Component {
   }
 
   createInitState() {
-    const object = this.mapFields((fieldName, fieldType) => fieldType.init)
-    return this.createInputState(object)
+    return this.mapFields(() => "")
   }
 
   createFieldObjects() {

@@ -1,165 +1,134 @@
 import React from "react"
 
 import Button from "Button"
+import FieldType from "FieldType"
+import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default class EditCriterion extends React.Component {
-  constructor({ criterion }) {
-    super()
-    this.state = {
-      name: criterion.name,
-      description: criterion.description || "",
-      full_value: this.convertFromFullValue(criterion),
-      default_estimate: this.convertFromDefaultEstimate(criterion)
-    }
+export default function EditCriterion(props) {
+  const { criterion } = props
+  const fields = {
+    name: FieldType.string,
+    description: FieldType.nullString,
+    full_value: FieldType.float,
+    default_estimate: FieldType.nullFloatPercent
   }
 
-  get id() {
-    return this.props.criterion.id
-  }
+  return (
+    <FormState
+      input={criterion}
+      fields={fields}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function render({ criterion, fields, onSubmit, onCancel }) {
+  return (
+    <form
+      className="EditCriterion"
+      onSubmit={event => handleSubmit(event, criterion, fields, onSubmit)}
+    >
+      {renderName(fields.name)}
+      {renderDescription(fields.description)}
+      {renderFullValue(fields.full_value)}
+      {renderDefaultEstimate(fields.default_estimate)}
+      {renderButtons(onCancel)}
+    </form>
+  )
+}
 
-  get onCancel() {
-    return this.props.onCancel
-  }
+function renderName(field) {
+  return (
+    <CustomLabeledInput
+      field={field}
+      labelText="Criterion name"
+      input={TextInput}
+      required
+      placeholder="Criterion"
+    />
+  )
+}
 
-  get name() {
-    return this.state.name
-  }
+function renderDescription(field) {
+  return (
+    <CustomLabeledInput
+      field={field}
+      labelText="Description (optional)"
+      input={TextInput}
+      placeholder="Why this criterion is important"
+    />
+  )
+}
 
-  get description() {
-    return this.state.description
-  }
+function renderFullValue(field) {
+  return (
+    <CustomLabeledInput
+      field={field}
+      labelText="Full value"
+      input={NumberInput}
+      required
+      placeholder="1000"
+    />
+  )
+}
 
-  get full_value() {
-    return this.state.full_value
-  }
+function renderDefaultEstimate(field) {
+  return (
+    <CustomLabeledInput
+      field={field}
+      labelText="Default estimate (optional)"
+      input={NumberInput}
+      min="0"
+      max="100"
+      placeholder="50"
+    />
+  )
+}
 
-  get default_estimate() {
-    return this.state.default_estimate
-  }
+function CustomLabeledInput({ field, labelText, input, ...props }) {
+  const Input = input
+  return (
+    <label className="EditCriterion_label">
+      {labelText}:
+      <Input
+        className="EditCriterion_input"
+        value={field.value}
+        onChange={field.onChange}
+        {...props}
+      />
+    </label>
+  )
+}
 
-  convertFromFullValue(criterion) {
-    return criterion.full_value.toString()
-  }
-
-  convertToFullValue() {
-    return parseFloat(this.full_value)
-  }
-
-  convertFromDefaultEstimate(criterion) {
-    return criterion.default_estimate !== null
-      ? (criterion.default_estimate * 100).toString()
-      : ""
-  }
-
-  convertToDefaultEstimate() {
-    return this.default_estimate !== ""
-      ? parseFloat(this.default_estimate) / 100
-      : null
-  }
-
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleChangeDescription(event) {
-    this.setState({
-      description: event.target.value
-    })
-  }
-
-  handleChangeFullValue(event) {
-    this.setState({
-      full_value: event.target.value
-    })
-  }
-
-  handleChangeDefaultEstimate(event) {
-    this.setState({
-      default_estimate: event.target.value
-    })
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault()
-    await this.onSubmit({
-      id: this.id,
-      name: this.name,
-      description: this.description || null,
-      full_value: this.convertToFullValue(),
-      default_estimate: this.convertToDefaultEstimate()
-    })
-  }
-
-  handleCancel(event) {
-    event.preventDefault()
-    this.onCancel()
-  }
-
-  render() {
-    return (
-      <form
-        className="EditCriterion"
-        onSubmit={event => this.handleSubmit(event)}
+function renderButtons(onCancel) {
+  return (
+    <div className="EditCriterion_buttonGroup">
+      <SubmitButton className="EditCriterion_button">Save</SubmitButton>
+      <Button
+        className="EditCriterion_button"
+        onClick={event => handleCancel(event, onCancel)}
       >
-        <label className="EditCriterion_label">
-          Criterion name:
-          <TextInput
-            className="EditCriterion_input"
-            required
-            placeholder="Criterion"
-            value={this.name}
-            onChange={event => this.handleChangeName(event)}
-          />
-        </label>
-        <label className="EditCriterion_label">
-          Description (optional):
-          <TextInput
-            className="EditCriterion_input"
-            placeholder="Why this criterion is important"
-            value={this.description}
-            onChange={event => this.handleChangeDescription(event)}
-          />
-        </label>
-        <label className="EditCriterion_label">
-          Full value:
-          <NumberInput
-            className="EditCriterion_input"
-            required
-            placeholder="1000"
-            value={this.full_value}
-            onChange={event => this.handleChangeFullValue(event)}
-          />
-        </label>
-        <label className="EditCriterion_label">
-          Default estimate (optional):
-          <NumberInput
-            className="EditCriterion_input"
-            min="0"
-            max="100"
-            placeholder="50"
-            value={this.default_estimate}
-            onChange={event => this.handleChangeDefaultEstimate(event)}
-          />
-        </label>
-        <div className="EditCriterion_buttonGroup">
-          <SubmitButton className="EditCriterion_button">Save</SubmitButton>
-          <Button
-            className="EditCriterion_button"
-            onClick={event => this.handleCancel(event)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    )
-  }
+        Cancel
+      </Button>
+    </div>
+  )
+}
+
+async function handleSubmit(event, criterion, fields, onSubmit) {
+  event.preventDefault()
+  await onSubmit({
+    id: criterion.id,
+    name: fields.name.output(),
+    description: fields.description.output(),
+    full_value: fields.full_value.output(),
+    default_estimate: fields.default_estimate.output()
+  })
+}
+
+function handleCancel(event, onCancel) {
+  event.preventDefault()
+  onCancel()
 }

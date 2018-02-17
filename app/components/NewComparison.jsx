@@ -1,60 +1,60 @@
 import MdLibraryAdd from "react-icons/lib/md/library-add"
 import React from "react"
 
+import FieldType from "FieldType"
+import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default class NewComparison extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      name: ""
-    }
+export default function NewComparison(props) {
+  const fields = {
+    name: FieldType.string
   }
 
-  get className() {
-    return this.props.className
-  }
+  return (
+    <FormState
+      fields={fields}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
+}
 
-  get onSubmit() {
-    return this.props.onSubmit
-  }
+function render({ className, fields, onSubmit }) {
+  return (
+    <form
+      className={`NewComparison ${className}`}
+      onSubmit={event => handleSubmit(event, fields, onSubmit)}
+    >
+      {renderName(fields.name)}
+      {renderButton()}
+    </form>
+  )
+}
 
-  get name() {
-    return this.state.name
-  }
+function renderName({ value, onChange }) {
+  return (
+    <TextInput
+      className="NewComparison_input"
+      type="text"
+      required
+      placeholder="New comparison"
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
 
-  handleChangeName(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
+function renderButton() {
+  return (
+    <SubmitButton className="NewComparison_button">
+      <MdLibraryAdd /> Create
+    </SubmitButton>
+  )
+}
 
-  async handleSubmit(event) {
-    event.preventDefault()
-    await this.onSubmit({
-      name: this.name
-    })
-  }
-
-  render() {
-    return (
-      <form
-        className={`NewComparison ${this.className}`}
-        onSubmit={event => this.handleSubmit(event)}
-      >
-        <TextInput
-          className="NewComparison_input"
-          type="text"
-          required
-          placeholder="New comparison"
-          value={this.name}
-          onChange={event => this.handleChangeName(event)}
-        />
-        <SubmitButton className="NewComparison_button">
-          <MdLibraryAdd /> Create
-        </SubmitButton>
-      </form>
-    )
-  }
+async function handleSubmit(event, fields, onSubmit) {
+  event.preventDefault()
+  await onSubmit({
+    name: fields.name.output()
+  })
 }
