@@ -33,25 +33,23 @@ function render({ className, fields, onSubmit, onReinitForm }) {
   )
 }
 
-function renderName({ value, onChange }) {
+function renderName(field) {
   return (
     <TextInput
       className="NewAlternative_name"
       required
       placeholder="New alternative name"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }
 
-function renderURL({ value, onChange }) {
+function renderURL(field) {
   return (
     <TextInput
       className="NewAlternative_url"
       placeholder="New alternative URL (optional)"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }

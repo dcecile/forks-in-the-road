@@ -8,6 +8,10 @@ export default class Input extends React.Component {
     }
   }
 
+  get field() {
+    return this.props.field
+  }
+
   get hasFocus() {
     return this.state.hasFocus
   }
@@ -25,7 +29,11 @@ export default class Input extends React.Component {
   }
 
   render() {
-    return this.renderProps(this.props)
+    return this.renderProps({
+      ...this.props,
+      value: this.field.value,
+      onChange: this.field.onChange
+    })
   }
 
   renderProps({

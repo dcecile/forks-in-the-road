@@ -72,12 +72,7 @@ function CustomLabeledTextInput({ field, labelText, ...props }) {
   return (
     <label className="EditComparison_label">
       {labelText}:
-      <TextInput
-        className="EditComparison_input"
-        value={field.value}
-        onChange={field.onChange}
-        {...props}
-      />
+      <TextInput className="EditComparison_input" field={field} {...props} />
     </label>
   )
 }

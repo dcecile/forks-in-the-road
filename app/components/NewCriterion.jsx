@@ -34,25 +34,24 @@ function render({ className, fields, onSubmit, onReinitForm }) {
   )
 }
 
-function renderName({ value, onChange }) {
+function renderName(field) {
   return (
     <TextInput
       className="NewCriterion_name"
       required
       placeholder="New criterion name"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }
-function renderFullValue({ value, onChange }) {
+
+function renderFullValue(field) {
   return (
     <NumberInput
       className="NewCriterion_fullValue"
       required
       placeholder="New criterion full value"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }

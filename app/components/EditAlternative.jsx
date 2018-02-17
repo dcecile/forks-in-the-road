@@ -37,26 +37,24 @@ function render({ className, alternative, fields, onSubmit, onCancel }) {
   )
 }
 
-function renderName({ value, onChange }) {
+function renderName(field) {
   return (
     <TextInput
       className="EditAlternative_name"
       required
       placeholder="Alternative name"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }
 
-function renderURL({ value, onChange }) {
+function renderURL(field) {
   return (
     <TextInput
       className="EditAlternative_url"
       type="text"
       placeholder="Alternative URL (optional)"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }

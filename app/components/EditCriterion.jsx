@@ -93,12 +93,7 @@ function CustomLabeledInput({ field, labelText, input, ...props }) {
   return (
     <label className="EditCriterion_label">
       {labelText}:
-      <Input
-        className="EditCriterion_input"
-        value={field.value}
-        onChange={field.onChange}
-        {...props}
-      />
+      <Input className="EditCriterion_input" field={field} {...props} />
     </label>
   )
 }

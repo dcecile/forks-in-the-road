@@ -31,15 +31,14 @@ function render({ className, fields, onSubmit }) {
   )
 }
 
-function renderName({ value, onChange }) {
+function renderName(field) {
   return (
     <TextInput
       className="NewComparison_input"
       type="text"
       required
       placeholder="New comparison"
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }

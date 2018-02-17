@@ -30,7 +30,7 @@ function render({ criterion, fields, onSubmit }) {
   )
 }
 
-function renderEstimate(criterion, { value, onChange }) {
+function renderEstimate(criterion, field) {
   return (
     <NumberInput
       className="NewEstimate_input"
@@ -38,8 +38,7 @@ function renderEstimate(criterion, { value, onChange }) {
       min="0"
       max="100"
       placeholder={`Estimate: ${criterion.default_estimate}`}
-      value={value}
-      onChange={onChange}
+      field={field}
     />
   )
 }
