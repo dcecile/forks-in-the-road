@@ -49,9 +49,9 @@ export default class EditAlternative extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
-    this.onSubmit({
+    await this.onSubmit({
       id: this.id,
       name: this.name,
       url: this.url || null

@@ -29,9 +29,9 @@ export default class NewEstimate extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
-    this.onSubmit({
+    await this.onSubmit({
       criterion_id: this.criterion.id,
       estimate: parseFloat(this.estimate) / 100
     })

@@ -44,9 +44,9 @@ export default class NewCriterion extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
-    this.onSubmit({
+    await this.onSubmit({
       name: this.name,
       full_value: parseFloat(this.full_value)
     })

@@ -5,7 +5,9 @@ import { entries, fromEntries } from "Utils"
 export default class FormState extends React.Component {
   constructor(props) {
     super(props)
-    this.state = this.createInputState(this.input)
+    this.state = this.input
+      ? this.createInputState(this.input)
+      : this.createInitState()
   }
 
   get input() {
@@ -24,6 +26,11 @@ export default class FormState extends React.Component {
     return this.mapFields((fieldName, fieldType) =>
       fieldType.input(object[fieldName])
     )
+  }
+
+  createInitState() {
+    const object = this.mapFields((fieldName, fieldType) => fieldType.init)
+    return this.createInputState(object)
   }
 
   createFieldObjects() {
@@ -57,7 +64,14 @@ export default class FormState extends React.Component {
     })
   }
 
+  handleReinit() {
+    this.setState(this.createInitState())
+  }
+
   render() {
-    return this.renderProp({ fields: this.createFieldObjects() })
+    return this.renderProp({
+      fields: this.createFieldObjects(),
+      onReinitForm: () => this.handleReinit()
+    })
   }
 }

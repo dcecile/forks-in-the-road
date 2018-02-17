@@ -4,14 +4,12 @@ import React from "react"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-const initialState = {
-  name: ""
-}
-
 export default class NewComparison extends React.Component {
   constructor() {
     super()
-    this.state = initialState
+    this.state = {
+      name: ""
+    }
   }
 
   get className() {
@@ -32,12 +30,11 @@ export default class NewComparison extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
-    this.onSubmit({
+    await this.onSubmit({
       name: this.name
     })
-    this.setState(initialState)
   }
 
   render() {

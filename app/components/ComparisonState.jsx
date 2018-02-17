@@ -126,7 +126,11 @@ export default class ComparisonState extends React.Component {
     this.setState({
       isAlternativeNewlyCreated: true
     })
-    await Timing.comparisonAlternativesHighlightLink()
+    this.animateNewAlternative()
+  }
+
+  async animateNewAlternative() {
+    await Timing.alternativeIndexHighlightLink()
     this.setState({
       isAlternativeNewlyCreated: false
     })
@@ -153,7 +157,11 @@ export default class ComparisonState extends React.Component {
     this.setState({
       isCriterionNewlyCreated: true
     })
-    await Timing.comparisonCriteriaPopIn()
+    this.animateNewCriterion()
+  }
+
+  async animateNewCriterion() {
+    await Timing.criterionIndexPopIn()
     this.setState({
       isCriterionNewlyCreated: false
     })

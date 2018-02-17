@@ -96,9 +96,9 @@ function renderButtons(onCancel) {
   )
 }
 
-function handleSubmit(event, fields, onSubmit) {
+async function handleSubmit(event, fields, onSubmit) {
   event.preventDefault()
-  onSubmit({
+  await onSubmit({
     name: fields.name.output(),
     alternative_noun: fields.alternative_noun.output(),
     value_unit: fields.value_unit.output()

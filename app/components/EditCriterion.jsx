@@ -88,9 +88,9 @@ export default class EditCriterion extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
-    this.onSubmit({
+    await this.onSubmit({
       id: this.id,
       name: this.name,
       description: this.description || null,
