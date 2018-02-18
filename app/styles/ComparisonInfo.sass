@@ -1,0 +1,16 @@
+.ComparisonInfo
+  overflow: hidden
+
+.ComparisonInfo_content
+  transition:
+    property: transform, opacity
+    duration: $Timing_comparisonInfoEditStateChange
+    timing-function: ease
+
+.ComparisonInfo_content__isChangingState
+  transform: translateY(calc(-100% - 6.0rem))
+  opacity: 0.5
+
+.ComparisonInfo_editButton
+  padding: 0.4rem 1.0em
+  font-size: 1.2rem

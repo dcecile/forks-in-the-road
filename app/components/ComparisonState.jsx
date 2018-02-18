@@ -62,9 +62,6 @@ export default class ComparisonState extends React.Component {
 
   get handlers() {
     return {
-      handleBeginEdit: () => this.handleBeginEdit(),
-      handleCancelEdit: () => this.handleCancelEdit(),
-      handleSubmitEdit: comparison => this.handleSubmitEdit(comparison),
       handleSubmitEditAlternative: alternative =>
         this.handleSubmitEditAlternative(alternative),
       handleSubmitEditCriterion: criterion =>
@@ -213,38 +210,6 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  async handleBeginEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.comparisonEditStateChange()
-    this.setState({
-      isEditing: true,
-      isEditStateChanging: false
-    })
-  }
-
-  async handleSubmitEdit(comparison) {
-    console.log("Patching comparison", comparison)
-    const response = await this.server.patch(
-      `/comparisons/${this.comparison.id}`,
-      comparison
-    )
-    this.setComparisonState(response.data)
-    await this.handleCancelEdit()
-  }
-
-  async handleCancelEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.comparisonEditStateChange()
-    this.setState({
-      isEditing: false,
-      isEditStateChanging: false
-    })
-  }
-
   render() {
     return (
       <ComparisonRender
@@ -258,6 +223,10 @@ export default class ComparisonState extends React.Component {
         isLoading={this.isLoading}
         location={this.location}
         matchUrl={this.matchUrl}
+        server={this.server}
+        onSetComparisonState={comparisonChanges =>
+          this.setComparisonState(comparisonChanges)
+        }
       />
     )
   }

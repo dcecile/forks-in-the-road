@@ -41,24 +41,6 @@
     direction: reverse
     fill-mode: forwards
 
-.Comparison_infoEditSection
-  @extend .Comparison_section
-  overflow: hidden
-
-.Comparison_infoEditContent
-  transition:
-    property: transform, opacity
-    duration: $Timing_comparisonEditStateChange
-    timing-function: ease
-
-.Comparison_infoEditContent__isChangingState
-  transform: translateY(calc(-100% - 6.0rem))
-  opacity: 0.5
-
-.Comparison_infoEditButton
-  padding: 0.4rem 1.0em
-  font-size: 1.2rem
-
 @keyframes Comparison_fadeIn
   0%
     opacity: 0

@@ -5,9 +5,8 @@ import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 import Alternative from "Alternative"
 import AlternativeIndex from "AlternativeIndex"
-import Button from "Button"
+import ComparisonInfo from "ComparisonInfo"
 import CriterionIndex from "CriterionIndex"
-import EditComparison from "EditComparison"
 import Header from "Header"
 import Loading from "Loading"
 import RouteNotFound from "RouteNotFound"
@@ -20,16 +19,12 @@ export default function ComparisonRender({
   handlers,
   isAlternativeNewlyCreated,
   isCriterionNewlyCreated,
-  isEditStateChanging,
-  isEditing,
   isLoading,
   location,
-  matchUrl
+  matchUrl,
+  server,
+  onSetComparisonState
 }) {
-  const editStateChangingClassName = isEditStateChanging
-    ? "Comparison_infoEditContent__isChangingState"
-    : ""
-
   function render() {
     return (
       <div className="Comparison">
@@ -99,41 +94,13 @@ export default function ComparisonRender({
             </CSSTransition>
           </TransitionGroup>
         </div>
-        {renderInfo()}
+        <ComparisonInfo
+          className="Comparison_section"
+          comparison={comparison}
+          server={server}
+          onSetComparisonState={onSetComparisonState}
+        />
       </React.Fragment>
-    )
-  }
-
-  function renderInfo() {
-    return (
-      <section className="Comparison_infoEditSection">
-        <div
-          className={`Comparison_infoEditContent ${editStateChangingClassName}`}
-        >
-          {!isEditing ? renderEditButton() : renderEditForm()}
-        </div>
-      </section>
-    )
-  }
-
-  function renderEditButton() {
-    return (
-      <Button
-        className="Comparison_infoEditButton"
-        onClick={() => handlers.handleBeginEdit()}
-      >
-        Edit comparison info for {comparison.name}
-      </Button>
-    )
-  }
-
-  function renderEditForm() {
-    return (
-      <EditComparison
-        comparison={comparison}
-        onSubmit={comparison => handlers.handleSubmitEdit(comparison)}
-        onCancel={() => handlers.handleCancelEdit()}
-      />
     )
   }
 

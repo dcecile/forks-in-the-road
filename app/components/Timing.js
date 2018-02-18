@@ -11,7 +11,7 @@ export default {
   alternativeIndexHighlightLink: timing(2000),
   appUserSigningInChanging: timing(200),
   appUserSigningOut: timing(400),
-  comparisonEditStateChange: timing(200),
+  comparisonInfoEditStateChange: timing(200),
   comparisonRouteChange: 100,
   criterionEditStateChange: timing(150),
   criterionIndexPopIn: timing(800),
