@@ -1,7 +1,5 @@
 import React from "react"
 
-import ComparisonRender from "ComparisonRender"
-
 export default class ComparisonState extends React.Component {
   constructor() {
     super()
@@ -9,10 +7,6 @@ export default class ComparisonState extends React.Component {
       isLoading: true,
       comparison: null
     }
-  }
-
-  get className() {
-    return this.props.className
   }
 
   get server() {
@@ -23,8 +17,8 @@ export default class ComparisonState extends React.Component {
     return this.props.match
   }
 
-  get location() {
-    return this.props.location
+  get renderProp() {
+    return this.props.render
   }
 
   get isLoading() {
@@ -33,19 +27,6 @@ export default class ComparisonState extends React.Component {
 
   get comparison() {
     return this.state.comparison
-  }
-
-  get matchUrl() {
-    return this.match.url
-  }
-
-  setComparisonState(comparisonChanges) {
-    this.setState({
-      comparison: {
-        ...this.comparison,
-        ...comparisonChanges
-      }
-    })
   }
 
   componentDidMount() {
@@ -62,19 +43,21 @@ export default class ComparisonState extends React.Component {
     })
   }
 
+  handleSetComparisonState(comparisonChanges) {
+    this.setState({
+      comparison: {
+        ...this.comparison,
+        ...comparisonChanges
+      }
+    })
+  }
+
   render() {
-    return (
-      <ComparisonRender
-        className={this.className}
-        comparison={this.comparison}
-        isLoading={this.isLoading}
-        location={this.location}
-        matchUrl={this.matchUrl}
-        server={this.server}
-        onSetComparisonState={comparisonChanges =>
-          this.setComparisonState(comparisonChanges)
-        }
-      />
-    )
+    return this.renderProp({
+      comparison: this.comparison,
+      isLoading: this.isLoading,
+      onSetComparisonState: comparisonChanges =>
+        this.handleSetComparisonState(comparisonChanges)
+    })
   }
 }
