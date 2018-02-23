@@ -39,34 +39,12 @@ export default class ComparisonState extends React.Component {
     return this.match.url
   }
 
-  get handlers() {
-    return {
-      handleSubmitEditAlternative: alternative =>
-        this.handleSubmitEditAlternative(alternative),
-      handleSubmitEditEstimate: (alternative, estimate) =>
-        this.handleSubmitEditEstimate(alternative, estimate),
-      handleSubmitNewEstimate: (alternative, estimate) =>
-        this.handleSubmitNewEstimate(alternative, estimate),
-      handleSubmitResetEstimate: (alternative, estimate) =>
-        this.handleSubmitResetEstimate(alternative, estimate)
-    }
-  }
-
   setComparisonState(comparisonChanges) {
     this.setState({
       comparison: {
         ...this.comparison,
         ...comparisonChanges
       }
-    })
-  }
-
-  setAlternativeState(alternativeID, alternativeChanges) {
-    this.setComparisonState({
-      alternatives: this.comparison.alternatives.map(
-        item =>
-          item.id === alternativeID ? { ...item, ...alternativeChanges } : item
-      )
     })
   }
 
@@ -84,53 +62,11 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  async handleSubmitEditAlternative(alternative) {
-    console.log("Patching alternative", alternative)
-    const response = await this.server.patch(
-      `/alternatives/${alternative.id}`,
-      alternative
-    )
-    this.setAlternativeState(alternative.id, response.data)
-  }
-
-  async handleSubmitNewEstimate(alternative, estimate) {
-    console.log("Posting new estimate", estimate)
-    const response = await this.server.post(
-      `/alternatives/${alternative.id}/estimates`,
-      estimate
-    )
-    this.setAlternativeState(alternative.id, {
-      estimates: alternative.estimates.concat(response.data)
-    })
-  }
-
-  async handleSubmitEditEstimate(alternative, estimate) {
-    console.log("Patching estimate", estimate)
-    const response = await this.server.patch(
-      `/estimates/${estimate.id}`,
-      estimate
-    )
-    this.setAlternativeState(alternative.id, {
-      estimates: alternative.estimates.map(
-        item => (item.id === estimate.id ? { ...item, ...response.data } : item)
-      )
-    })
-  }
-
-  async handleSubmitResetEstimate(alternative, estimate) {
-    console.log("Deleting estimate", estimate)
-    await this.server.delete(`/estimates/${estimate.id}`)
-    this.setAlternativeState(alternative.id, {
-      estimates: alternative.estimates.filter(item => item.id !== estimate.id)
-    })
-  }
-
   render() {
     return (
       <ComparisonRender
         className={this.className}
         comparison={this.comparison}
-        handlers={this.handlers}
         isLoading={this.isLoading}
         location={this.location}
         matchUrl={this.matchUrl}

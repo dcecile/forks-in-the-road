@@ -2,195 +2,171 @@ import MdOpenInNew from "react-icons/lib/md/open-in-new"
 import React from "react"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 
+import AlternativeState from "AlternativeState"
 import Button from "Button"
 import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Timing from "Timing"
 
-export default class Alternative extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      isEditing: false
-    }
-  }
+export default function Alternative(props) {
+  const { match, comparison, server, onSetComparisonState } = props
+  return (
+    <AlternativeState
+      {...{ match, comparison, server, onSetComparisonState }}
+      render={stateProps => render({ ...props, ...stateProps })}
+    />
+  )
+}
 
-  get id() {
-    return parseInt(this.props.match.params.id)
-  }
+function render({
+  match,
+  parentMatchUrl,
+  comparison,
+  alternative,
+  isEditing,
+  onBeginEdit,
+  onSubmitEdit,
+  onCancelEdit,
+  onSubmitNewEstimate,
+  onSubmitEditEstimate,
+  onSubmitResetEstimate
+}) {
+  return (
+    <div className="Alternative">
+      {renderInfo(
+        match.url,
+        parentMatchUrl,
+        alternative,
+        isEditing,
+        onBeginEdit,
+        onSubmitEdit,
+        onCancelEdit
+      )}
+      {renderEstimates(
+        alternative,
+        comparison.criteria,
+        onSubmitNewEstimate,
+        onSubmitEditEstimate,
+        onSubmitResetEstimate
+      )}
+    </div>
+  )
+}
 
-  get matchUrl() {
-    return this.props.match.url
-  }
-
-  get parentMatchUrl() {
-    return this.props.parentMatchUrl
-  }
-
-  get parentTitle() {
-    return this.props.parentTitle
-  }
-
-  get comparisonMatchUrl() {
-    return this.props.comparisonMatchUrl
-  }
-
-  get onSubmitEditEstimate() {
-    return this.props.onSubmitEditEstimate
-  }
-
-  get onSubmitResetEstimate() {
-    return this.props.onSubmitResetEstimate
-  }
-
-  get onSubmitNewEstimate() {
-    return this.props.onSubmitNewEstimate
-  }
-
-  get onSubmitEditAlternative() {
-    return this.props.onSubmitEditAlternative
-  }
-
-  get alternatives() {
-    return this.props.alternatives
-  }
-
-  get alternative() {
-    return this.alternatives.find(item => item.id === this.id)
-  }
-
-  get criteria() {
-    return this.props.criteria
-  }
-
-  get isEditing() {
-    return this.state.isEditing
-  }
-
-  findEstimate(criterion) {
-    return this.alternative.estimates.find(
-      estimate => estimate.criterion_id === criterion.id
-    )
-  }
-
-  async handleSubmitNewEstimate(estimate) {
-    await this.onSubmitNewEstimate(this.alternative, estimate)
-  }
-
-  async handleSubmitEditEstimate(estimate) {
-    await this.onSubmitEditEstimate(this.alternative, estimate)
-  }
-
-  async handleSubmitResetEstimate(estimate) {
-    await this.onSubmitResetEstimate(this.alternative, estimate)
-  }
-
-  handleBeginEdit() {
-    this.setState({
-      isEditing: true
-    })
-  }
-
-  async handleSubmitEdit(alternative) {
-    await this.onSubmitEditAlternative(alternative)
-    this.handleCancelEdit()
-  }
-
-  handleCancelEdit() {
-    this.setState({
-      isEditing: false
-    })
-  }
-
-  render() {
-    return (
-      <div className="Alternative">
-        <TransitionGroup>
-          <CSSTransition
-            key={!this.isEditing}
-            classNames="Alternative_headerTransition"
-            timeout={{
-              exit: Timing.alternativeEditStateChange,
-              enter: Timing.alternativeEditStateChange * 2
-            }}
-          >
-            {!this.isEditing ? this.renderHeaders() : this.renderEdit()}
-          </CSSTransition>
-        </TransitionGroup>
-        {this.renderEstimates()}
-      </div>
-    )
-  }
-
-  renderHeaders() {
-    return (
-      <div className="Alternative_headers">
-        {this.renderHeader()}
-        {this.renderSubHeader()}
-      </div>
-    )
-  }
-
-  renderHeader() {
-    return (
-      <ComparisonHeader
-        matchUrl={this.matchUrl}
-        title={this.alternative.name}
-        parentMatchUrl={this.parentMatchUrl}
-        parentTitle={this.parentTitle}
+function renderInfo(
+  matchUrl,
+  parentMatchUrl,
+  alternative,
+  isEditing,
+  onBeginEdit,
+  onSubmitEdit,
+  onCancelEdit
+) {
+  return (
+    <TransitionGroup>
+      <CSSTransition
+        key={!isEditing}
+        classNames="Alternative_headerTransition"
+        timeout={{
+          exit: Timing.alternativeEditStateChange,
+          enter: Timing.alternativeEditStateChange * 2
+        }}
       >
-        <Button
-          className="Alternative_editButton"
-          onClick={() => this.handleBeginEdit()}
-        >
-          Edit
-        </Button>
-      </ComparisonHeader>
-    )
-  }
+        {!isEditing
+          ? renderHeaders(matchUrl, parentMatchUrl, alternative, onBeginEdit)
+          : renderEdit(alternative, onSubmitEdit, onCancelEdit)}
+      </CSSTransition>
+    </TransitionGroup>
+  )
+}
 
-  renderSubHeader() {
-    return (
-      this.alternative.url && (
-        <h2 className="Alternative_subHeader">
-          <a href={this.alternative.url} target="_blank">
-            (external link){" "}
-            <MdOpenInNew className="Alternative_externalLinkIcon" />
-          </a>
-        </h2>
-      )
-    )
-  }
+function renderHeaders(matchUrl, parentMatchUrl, alternative, onBeginEdit) {
+  return (
+    <div className="Alternative_headers">
+      {renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit)}
+      {renderSubHeader(alternative)}
+    </div>
+  )
+}
 
-  renderEdit() {
-    return (
-      <EditAlternative
-        className="Alternative_edit"
-        alternative={this.alternative}
-        onSubmit={alternative => this.handleSubmitEdit(alternative)}
-        onCancel={() => this.handleCancelEdit()}
-      />
-    )
-  }
+function renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit) {
+  return (
+    <ComparisonHeader
+      matchUrl={matchUrl}
+      title={alternative.name}
+      parentMatchUrl={parentMatchUrl}
+      parentTitle="Alternatives"
+    >
+      <Button className="Alternative_editButton" onClick={onBeginEdit}>
+        Edit
+      </Button>
+    </ComparisonHeader>
+  )
+}
 
-  renderEstimates() {
-    return this.criteria.map(criterion =>
-      this.renderEstimate(criterion, this.findEstimate(criterion))
+function renderSubHeader(alternative) {
+  return (
+    alternative.url && (
+      <h2 className="Alternative_subHeader">
+        <a href={alternative.url} target="_blank">
+          (external link){" "}
+          <MdOpenInNew className="Alternative_externalLinkIcon" />
+        </a>
+      </h2>
     )
-  }
+  )
+}
 
-  renderEstimate(criterion, estimate) {
-    return (
-      <Estimate
-        key={criterion.id}
-        className="Alternative_item"
-        estimate={estimate}
-        criterion={criterion}
-        onSubmitNew={estimate => this.handleSubmitNewEstimate(estimate)}
-        onSubmitEdit={estimate => this.handleSubmitEditEstimate(estimate)}
-        onSubmitReset={estimate => this.handleSubmitResetEstimate(estimate)}
-      />
+function renderEdit(alternative, onSubmitEdit, onCancelEdit) {
+  return (
+    <EditAlternative
+      className="Alternative_edit"
+      alternative={alternative}
+      onSubmit={onSubmitEdit}
+      onCancel={onCancelEdit}
+    />
+  )
+}
+
+function renderEstimates(
+  alternative,
+  criteria,
+  onSubmitNewEstimate,
+  onSubmitEditEstimate,
+  onSubmitResetEstimate
+) {
+  return criteria.map(criterion =>
+    renderEstimate(
+      criterion,
+      findEstimate(alternative.estimates, criterion),
+      onSubmitNewEstimate,
+      onSubmitEditEstimate,
+      onSubmitResetEstimate
     )
-  }
+  )
+}
+
+function findEstimate(estimates, criterion) {
+  return estimates.find(estimate => estimate.criterion_id === criterion.id)
+}
+
+function renderEstimate(
+  criterion,
+  estimate,
+  onSubmitNewEstimate,
+  onSubmitEditEstimate,
+  onSubmitResetEstimate
+) {
+  return (
+    <Estimate
+      key={criterion.id}
+      className="Alternative_item"
+      estimate={estimate}
+      criterion={criterion}
+      onSubmitNew={onSubmitNewEstimate}
+      onSubmitEdit={onSubmitEditEstimate}
+      onSubmitReset={onSubmitResetEstimate}
+    />
+  )
 }

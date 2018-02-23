@@ -16,7 +16,6 @@ import Timing from "Timing"
 export default function ComparisonRender({
   className,
   comparison,
-  handlers,
   isLoading,
   location,
   matchUrl,
@@ -129,22 +128,9 @@ export default function ComparisonRender({
       <Alternative
         {...routeProps}
         parentMatchUrl={matchUrl}
-        parentTitle="Alternatives"
-        alternatives={comparison.alternatives}
-        criteria={comparison.criteria}
-        comparisonMatchUrl={matchUrl}
-        onSubmitEditAlternative={alternative =>
-          handlers.handleSubmitEditAlternative(alternative)
-        }
-        onSubmitNewEstimate={(alternative, estimate) =>
-          handlers.handleSubmitNewEstimate(alternative, estimate)
-        }
-        onSubmitEditEstimate={(alternative, estimate) =>
-          handlers.handleSubmitEditEstimate(alternative, estimate)
-        }
-        onSubmitResetEstimate={(alternative, estimate) =>
-          handlers.handleSubmitResetEstimate(alternative, estimate)
-        }
+        comparison={comparison}
+        server={server}
+        onSetComparisonState={onSetComparisonState}
       />
     )
   }
