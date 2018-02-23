@@ -1,22 +1,17 @@
 import React from "react"
 
+import AlternativeFields from "AlternativeFields"
 import Button from "Button"
-import FieldType from "FieldType"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditAlternative(props) {
   const { alternative } = props
-  const fields = {
-    name: FieldType.string,
-    url: FieldType.nullString
-  }
-
   return (
     <FormState
       input={alternative}
-      fields={fields}
+      fields={AlternativeFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

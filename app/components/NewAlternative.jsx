@@ -1,20 +1,15 @@
 import MdAdd from "react-icons/lib/md/add"
 import React from "react"
 
-import FieldType from "FieldType"
+import AlternativeFields from "AlternativeFields"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function NewAlternative(props) {
-  const fields = {
-    name: FieldType.string,
-    url: FieldType.nullString
-  }
-
   return (
     <FormState
-      fields={fields}
+      fields={AlternativeFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

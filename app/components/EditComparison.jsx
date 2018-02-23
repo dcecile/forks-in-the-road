@@ -1,23 +1,17 @@
 import React from "react"
 
 import Button from "Button"
-import FieldType from "FieldType"
+import ComparisonFields from "ComparisonFields"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditComparison(props) {
   const { comparison } = props
-  const fields = {
-    name: FieldType.string,
-    alternative_noun: FieldType.nullString,
-    value_unit: FieldType.nullString
-  }
-
   return (
     <FormState
       input={comparison}
-      fields={fields}
+      fields={ComparisonFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

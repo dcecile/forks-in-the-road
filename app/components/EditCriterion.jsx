@@ -1,7 +1,7 @@
 import React from "react"
 
 import Button from "Button"
-import FieldType from "FieldType"
+import CriterionFields from "CriterionFields"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
@@ -9,17 +9,10 @@ import TextInput from "TextInput"
 
 export default function EditCriterion(props) {
   const { criterion } = props
-  const fields = {
-    name: FieldType.string,
-    description: FieldType.nullString,
-    full_value: FieldType.float,
-    default_estimate: FieldType.nullFloatPercent
-  }
-
   return (
     <FormState
       input={criterion}
-      fields={fields}
+      fields={CriterionFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

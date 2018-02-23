@@ -1,21 +1,16 @@
 import MdAdd from "react-icons/lib/md/add"
 import React from "react"
 
-import FieldType from "FieldType"
+import CriterionFields from "CriterionFields"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function NewCriterion(props) {
-  const fields = {
-    name: FieldType.string,
-    full_value: FieldType.float
-  }
-
   return (
     <FormState
-      fields={fields}
+      fields={CriterionFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

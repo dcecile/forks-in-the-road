@@ -1,21 +1,17 @@
 import React from "react"
 
 import Button from "Button"
-import FieldType from "FieldType"
+import EstimateFields from "EstimateFields"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
 export default function EditComparison(props) {
   const { estimate } = props
-  const fields = {
-    estimate: FieldType.floatPercent
-  }
-
   return (
     <FormState
       input={estimate}
-      fields={fields}
+      fields={EstimateFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

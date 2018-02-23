@@ -1,19 +1,15 @@
 import MdLibraryAdd from "react-icons/lib/md/library-add"
 import React from "react"
 
-import FieldType from "FieldType"
+import ComparisonFields from "ComparisonFields"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function NewComparison(props) {
-  const fields = {
-    name: FieldType.string
-  }
-
   return (
     <FormState
-      fields={fields}
+      fields={ComparisonFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )

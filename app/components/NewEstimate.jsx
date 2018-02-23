@@ -1,18 +1,14 @@
 import React from "react"
 
-import FieldType from "FieldType"
+import EstimateFields from "EstimateFields"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
 export default function NewEstimate(props) {
-  const fields = {
-    estimate: FieldType.floatPercent
-  }
-
   return (
     <FormState
-      fields={fields}
+      fields={EstimateFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )
