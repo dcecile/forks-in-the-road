@@ -17,7 +17,6 @@ export default function ComparisonRender({
   className,
   comparison,
   handlers,
-  isAlternativeNewlyCreated,
   isCriterionNewlyCreated,
   isLoading,
   location,
@@ -108,11 +107,9 @@ export default function ComparisonRender({
     return (
       <AlternativeIndex
         matchUrl={matchUrl}
-        alternatives={comparison.alternatives}
-        isAlternativeNewlyCreated={isAlternativeNewlyCreated}
-        onSubmitNewAlternative={alternative =>
-          handlers.handleSubmitNewAlternative(alternative)
-        }
+        comparison={comparison}
+        server={server}
+        onSetComparisonState={onSetComparisonState}
       />
     )
   }

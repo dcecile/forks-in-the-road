@@ -8,9 +8,6 @@ export default class ComparisonState extends React.Component {
     super()
     this.state = {
       isLoading: true,
-      isEditing: false,
-      isEditStateChanging: false,
-      isAlternativeNewlyCreated: false,
       isCriterionNewlyCreated: false,
       comparison: null
     }
@@ -34,18 +31,6 @@ export default class ComparisonState extends React.Component {
 
   get isLoading() {
     return this.state.isLoading
-  }
-
-  get isEditing() {
-    return this.state.isEditing
-  }
-
-  get isEditStateChanging() {
-    return this.state.isEditStateChanging
-  }
-
-  get isAlternativeNewlyCreated() {
-    return this.state.isAlternativeNewlyCreated
   }
 
   get isCriterionNewlyCreated() {
@@ -111,28 +96,6 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  async handleSubmitNewAlternative(alternative) {
-    console.log("Posting new alternative", alternative)
-    const response = await this.server.post(
-      `/comparisons/${this.comparison.id}/alternatives`,
-      alternative
-    )
-    this.setComparisonState({
-      alternatives: [response.data].concat(this.comparison.alternatives)
-    })
-    this.setState({
-      isAlternativeNewlyCreated: true
-    })
-    this.animateNewAlternative()
-  }
-
-  async animateNewAlternative() {
-    await Timing.alternativeIndexHighlightLink()
-    this.setState({
-      isAlternativeNewlyCreated: false
-    })
-  }
-
   async handleSubmitEditAlternative(alternative) {
     console.log("Patching alternative", alternative)
     const response = await this.server.patch(
@@ -151,13 +114,13 @@ export default class ComparisonState extends React.Component {
     this.setComparisonState({
       criteria: this.comparison.criteria.concat(response.data)
     })
-    this.setState({
-      isCriterionNewlyCreated: true
-    })
     this.animateNewCriterion()
   }
 
   async animateNewCriterion() {
+    this.setState({
+      isCriterionNewlyCreated: true
+    })
     await Timing.criterionIndexPopIn()
     this.setState({
       isCriterionNewlyCreated: false
@@ -216,10 +179,7 @@ export default class ComparisonState extends React.Component {
         className={this.className}
         comparison={this.comparison}
         handlers={this.handlers}
-        isAlternativeNewlyCreated={this.isAlternativeNewlyCreated}
         isCriterionNewlyCreated={this.isCriterionNewlyCreated}
-        isEditStateChanging={this.isEditStateChanging}
-        isEditing={this.isEditing}
         isLoading={this.isLoading}
         location={this.location}
         matchUrl={this.matchUrl}
