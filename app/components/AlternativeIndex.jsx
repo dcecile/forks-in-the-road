@@ -1,9 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+import AlternativeIndexState from "AlternativeIndexState"
 import ComparisonHeader from "ComparisonHeader"
 import NewAlternative from "NewAlternative"
-import AlternativeIndexState from "AlternativeIndexState"
 
 export default function AlternativeIndex(props) {
   const { comparison, server, onSetComparisonState } = props

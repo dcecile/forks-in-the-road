@@ -1,14 +1,12 @@
 import React from "react"
 
 import ComparisonRender from "ComparisonRender"
-import Timing from "Timing"
 
 export default class ComparisonState extends React.Component {
   constructor() {
     super()
     this.state = {
       isLoading: true,
-      isCriterionNewlyCreated: false,
       comparison: null
     }
   }
@@ -33,10 +31,6 @@ export default class ComparisonState extends React.Component {
     return this.state.isLoading
   }
 
-  get isCriterionNewlyCreated() {
-    return this.state.isCriterionNewlyCreated
-  }
-
   get comparison() {
     return this.state.comparison
   }
@@ -49,14 +43,8 @@ export default class ComparisonState extends React.Component {
     return {
       handleSubmitEditAlternative: alternative =>
         this.handleSubmitEditAlternative(alternative),
-      handleSubmitEditCriterion: criterion =>
-        this.handleSubmitEditCriterion(criterion),
       handleSubmitEditEstimate: (alternative, estimate) =>
         this.handleSubmitEditEstimate(alternative, estimate),
-      handleSubmitNewAlternative: alternative =>
-        this.handleSubmitNewAlternative(alternative),
-      handleSubmitNewCriterion: criterion =>
-        this.handleSubmitNewCriterion(criterion),
       handleSubmitNewEstimate: (alternative, estimate) =>
         this.handleSubmitNewEstimate(alternative, estimate),
       handleSubmitResetEstimate: (alternative, estimate) =>
@@ -105,42 +93,6 @@ export default class ComparisonState extends React.Component {
     this.setAlternativeState(alternative.id, response.data)
   }
 
-  async handleSubmitNewCriterion(criterion) {
-    console.log("Posting new criterion", criterion)
-    const response = await this.server.post(
-      `/comparisons/${this.comparison.id}/criteria`,
-      criterion
-    )
-    this.setComparisonState({
-      criteria: this.comparison.criteria.concat(response.data)
-    })
-    this.animateNewCriterion()
-  }
-
-  async animateNewCriterion() {
-    this.setState({
-      isCriterionNewlyCreated: true
-    })
-    await Timing.criterionIndexPopIn()
-    this.setState({
-      isCriterionNewlyCreated: false
-    })
-  }
-
-  async handleSubmitEditCriterion(criterion) {
-    console.log("Patching criterion", criterion)
-    const response = await this.server.patch(
-      `/criteria/${criterion.id}`,
-      criterion
-    )
-    this.setComparisonState({
-      criteria: this.comparison.criteria.map(
-        item =>
-          item.id === criterion.id ? { ...item, ...response.data } : item
-      )
-    })
-  }
-
   async handleSubmitNewEstimate(alternative, estimate) {
     console.log("Posting new estimate", estimate)
     const response = await this.server.post(
@@ -179,7 +131,6 @@ export default class ComparisonState extends React.Component {
         className={this.className}
         comparison={this.comparison}
         handlers={this.handlers}
-        isCriterionNewlyCreated={this.isCriterionNewlyCreated}
         isLoading={this.isLoading}
         location={this.location}
         matchUrl={this.matchUrl}

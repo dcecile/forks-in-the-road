@@ -17,7 +17,6 @@ export default function ComparisonRender({
   className,
   comparison,
   handlers,
-  isCriterionNewlyCreated,
   isLoading,
   location,
   matchUrl,
@@ -118,14 +117,9 @@ export default function ComparisonRender({
     return (
       <CriterionIndex
         matchUrl={matchUrl}
-        criteria={comparison.criteria}
-        isCriterionNewlyCreated={isCriterionNewlyCreated}
-        onSubmitNewCriterion={criterion =>
-          handlers.handleSubmitNewCriterion(criterion)
-        }
-        onSubmitEditCriterion={criterion =>
-          handlers.handleSubmitEditCriterion(criterion)
-        }
+        comparison={comparison}
+        server={server}
+        onSetComparisonState={onSetComparisonState}
       />
     )
   }
