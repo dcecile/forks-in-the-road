@@ -2,6 +2,7 @@ import React from "react"
 
 import AlternativeFields from "AlternativeFields"
 import Button from "Button"
+import Form from "Form"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
@@ -19,16 +20,16 @@ export default function EditAlternative(props) {
 
 function render({ className, alternative, fields, onSubmit, onCancel }) {
   return (
-    <form
+    <Form
       className={`EditAlternative ${className}`}
-      onSubmit={event => handleSubmit(event, alternative, fields, onSubmit)}
+      onSubmit={() => handleSubmit(alternative, fields, onSubmit)}
     >
       <div className="EditAlternative_row">
         {renderName(fields.name)}
         {renderURL(fields.url)}
       </div>
       <div className="EditAlternative_buttonRow">{renderButtons(onCancel)}</div>
-    </form>
+    </Form>
   )
 }
 
@@ -60,7 +61,7 @@ function renderButtons(onCancel) {
       <SubmitButton className="EditAlternative_submit">Save</SubmitButton>
       <Button
         className="EditAlternative_cancel"
-        onClick={event => handleCancel(event, onCancel)}
+        onClick={() => handleCancel(onCancel)}
       >
         Cancel
       </Button>
@@ -68,8 +69,7 @@ function renderButtons(onCancel) {
   )
 }
 
-async function handleSubmit(event, alternative, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(alternative, fields, onSubmit) {
   await onSubmit({
     id: alternative.id,
     name: fields.name.output(),
@@ -77,7 +77,6 @@ async function handleSubmit(event, alternative, fields, onSubmit) {
   })
 }
 
-function handleCancel(event, onCancel) {
-  event.preventDefault()
+function handleCancel(onCancel) {
   onCancel()
 }

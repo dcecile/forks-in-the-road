@@ -1,6 +1,7 @@
 import React from "react"
 
 import EstimateFields from "EstimateFields"
+import Form from "Form"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
@@ -16,13 +17,13 @@ export default function NewEstimate(props) {
 
 function render({ criterion, fields, onSubmit }) {
   return (
-    <form
+    <Form
       className="NewEstimate"
-      onSubmit={event => handleSubmit(event, criterion, fields, onSubmit)}
+      onSubmit={() => handleSubmit(criterion, fields, onSubmit)}
     >
       {renderEstimate(criterion, fields.estimate)}
       {renderButton()}
-    </form>
+    </Form>
   )
 }
 
@@ -43,8 +44,7 @@ function renderButton() {
   return <SubmitButton className="NewEstimate_button">Save</SubmitButton>
 }
 
-async function handleSubmit(event, criterion, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(criterion, fields, onSubmit) {
   await onSubmit({
     criterion_id: criterion.id,
     estimate: fields.estimate.output()

@@ -2,6 +2,7 @@ import React from "react"
 
 import Button from "Button"
 import CriterionFields from "CriterionFields"
+import Form from "Form"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
@@ -20,16 +21,16 @@ export default function EditCriterion(props) {
 
 function render({ criterion, fields, onSubmit, onCancel }) {
   return (
-    <form
+    <Form
       className="EditCriterion"
-      onSubmit={event => handleSubmit(event, criterion, fields, onSubmit)}
+      onSubmit={() => handleSubmit(criterion, fields, onSubmit)}
     >
       {renderName(fields.name)}
       {renderDescription(fields.description)}
       {renderFullValue(fields.full_value)}
       {renderDefaultEstimate(fields.default_estimate)}
       {renderButtons(onCancel)}
-    </form>
+    </Form>
   )
 }
 
@@ -97,7 +98,7 @@ function renderButtons(onCancel) {
       <SubmitButton className="EditCriterion_button">Save</SubmitButton>
       <Button
         className="EditCriterion_button"
-        onClick={event => handleCancel(event, onCancel)}
+        onClick={() => handleCancel(onCancel)}
       >
         Cancel
       </Button>
@@ -105,8 +106,7 @@ function renderButtons(onCancel) {
   )
 }
 
-async function handleSubmit(event, criterion, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(criterion, fields, onSubmit) {
   await onSubmit({
     id: criterion.id,
     name: fields.name.output(),
@@ -116,7 +116,6 @@ async function handleSubmit(event, criterion, fields, onSubmit) {
   })
 }
 
-function handleCancel(event, onCancel) {
-  event.preventDefault()
+function handleCancel(onCancel) {
   onCancel()
 }

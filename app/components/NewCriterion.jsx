@@ -2,6 +2,7 @@ import MdAdd from "react-icons/lib/md/add"
 import React from "react"
 
 import CriterionFields from "CriterionFields"
+import Form from "Form"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
@@ -18,14 +19,14 @@ export default function NewCriterion(props) {
 
 function render({ className, fields, onSubmit, onReinitForm }) {
   return (
-    <form
+    <Form
       className={`NewCriterion ${className}`}
-      onSubmit={event => handleSubmit(event, fields, onSubmit, onReinitForm)}
+      onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
       {renderName(fields.name)}
       {renderFullValue(fields.full_value)}
       {renderButton()}
-    </form>
+    </Form>
   )
 }
 
@@ -59,8 +60,7 @@ function renderButton() {
   )
 }
 
-async function handleSubmit(event, fields, onSubmit, onReinitForm) {
-  event.preventDefault()
+async function handleSubmit(fields, onSubmit, onReinitForm) {
   await onSubmit({
     name: fields.name.output(),
     full_value: fields.full_value.output()

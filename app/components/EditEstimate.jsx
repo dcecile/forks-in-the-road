@@ -2,6 +2,7 @@ import React from "react"
 
 import Button from "Button"
 import EstimateFields from "EstimateFields"
+import Form from "Form"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
@@ -19,13 +20,13 @@ export default function EditComparison(props) {
 
 function render({ estimate, criterion, fields, onSubmit, onCancel, onReset }) {
   return (
-    <form
+    <Form
       className="EditEstimate"
-      onSubmit={event => handleSubmit(event, estimate, fields, onSubmit)}
+      onSubmit={() => handleSubmit(estimate, fields, onSubmit)}
     >
       {renderEstimate(criterion, fields.estimate)}
       {renderButtons(onCancel, onReset)}
-    </form>
+    </Form>
   )
 }
 
@@ -48,13 +49,13 @@ function renderButtons(onCancel, onReset) {
       <SubmitButton className="EditEstimate_button">Save</SubmitButton>
       <Button
         className="EditEstimate_button"
-        onClick={event => handleCancel(event, onCancel)}
+        onClick={() => handleCancel(onCancel)}
       >
         Cancel
       </Button>
       <Button
         className="EditEstimate_resetButton"
-        onClick={event => handleReset(event, onReset)}
+        onClick={() => handleReset(onReset)}
       >
         Reset
       </Button>
@@ -62,20 +63,17 @@ function renderButtons(onCancel, onReset) {
   )
 }
 
-async function handleSubmit(event, estimate, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(estimate, fields, onSubmit) {
   await onSubmit({
     id: estimate.id,
     estimate: fields.estimate.output()
   })
 }
 
-function handleCancel(event, onCancel) {
-  event.preventDefault()
+function handleCancel(onCancel) {
   onCancel()
 }
 
-function handleReset(event, onReset) {
-  event.preventDefault()
+function handleReset(onReset) {
   onReset()
 }

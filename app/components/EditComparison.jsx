@@ -2,6 +2,7 @@ import React from "react"
 
 import Button from "Button"
 import ComparisonFields from "ComparisonFields"
+import Form from "Form"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
@@ -19,15 +20,15 @@ export default function EditComparison(props) {
 
 function render({ fields, onSubmit, onCancel }) {
   return (
-    <form
+    <Form
       className="EditComparison"
-      onSubmit={event => handleSubmit(event, fields, onSubmit)}
+      onSubmit={() => handleSubmit(fields, onSubmit)}
     >
       {renderName(fields.name)}
       {renderAlternativeNoun(fields.alternative_noun)}
       {renderValueUnit(fields.value_unit)}
       {renderButtons(onCancel)}
-    </form>
+    </Form>
   )
 }
 
@@ -77,7 +78,7 @@ function renderButtons(onCancel) {
       <SubmitButton className="EditComparison_button">Save</SubmitButton>
       <Button
         className="EditComparison_button"
-        onClick={event => handleCancel(event, onCancel)}
+        onClick={() => handleCancel(onCancel)}
       >
         Cancel
       </Button>
@@ -85,8 +86,7 @@ function renderButtons(onCancel) {
   )
 }
 
-async function handleSubmit(event, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(fields, onSubmit) {
   await onSubmit({
     name: fields.name.output(),
     alternative_noun: fields.alternative_noun.output(),
@@ -94,7 +94,6 @@ async function handleSubmit(event, fields, onSubmit) {
   })
 }
 
-function handleCancel(event, onCancel) {
-  event.preventDefault()
+function handleCancel(onCancel) {
   onCancel()
 }

@@ -2,6 +2,7 @@ import MdLibraryAdd from "react-icons/lib/md/library-add"
 import React from "react"
 
 import ComparisonFields from "ComparisonFields"
+import Form from "Form"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
@@ -17,13 +18,13 @@ export default function NewComparison(props) {
 
 function render({ className, fields, onSubmit }) {
   return (
-    <form
+    <Form
       className={`NewComparison ${className}`}
-      onSubmit={event => handleSubmit(event, fields, onSubmit)}
+      onSubmit={() => handleSubmit(fields, onSubmit)}
     >
       {renderName(fields.name)}
       {renderButton()}
-    </form>
+    </Form>
   )
 }
 
@@ -47,8 +48,7 @@ function renderButton() {
   )
 }
 
-async function handleSubmit(event, fields, onSubmit) {
-  event.preventDefault()
+async function handleSubmit(fields, onSubmit) {
   await onSubmit({
     name: fields.name.output()
   })

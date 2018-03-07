@@ -46,13 +46,12 @@ export default class Input extends React.Component {
     max,
     onChange
   }) {
-    const props = { className, type, required, value, min, max, onChange }
     return (
       <input
         onFocus={() => this.handleFocus()}
         onBlur={() => this.handleBlur()}
         placeholder={this.hasFocus ? null : placeholder}
-        {...props}
+        {...{ className, type, required, value, min, max, onChange }}
       />
     )
   }

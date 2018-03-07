@@ -2,6 +2,7 @@ import MdAdd from "react-icons/lib/md/add"
 import React from "react"
 
 import AlternativeFields from "AlternativeFields"
+import Form from "Form"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
@@ -17,14 +18,14 @@ export default function NewAlternative(props) {
 
 function render({ className, fields, onSubmit, onReinitForm }) {
   return (
-    <form
+    <Form
       className={`NewAlternative ${className}`}
-      onSubmit={event => handleSubmit(event, fields, onSubmit, onReinitForm)}
+      onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
       {renderName(fields.name)}
       {renderURL(fields.url)}
       {renderButton()}
-    </form>
+    </Form>
   )
 }
 
@@ -57,8 +58,7 @@ function renderButton() {
   )
 }
 
-async function handleSubmit(event, fields, onSubmit, onReinitForm) {
-  event.preventDefault()
+async function handleSubmit(fields, onSubmit, onReinitForm) {
   await onSubmit({
     name: fields.name.output(),
     url: fields.url.output()
