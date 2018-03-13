@@ -7,7 +7,7 @@ import Comparison from "Comparison"
 import ComparisonIndex from "ComparisonIndex"
 import RouteNotFound from "RouteNotFound"
 import SignIn from "SignIn"
-import { HeaderSlot } from "Header"
+import HeaderSlot from "HeaderSlot"
 
 export default AppState.renderWith(render)
 
