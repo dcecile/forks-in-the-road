@@ -1,8 +1,8 @@
 import React from "react"
 
 export default class Alternative extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isEditing: false
     }

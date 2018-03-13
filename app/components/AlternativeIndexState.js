@@ -3,8 +3,8 @@ import React from "react"
 import Timing from "Timing"
 
 export default class AlternativeIndexState extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isAlternativeNewlyCreated: false
     }

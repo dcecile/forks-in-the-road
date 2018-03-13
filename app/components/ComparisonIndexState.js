@@ -1,8 +1,8 @@
 import StateComponent from "StateComponent"
 
 export default class ComparisonIndexState extends StateComponent {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isLoading: true,
       comparisonStubs: []

@@ -1,8 +1,8 @@
 import React from "react"
 
 export default class ComparisonState extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isLoading: true,
       comparison: null

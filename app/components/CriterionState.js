@@ -2,8 +2,8 @@ import StateComponent from "StateComponent"
 import Timing from "Timing"
 
 export default class CriterionState extends StateComponent {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isEditing: false,
       isEditStateChanging: false
