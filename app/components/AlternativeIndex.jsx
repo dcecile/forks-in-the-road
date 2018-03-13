@@ -5,15 +5,7 @@ import AlternativeIndexState from "AlternativeIndexState"
 import ComparisonHeader from "ComparisonHeader"
 import NewAlternative from "NewAlternative"
 
-export default function AlternativeIndex(props) {
-  const { comparison, server, onSetComparisonState } = props
-  return (
-    <AlternativeIndexState
-      {...{ comparison, server, onSetComparisonState }}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default AlternativeIndexState.renderWith(render)
 
 function render({
   matchUrl,

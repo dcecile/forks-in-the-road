@@ -6,14 +6,7 @@ import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
-export default function NewEstimate(props) {
-  return (
-    <FormState
-      fields={EstimateFields}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default FormState.renderWith(render, { fields: EstimateFields })
 
 function render({ criterion, fields, onSubmit }) {
   return (

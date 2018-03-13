@@ -14,15 +14,7 @@ import RouteNotFound from "RouteNotFound"
 import Sidebar from "Sidebar"
 import Timing from "Timing"
 
-export default function Comparison(props) {
-  const { server, match } = props
-  return (
-    <ComparisonState
-      {...{ server, match }}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default ComparisonState.renderWith(render)
 
 function render({
   className,

@@ -4,15 +4,7 @@ import Button from "Button"
 import EditComparison from "EditComparison"
 import ComparisonInfoState from "ComparisonInfoState"
 
-export default function ComparisonInfo(props) {
-  const { comparison, server, onSetComparisonState } = props
-  return (
-    <ComparisonInfoState
-      {...{ comparison, server, onSetComparisonState }}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default ComparisonInfoState.renderWith(render)
 
 function render({
   className,

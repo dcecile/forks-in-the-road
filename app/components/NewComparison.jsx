@@ -7,14 +7,7 @@ import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default function NewComparison(props) {
-  return (
-    <FormState
-      fields={ComparisonFields}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default FormState.renderWith(render, { fields: ComparisonFields })
 
 function render({ className, fields, onSubmit }) {
   return (

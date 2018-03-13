@@ -7,14 +7,7 @@ import FormState from "FormState"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default function NewAlternative(props) {
-  return (
-    <FormState
-      fields={AlternativeFields}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default FormState.renderWith(render, { fields: AlternativeFields })
 
 function render({ className, fields, onSubmit, onReinitForm }) {
   return (

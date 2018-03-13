@@ -5,15 +5,7 @@ import Criterion from "Criterion"
 import CriterionIndexState from "CriterionIndexState"
 import NewCriterion from "NewCriterion"
 
-export default function CriterionIndex(props) {
-  const { comparison, server, onSetComparisonState } = props
-  return (
-    <CriterionIndexState
-      {...{ comparison, server, onSetComparisonState }}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default CriterionIndexState.renderWith(render)
 
 function render({
   matchUrl,

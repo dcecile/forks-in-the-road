@@ -9,15 +9,7 @@ import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Timing from "Timing"
 
-export default function Alternative(props) {
-  const { match, comparison, server, onSetComparisonState } = props
-  return (
-    <AlternativeState
-      {...{ match, comparison, server, onSetComparisonState }}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default AlternativeState.renderWith(render)
 
 function render({
   match,

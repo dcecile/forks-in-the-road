@@ -8,16 +8,7 @@ import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
-export default function EditCriterion(props) {
-  const { input } = props
-  return (
-    <FormState
-      input={input}
-      fields={CriterionFields}
-      render={stateProps => render({ ...props, ...stateProps })}
-    />
-  )
-}
+export default FormState.renderWith(render, { fields: CriterionFields })
 
 function render({ input, fields, onSubmit, onCancel }) {
   return (
