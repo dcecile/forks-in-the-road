@@ -1,120 +1,65 @@
 import React from "react"
 
 import Button from "Button"
+import CriterionState from "CriterionState"
 import EditCriterion from "EditCriterion"
-import Timing from "Timing"
 
-export default class Criterion extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      isEditing: false,
-      isEditStateChanging: false
-    }
-  }
+export default CriterionState.renderWith(render)
 
-  get className() {
-    return this.props.className
-  }
+function render({
+  className,
+  criterion,
+  isEditing,
+  isEditStateChanging,
+  onBeginEdit,
+  onSubmitEdit,
+  onCancelEdit
+}) {
+  const editStateChangingClassName = isEditStateChanging
+    ? "Criterion_transform__isEditChangingState"
+    : ""
 
-  get criterion() {
-    return this.props.criterion
-  }
-
-  get onSubmitEdit() {
-    return this.props.onSubmitEdit
-  }
-
-  get isEditing() {
-    return this.state.isEditing
-  }
-
-  get isEditStateChanging() {
-    return this.state.isEditStateChanging
-  }
-
-  get editStateChangingClassName() {
-    return this.isEditStateChanging
-      ? "Criterion_transform__isEditChangingState"
-      : ""
-  }
-
-  async handleBeginEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.criterionEditStateChange()
-    this.setState({
-      isEditing: true,
-      isEditStateChanging: false
-    })
-  }
-
-  async handleSubmitEdit(criterion) {
-    await this.onSubmitEdit(criterion)
-    await this.handleCancelEdit()
-  }
-
-  async handleCancelEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.criterionEditStateChange()
-    this.setState({
-      isEditing: false,
-      isEditStateChanging: false
-    })
-  }
-
-  render() {
-    return (
-      <div className={`Criterion ${this.className}`}>
-        <div
-          className={`Criterion_transform ${this.editStateChangingClassName}`}
-        >
-          {!this.isEditing ? this.renderShow() : this.renderEdit()}
-        </div>
+  return (
+    <div className={`Criterion ${className}`}>
+      <div className={`Criterion_transform ${editStateChangingClassName}`}>
+        {!isEditing
+          ? renderShow(criterion, onBeginEdit)
+          : renderEdit(criterion, onSubmitEdit, onCancelEdit)}
       </div>
-    )
-  }
+    </div>
+  )
+}
 
-  renderShow() {
-    return (
-      <div className="Criterion_body">
-        <h2 className="Criterion_name">{this.criterion.name} </h2>
-        <p className="Criterion_description">{this.criterion.description}</p>
-        <ul>
-          {this.renderDetail("Full value", this.criterion.full_value)}
-          {this.renderDetail(
-            "Default estimate",
-            this.criterion.default_estimate
-          )}
-        </ul>
-        <Button
-          className="Criterion_editButton"
-          onClick={() => this.handleBeginEdit()}
-        >
-          Edit
-        </Button>
-      </div>
-    )
-  }
+function renderShow(criterion, onBeginEdit) {
+  return (
+    <div className="Criterion_body">
+      <h2 className="Criterion_name">{criterion.name} </h2>
+      <p className="Criterion_description">{criterion.description}</p>
+      <ul>
+        {renderDetail("Full value", criterion.full_value)}
+        {renderDetail("Default estimate", criterion.default_estimate)}
+      </ul>
+      <Button className="Criterion_editButton" onClick={onBeginEdit}>
+        Edit
+      </Button>
+    </div>
+  )
+}
 
-  renderDetail(text, detail) {
-    return detail !== null ? (
-      <li>
-        {text}: {detail}
-      </li>
-    ) : null
-  }
+function renderDetail(text, detail) {
+  return detail !== null ? (
+    <li>
+      {text}: {detail}
+    </li>
+  ) : null
+}
 
-  renderEdit() {
-    return (
-      <EditCriterion
-        criterion={this.criterion}
-        onSubmit={criterion => this.handleSubmitEdit(criterion)}
-        onCancel={() => this.handleCancelEdit()}
-      />
-    )
-  }
+function renderEdit(criterion, onSubmitEdit, onCancelEdit) {
+  return (
+    <EditCriterion
+      criterion={criterion}
+      onSubmit={onSubmitEdit}
+      onCancel={onCancelEdit}
+    />
+  )
 }
