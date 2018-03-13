@@ -1,8 +1,9 @@
-import React from "react"
-
+import StateComponent from "StateComponent"
 import { entries, fromEntries } from "Utils"
 
-export default class FormState extends React.Component {
+export default class FormState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(FormState)
+
   constructor(props) {
     super(props)
     this.state = this.input
@@ -16,10 +17,6 @@ export default class FormState extends React.Component {
 
   get fields() {
     return this.props.fields
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   createInputState(object) {
@@ -67,10 +64,10 @@ export default class FormState extends React.Component {
     this.setState(this.createInitState())
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       fields: this.createFieldObjects(),
       onReinitForm: () => this.handleReinit()
-    })
+    }
   }
 }

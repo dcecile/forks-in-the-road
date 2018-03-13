@@ -1,8 +1,9 @@
-import React from "react"
-
+import StateComponent from "StateComponent"
 import Timing from "Timing"
 
-export default class ComparisonState extends React.Component {
+export default class ComparisonState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(ComparisonState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -21,10 +22,6 @@ export default class ComparisonState extends React.Component {
 
   get onSetComparisonState() {
     return this.props.onSetComparisonState
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   get isEditing() {
@@ -67,13 +64,13 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       isEditing: this.isEditing,
       isEditStateChanging: this.isEditStateChanging,
       onBeginEdit: () => this.handleBeginEdit(),
       onSubmitEdit: comparison => this.handleSubmitEdit(comparison),
       onCancelEdit: () => this.handleCancelEdit()
-    })
+    }
   }
 }

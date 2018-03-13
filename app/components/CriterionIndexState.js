@@ -1,8 +1,9 @@
-import React from "react"
-
+import StateComponent from "StateComponent"
 import Timing from "Timing"
 
-export default class CriterionIndexState extends React.Component {
+export default class CriterionIndexState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(CriterionIndexState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -20,10 +21,6 @@ export default class CriterionIndexState extends React.Component {
 
   get onSetComparisonState() {
     return this.props.onSetComparisonState
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   get isCriterionNewlyCreated() {
@@ -66,13 +63,13 @@ export default class CriterionIndexState extends React.Component {
     })
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       isCriterionNewlyCreated: this.isCriterionNewlyCreated,
       onSubmitNewCriterion: criterion =>
         this.handleSubmitNewCriterion(criterion),
       onSubmitEditCriterion: criterion =>
         this.handleSubmitEditCriterion(criterion)
-    })
+    }
   }
 }

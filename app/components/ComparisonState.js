@@ -1,6 +1,8 @@
-import React from "react"
+import StateComponent from "StateComponent"
 
-export default class ComparisonState extends React.Component {
+export default class ComparisonState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(ComparisonState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -15,10 +17,6 @@ export default class ComparisonState extends React.Component {
 
   get match() {
     return this.props.match
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   get isLoading() {
@@ -52,12 +50,12 @@ export default class ComparisonState extends React.Component {
     })
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       comparison: this.comparison,
       isLoading: this.isLoading,
       onSetComparisonState: comparisonChanges =>
         this.handleSetComparisonState(comparisonChanges)
-    })
+    }
   }
 }

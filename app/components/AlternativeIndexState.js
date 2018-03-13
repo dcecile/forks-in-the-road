@@ -1,8 +1,9 @@
-import React from "react"
-
+import StateComponent from "StateComponent"
 import Timing from "Timing"
 
-export default class AlternativeIndexState extends React.Component {
+export default class AlternativeIndexState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(AlternativeIndexState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -20,10 +21,6 @@ export default class AlternativeIndexState extends React.Component {
 
   get onSetComparisonState() {
     return this.props.onSetComparisonState
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   get isAlternativeNewlyCreated() {
@@ -52,11 +49,11 @@ export default class AlternativeIndexState extends React.Component {
     })
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       isAlternativeNewlyCreated: this.isAlternativeNewlyCreated,
       onSubmitNewAlternative: alternative =>
         this.handleSubmitNewAlternative(alternative)
-    })
+    }
   }
 }

@@ -1,6 +1,8 @@
-import React from "react"
+import StateComponent from "StateComponent"
 
-export default class Alternative extends React.Component {
+export default class Alternative extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(Alternative)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -22,10 +24,6 @@ export default class Alternative extends React.Component {
 
   get onSetComparisonState() {
     return this.props.onSetComparisonState
-  }
-
-  get renderProp() {
-    return this.props.render
   }
 
   get id() {
@@ -111,8 +109,8 @@ export default class Alternative extends React.Component {
     })
   }
 
-  render() {
-    return this.renderProp({
+  renderState() {
+    return {
       alternative: this.alternative,
       isEditing: this.isEditing,
       onBeginEdit: () => this.handleBeginEdit(),
@@ -122,6 +120,6 @@ export default class Alternative extends React.Component {
       onSubmitNewEstimate: estimate => this.handleSubmitNewEstimate(estimate),
       onSubmitResetEstimate: estimate =>
         this.handleSubmitResetEstimate(estimate)
-    })
+    }
   }
 }
