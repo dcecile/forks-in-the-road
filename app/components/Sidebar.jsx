@@ -6,8 +6,10 @@ import { matchPath } from "react-router"
 export default function Sidebar({ matchUrl }) {
   const criteriaLinkIsActive = (_match, location) =>
     matchPath(location.pathname, { path: `${matchUrl}/criteria` })
+
   const alternativesLinkIsActive = (match, location) =>
     !criteriaLinkIsActive(match, location)
+
   return (
     <nav className="Sidebar">
       <Link

@@ -16,40 +16,42 @@ export default function SignIn({
       ? "SignIn_card__isSigningIn"
       : "SignIn_card__isSignInRequired"
 
-  const renderSigningIn = () => {
-    return (
-      <React.Fragment>
-        <h1 className="SignIn_header">Please wait</h1>
-        <div className="SignIn_progress">
-          <span className="SignIn_progressText">Signing in&hellip;</span>
-          <MdAutorenew className="SignIn_progressIcon" />
-        </div>
-      </React.Fragment>
-    )
-  }
-
-  const renderSignInRequired = () => {
-    return (
-      <React.Fragment>
-        <h1 className="SignIn_header">Sign in required</h1>
-        <p className="SignIn_text">
-          To continue from where you left off, please sign in:
-        </p>
-        <Button className="SignIn_button" onClick={onUserSignIn}>
-          Sign in now
-        </Button>
-      </React.Fragment>
-    )
-  }
-
   return (
     <main className={`SignIn ${className}`}>
       <Header className="Header__comparisonMode" />
       <div className={`SignIn_card ${stateClassName}`}>
         <div className="SignIn_body">
-          {isUserSigningIn ? renderSigningIn() : renderSignInRequired()}
+          {isUserSigningIn
+            ? renderSigningIn()
+            : renderSignInRequired(onUserSignIn)}
         </div>
       </div>
     </main>
+  )
+}
+
+function renderSigningIn() {
+  return (
+    <React.Fragment>
+      <h1 className="SignIn_header">Please wait</h1>
+      <div className="SignIn_progress">
+        <span className="SignIn_progressText">Signing in&hellip;</span>
+        <MdAutorenew className="SignIn_progressIcon" />
+      </div>
+    </React.Fragment>
+  )
+}
+
+function renderSignInRequired(onUserSignIn) {
+  return (
+    <React.Fragment>
+      <h1 className="SignIn_header">Sign in required</h1>
+      <p className="SignIn_text">
+        To continue from where you left off, please sign in:
+      </p>
+      <Button className="SignIn_button" onClick={onUserSignIn}>
+        Sign in now
+      </Button>
+    </React.Fragment>
   )
 }
