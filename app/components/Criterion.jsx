@@ -57,7 +57,7 @@ function renderDetail(text, detail) {
 function renderEdit(criterion, onSubmitEdit, onCancelEdit) {
   return (
     <EditCriterion
-      criterion={criterion}
+      input={criterion}
       onSubmit={onSubmitEdit}
       onCancel={onCancelEdit}
     />

@@ -8,21 +8,21 @@ import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditAlternative(props) {
-  const { alternative } = props
+  const { input } = props
   return (
     <FormState
-      input={alternative}
+      input={input}
       fields={AlternativeFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )
 }
 
-function render({ className, alternative, fields, onSubmit, onCancel }) {
+function render({ className, input, fields, onSubmit, onCancel }) {
   return (
     <Form
       className={`EditAlternative ${className}`}
-      onSubmit={() => handleSubmit(alternative, fields, onSubmit)}
+      onSubmit={() => handleSubmit(input, fields, onSubmit)}
     >
       <div className="EditAlternative_row">
         {renderName(fields.name)}
@@ -69,9 +69,9 @@ function renderButtons(onCancel) {
   )
 }
 
-async function handleSubmit(alternative, fields, onSubmit) {
+async function handleSubmit(input, fields, onSubmit) {
   await onSubmit({
-    id: alternative.id,
+    id: input.id,
     name: fields.name.output(),
     url: fields.url.output()
   })

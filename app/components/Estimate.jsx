@@ -71,7 +71,7 @@ function renderEdit(
 ) {
   return (
     <EditEstimate
-      estimate={estimate}
+      input={estimate}
       criterion={criterion}
       onSubmit={onSubmitEdit}
       onCancel={onCancelEdit}

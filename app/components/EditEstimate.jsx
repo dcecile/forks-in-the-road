@@ -7,22 +7,22 @@ import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
-export default function EditComparison(props) {
-  const { estimate } = props
+export default function EditEstimate(props) {
+  const { input } = props
   return (
     <FormState
-      input={estimate}
+      input={input}
       fields={EstimateFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )
 }
 
-function render({ estimate, criterion, fields, onSubmit, onCancel, onReset }) {
+function render({ input, criterion, fields, onSubmit, onCancel, onReset }) {
   return (
     <Form
       className="EditEstimate"
-      onSubmit={() => handleSubmit(estimate, fields, onSubmit)}
+      onSubmit={() => handleSubmit(input, fields, onSubmit)}
     >
       {renderEstimate(criterion, fields.estimate)}
       {renderButtons(onCancel, onReset)}
@@ -63,9 +63,9 @@ function renderButtons(onCancel, onReset) {
   )
 }
 
-async function handleSubmit(estimate, fields, onSubmit) {
+async function handleSubmit(input, fields, onSubmit) {
   await onSubmit({
-    id: estimate.id,
+    id: input.id,
     estimate: fields.estimate.output()
   })
 }

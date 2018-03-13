@@ -122,7 +122,7 @@ function renderEdit(alternative, onSubmitEdit, onCancelEdit) {
   return (
     <EditAlternative
       className="Alternative_edit"
-      alternative={alternative}
+      input={alternative}
       onSubmit={onSubmitEdit}
       onCancel={onCancelEdit}
     />

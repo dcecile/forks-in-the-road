@@ -9,21 +9,21 @@ import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditCriterion(props) {
-  const { criterion } = props
+  const { input } = props
   return (
     <FormState
-      input={criterion}
+      input={input}
       fields={CriterionFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />
   )
 }
 
-function render({ criterion, fields, onSubmit, onCancel }) {
+function render({ input, fields, onSubmit, onCancel }) {
   return (
     <Form
       className="EditCriterion"
-      onSubmit={() => handleSubmit(criterion, fields, onSubmit)}
+      onSubmit={() => handleSubmit(input, fields, onSubmit)}
     >
       {renderName(fields.name)}
       {renderDescription(fields.description)}
@@ -106,9 +106,9 @@ function renderButtons(onCancel) {
   )
 }
 
-async function handleSubmit(criterion, fields, onSubmit) {
+async function handleSubmit(input, fields, onSubmit) {
   await onSubmit({
-    id: criterion.id,
+    id: input.id,
     name: fields.name.output(),
     description: fields.description.output(),
     full_value: fields.full_value.output(),

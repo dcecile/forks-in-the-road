@@ -8,10 +8,10 @@ import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
 
 export default function EditComparison(props) {
-  const { comparison } = props
+  const { input } = props
   return (
     <FormState
-      input={comparison}
+      input={input}
       fields={ComparisonFields}
       render={stateProps => render({ ...props, ...stateProps })}
     />

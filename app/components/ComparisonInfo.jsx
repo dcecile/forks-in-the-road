@@ -49,7 +49,7 @@ function renderEditButton(comparison, onBeginEdit) {
 function renderEditForm(comparison, onSubmitEdit, onCancelEdit) {
   return (
     <EditComparison
-      comparison={comparison}
+      input={comparison}
       onSubmit={onSubmitEdit}
       onCancel={onCancelEdit}
     />
