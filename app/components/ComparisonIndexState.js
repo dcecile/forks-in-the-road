@@ -1,6 +1,8 @@
 import StateComponent from "StateComponent"
 
 export default class ComparisonIndexState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(ComparisonIndexState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -56,7 +58,3 @@ export default class ComparisonIndexState extends StateComponent {
     }
   }
 }
-
-ComparisonIndexState.renderWith = StateComponent.renderWithComponent(
-  ComparisonIndexState
-)

@@ -2,6 +2,8 @@ import StateComponent from "StateComponent"
 import Timing from "Timing"
 
 export default class EstimateState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(EstimateState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -89,5 +91,3 @@ export default class EstimateState extends StateComponent {
     }
   }
 }
-
-EstimateState.renderWith = StateComponent.renderWithComponent(EstimateState)

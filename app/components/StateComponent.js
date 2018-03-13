@@ -1,6 +1,15 @@
 import React from "react"
 
 export default class StateComponent extends React.Component {
+  /* eslint-disable react/display-name */
+  static renderWithComponent = State => (render, fixedProps) => props =>
+    React.createElement(State, {
+      ...props,
+      ...fixedProps,
+      render: stateProps => render({ ...props, ...stateProps })
+    })
+  /* eslint-enable react/display-name */
+
   constructor(props) {
     super(props)
   }
@@ -13,12 +22,3 @@ export default class StateComponent extends React.Component {
     return this.renderProp(this.renderState())
   }
 }
-
-/* eslint-disable react/display-name */
-StateComponent.renderWithComponent = State => (render, fixedProps) => props =>
-  React.createElement(State, {
-    ...props,
-    ...fixedProps,
-    render: stateProps => render({ ...props, ...stateProps })
-  })
-/* eslint-enable react/display-name */

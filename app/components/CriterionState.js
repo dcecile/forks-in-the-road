@@ -2,6 +2,8 @@ import StateComponent from "StateComponent"
 import Timing from "Timing"
 
 export default class CriterionState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(CriterionState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -59,5 +61,3 @@ export default class CriterionState extends StateComponent {
     }
   }
 }
-
-CriterionState.renderWith = StateComponent.renderWithComponent(CriterionState)

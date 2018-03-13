@@ -1,6 +1,8 @@
 import StateComponent from "StateComponent"
 
 export default class InputState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(InputState)
+
   constructor(props) {
     super(props)
     this.state = {
@@ -32,5 +34,3 @@ export default class InputState extends StateComponent {
     }
   }
 }
-
-InputState.renderWith = StateComponent.renderWithComponent(InputState)

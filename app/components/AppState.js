@@ -8,6 +8,8 @@ import Timing from "Timing"
 const UserStorageKey = "user"
 
 export default class AppState extends StateComponent {
+  static renderWith = StateComponent.renderWithComponent(AppState)
+
   static childContextTypes = {
     headerSlot: PropTypes.instanceOf(HTMLElement)
   }
@@ -145,5 +147,3 @@ export default class AppState extends StateComponent {
     }
   }
 }
-
-AppState.renderWith = StateComponent.renderWithComponent(AppState)
