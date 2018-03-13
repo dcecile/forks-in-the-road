@@ -2,12 +2,12 @@ import React from "react"
 import { Redirect, Switch } from "react-router-dom"
 import { Route } from "react-router"
 
-import ComparisonIndex from "ComparisonIndex"
+import AppState from "AppState"
 import Comparison from "Comparison"
+import ComparisonIndex from "ComparisonIndex"
 import RouteNotFound from "RouteNotFound"
 import SignIn from "SignIn"
 import { HeaderSlot } from "Header"
-import AppState from "AppState"
 
 export default AppState.renderWith(render)
 

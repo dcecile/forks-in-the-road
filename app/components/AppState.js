@@ -1,8 +1,8 @@
-import StateComponent from "StateComponent"
 import PropTypes from "prop-types"
 import queryString from "query-string"
 
 import Server from "Server"
+import StateComponent from "StateComponent"
 import Timing from "Timing"
 
 const UserStorageKey = "user"
