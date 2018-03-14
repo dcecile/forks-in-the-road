@@ -128,35 +128,66 @@ function renderSwitch(
 ) {
   return (
     <Switch location={location}>
-      <Route
-        exact
-        path={matchUrl}
-        render={() =>
-          renderAlternatives(comparison, matchUrl, server, onSetComparisonState)
-        }
-      />
-      <Route
-        exact
-        path={`${matchUrl}/criteria`}
-        render={() =>
-          renderCriteria(comparison, matchUrl, server, onSetComparisonState)
-        }
-      />
-      <Route
-        exact
-        path={`${matchUrl}/alternative/:id`}
-        render={({ match }) =>
-          renderOneAlternative(
-            comparison,
-            match,
-            matchUrl,
-            server,
-            onSetComparisonState
-          )
-        }
-      />
-      <Route component={RouteNotFound} />
+      {renderRouteCriteria(comparison, matchUrl, server, onSetComparisonState)}
+      {renderRouteAlternatives(
+        comparison,
+        matchUrl,
+        server,
+        onSetComparisonState
+      )}
+      {renderRouteOneAlternative(
+        comparison,
+        matchUrl,
+        server,
+        onSetComparisonState
+      )}
+      {renderRouteNotFound()}
     </Switch>
+  )
+}
+
+function renderRouteCriteria(
+  comparison,
+  matchUrl,
+  server,
+  onSetComparisonState
+) {
+  return (
+    <Route
+      exact
+      path={`${matchUrl}/criteria`}
+      render={() =>
+        renderCriteria(comparison, matchUrl, server, onSetComparisonState)
+      }
+    />
+  )
+}
+
+function renderCriteria(comparison, matchUrl, server, onSetComparisonState) {
+  return (
+    <CriterionIndex
+      matchUrl={matchUrl}
+      comparison={comparison}
+      server={server}
+      onSetComparisonState={onSetComparisonState}
+    />
+  )
+}
+
+function renderRouteAlternatives(
+  comparison,
+  matchUrl,
+  server,
+  onSetComparisonState
+) {
+  return (
+    <Route
+      exact
+      path={matchUrl}
+      render={() =>
+        renderAlternatives(comparison, matchUrl, server, onSetComparisonState)
+      }
+    />
   )
 }
 
@@ -176,13 +207,25 @@ function renderAlternatives(
   )
 }
 
-function renderCriteria(comparison, matchUrl, server, onSetComparisonState) {
+function renderRouteOneAlternative(
+  comparison,
+  matchUrl,
+  server,
+  onSetComparisonState
+) {
   return (
-    <CriterionIndex
-      matchUrl={matchUrl}
-      comparison={comparison}
-      server={server}
-      onSetComparisonState={onSetComparisonState}
+    <Route
+      exact
+      path={`${matchUrl}/alternative/:id`}
+      render={({ match }) =>
+        renderOneAlternative(
+          comparison,
+          match,
+          matchUrl,
+          server,
+          onSetComparisonState
+        )
+      }
     />
   )
 }
@@ -203,6 +246,10 @@ function renderOneAlternative(
       onSetComparisonState={onSetComparisonState}
     />
   )
+}
+
+function renderRouteNotFound() {
+  return <Route component={RouteNotFound} />
 }
 
 function renderInfo(comparison, server, onSetComparisonState) {
