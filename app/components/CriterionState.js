@@ -1,35 +1,19 @@
-import StateComponent from "StateComponent"
+import EditableStateComponent from "EditableStateComponent"
 import Timing from "Timing"
 
-export default class CriterionState extends StateComponent {
-  static renderWith = StateComponent.renderWithComponent(CriterionState)
+export default class CriterionState extends EditableStateComponent {
+  static renderWith = EditableStateComponent.renderWithComponent(CriterionState)
 
   constructor(props) {
     super(props)
-    this.state = {
-      isEditing: false,
-      isEditStateChanging: false
-    }
   }
 
   get onSubmitEdit() {
     return this.props.onSubmitEdit
   }
 
-  get isEditing() {
-    return this.state.isEditing
-  }
-
-  get isEditStateChanging() {
-    return this.state.isEditStateChanging
-  }
-
-  async handleBeginEdit() {
-    await this.setStateTemporarily(
-      { isEditStateChanging: true },
-      Timing.criterionEditStateChange
-    )
-    this.setState({ isEditing: true })
+  get editStateChangeTiming() {
+    return Timing.criterionEditStateChange
   }
 
   async handleSubmitEdit(criterion) {
@@ -37,21 +21,9 @@ export default class CriterionState extends StateComponent {
     await this.handleCancelEdit()
   }
 
-  async handleCancelEdit() {
-    await this.setStateTemporarily(
-      { isEditStateChanging: true },
-      Timing.criterionEditStateChange
-    )
-    this.setState({ isEditing: false })
-  }
-
-  renderState() {
+  renderEditableState() {
     return {
-      isEditing: this.isEditing,
-      isEditStateChanging: this.isEditStateChanging,
-      onBeginEdit: () => this.handleBeginEdit(),
-      onSubmitEdit: criterion => this.handleSubmitEdit(criterion),
-      onCancelEdit: () => this.handleCancelEdit()
+      onSubmitEdit: criterion => this.handleSubmitEdit(criterion)
     }
   }
 }

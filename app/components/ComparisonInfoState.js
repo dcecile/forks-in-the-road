@@ -1,15 +1,13 @@
-import StateComponent from "StateComponent"
+import EditableStateComponent from "EditableStateComponent"
 import Timing from "Timing"
 
-export default class ComparisonState extends StateComponent {
-  static renderWith = StateComponent.renderWithComponent(ComparisonState)
+export default class ComparisonState extends EditableStateComponent {
+  static renderWith = EditableStateComponent.renderWithComponent(
+    ComparisonState
+  )
 
   constructor(props) {
     super(props)
-    this.state = {
-      isEditing: false,
-      isEditStateChanging: false
-    }
   }
 
   get comparison() {
@@ -24,20 +22,8 @@ export default class ComparisonState extends StateComponent {
     return this.props.onSetComparisonState
   }
 
-  get isEditing() {
-    return this.state.isEditing
-  }
-
-  get isEditStateChanging() {
-    return this.state.isEditStateChanging
-  }
-
-  async handleBeginEdit() {
-    await this.setStateTemporarily(
-      { isEditStateChanging: true },
-      Timing.comparisonInfoEditStateChange
-    )
-    this.setState({ isEditing: true })
+  get editStateChangeTiming() {
+    return Timing.comparisonInfoEditStateChange
   }
 
   async handleSubmitEdit(comparison) {
@@ -50,21 +36,9 @@ export default class ComparisonState extends StateComponent {
     await this.handleCancelEdit()
   }
 
-  async handleCancelEdit() {
-    await this.setStateTemporarily(
-      { isEditStateChanging: true },
-      Timing.comparisonInfoEditStateChange
-    )
-    this.setState({ isEditing: false })
-  }
-
-  renderState() {
+  renderEditableState() {
     return {
-      isEditing: this.isEditing,
-      isEditStateChanging: this.isEditStateChanging,
-      onBeginEdit: () => this.handleBeginEdit(),
-      onSubmitEdit: comparison => this.handleSubmitEdit(comparison),
-      onCancelEdit: () => this.handleCancelEdit()
+      onSubmitEdit: comparison => this.handleSubmitEdit(comparison)
     }
   }
 }
