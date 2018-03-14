@@ -1,4 +1,7 @@
 # Forks in the Road
+_Probability-calibrated comparison of many alternatives_
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/989b1e9c546c18f6f67f/maintainability)](https://codeclimate.com/github/dcecile/forks-in-the-road/maintainability)
 
 ## Developing
 
