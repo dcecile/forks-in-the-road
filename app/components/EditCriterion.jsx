@@ -2,6 +2,7 @@ import React from "react"
 
 import Button from "Button"
 import CriterionFields from "CriterionFields"
+import EstimateInput from "EstimateInput"
 import Form from "Form"
 import FormState from "FormState"
 import NumberInput from "NumberInput"
@@ -65,9 +66,7 @@ function renderDefaultEstimate(field) {
     <CustomLabeledInput
       field={field}
       labelText="Default estimate (optional)"
-      input={NumberInput}
-      min="0"
-      max="100"
+      input={EstimateInput}
       placeholder="50"
     />
   )

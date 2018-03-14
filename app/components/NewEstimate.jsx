@@ -1,9 +1,9 @@
 import React from "react"
 
 import EstimateFields from "EstimateFields"
+import EstimateInput from "EstimateInput"
 import Form from "Form"
 import FormState from "FormState"
-import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 
 export default FormState.renderWith(render, { fields: EstimateFields })
@@ -22,11 +22,9 @@ function render({ criterion, fields, onSubmit }) {
 
 function renderEstimate(criterion, field) {
   return (
-    <NumberInput
+    <EstimateInput
       className="NewEstimate_input"
       required
-      min="0"
-      max="100"
       placeholder={`Estimate: ${criterion.default_estimate}`}
       field={field}
     />
