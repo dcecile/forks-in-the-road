@@ -33,14 +33,11 @@ export default class ComparisonState extends StateComponent {
   }
 
   async handleBeginEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.comparisonInfoEditStateChange()
-    this.setState({
-      isEditing: true,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.comparisonInfoEditStateChange
+    )
+    this.setState({ isEditing: true })
   }
 
   async handleSubmitEdit(comparison) {
@@ -54,14 +51,11 @@ export default class ComparisonState extends StateComponent {
   }
 
   async handleCancelEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.comparisonInfoEditStateChange()
-    this.setState({
-      isEditing: false,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.comparisonInfoEditStateChange
+    )
+    this.setState({ isEditing: false })
   }
 
   renderState() {

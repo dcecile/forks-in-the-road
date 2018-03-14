@@ -21,4 +21,11 @@ export default class StateComponent extends React.Component {
   render() {
     return this.renderProp(this.renderState())
   }
+
+  async setStateTemporarily(newState, timing) {
+    const oldState = this.state
+    this.setState(newState)
+    await timing()
+    this.setState(oldState)
+  }
 }

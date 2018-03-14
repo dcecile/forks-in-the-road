@@ -37,25 +37,19 @@ export default class EstimateState extends StateComponent {
   }
 
   async handleBeginEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.estimateEditStateChange()
-    this.setState({
-      isEditing: true,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.estimateEditStateChange
+    )
+    this.setState({ isEditing: true })
   }
 
   async handleSubmitNew(estimate) {
     await this.onSubmitNew(estimate)
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.estimateEditStateChange()
-    this.setState({
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.estimateEditStateChange
+    )
   }
 
   async handleSubmitEdit(estimate) {
@@ -69,14 +63,11 @@ export default class EstimateState extends StateComponent {
   }
 
   async handleCancelEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.estimateEditStateChange()
-    this.setState({
-      isEditing: false,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.estimateEditStateChange
+    )
+    this.setState({ isEditing: false })
   }
 
   renderState() {

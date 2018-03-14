@@ -25,14 +25,11 @@ export default class CriterionState extends StateComponent {
   }
 
   async handleBeginEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.criterionEditStateChange()
-    this.setState({
-      isEditing: true,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.criterionEditStateChange
+    )
+    this.setState({ isEditing: true })
   }
 
   async handleSubmitEdit(criterion) {
@@ -41,14 +38,11 @@ export default class CriterionState extends StateComponent {
   }
 
   async handleCancelEdit() {
-    this.setState({
-      isEditStateChanging: true
-    })
-    await Timing.criterionEditStateChange()
-    this.setState({
-      isEditing: false,
-      isEditStateChanging: false
-    })
+    await this.setStateTemporarily(
+      { isEditStateChanging: true },
+      Timing.criterionEditStateChange
+    )
+    this.setState({ isEditing: false })
   }
 
   renderState() {

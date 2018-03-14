@@ -40,13 +40,10 @@ export default class AlternativeIndexState extends StateComponent {
   }
 
   async animateNewAlternative() {
-    this.setState({
-      isAlternativeNewlyCreated: true
-    })
-    await Timing.alternativeIndexHighlightLink()
-    this.setState({
-      isAlternativeNewlyCreated: false
-    })
+    this.setStateTemporarily(
+      { isAlternativeNewlyCreated: true },
+      Timing.alternativeIndexHighlightLink
+    )
   }
 
   renderState() {

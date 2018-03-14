@@ -69,9 +69,11 @@ export default class AppState extends StateComponent {
   }
 
   async handleUserSignIn() {
-    this.setState({ isUserSigningInChanging: true })
-    await Timing.appUserSigningInChanging()
-    this.setState({ isUserSigningInChanging: false, isUserSigningIn: true })
+    await this.setStateTemporarily(
+      { isUserSigningInChanging: true },
+      Timing.appUserSigningInChanging
+    )
+    this.setState({ isUserSigningIn: true })
     const clientID = process.env.GITHUB_CLIENT_ID
     const params = queryString.stringify({
       client_id: clientID,
@@ -92,9 +94,10 @@ export default class AppState extends StateComponent {
     const response = await this.server.post("/users/authorize", { code })
     const user = response.data
     console.log("Authorized", user)
-    this.setState({ isUserSigningInChanging: true })
-    await Timing.appUserSigningInChanging()
-    this.setState({ isUserSigningInChanging: false })
+    await this.setStateTemporarily(
+      { isUserSigningInChanging: true },
+      Timing.appUserSigningInChanging
+    )
     this.handleUserChange(user)
     this.removeSearchParameter()
     this.setState({ isUserSigningIn: false })

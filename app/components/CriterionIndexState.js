@@ -40,13 +40,10 @@ export default class CriterionIndexState extends StateComponent {
   }
 
   async animateNewCriterion() {
-    this.setState({
-      isCriterionNewlyCreated: true
-    })
-    await Timing.criterionIndexPopIn()
-    this.setState({
-      isCriterionNewlyCreated: false
-    })
+    await this.setStateTemporarily(
+      { isCriterionNewlyCreated: true },
+      Timing.criterionIndexPopIn
+    )
   }
 
   async handleSubmitEditCriterion(criterion) {
