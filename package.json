@@ -6,7 +6,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "4.0.0",
-    "caniuse-lite": "^1.0.30000697",
+    "caniuse-lite": "^1.0.30000815",
     "coffeescript": "2.2.1",
     "jquery": "^3.3.1",
     "node-sass": "^4.5.3",
