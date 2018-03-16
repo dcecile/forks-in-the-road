@@ -7,7 +7,7 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "4.0.0",
     "caniuse-lite": "^1.0.30000815",
-    "coffeescript": "2.2.1",
+    "coffeescript": "2.2.3",
     "jquery": "^3.3.1",
     "node-sass": "^4.5.3",
     "popper.js": "^1.14.1",
