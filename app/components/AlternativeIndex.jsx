@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { sortBy } from "rambda"
 
 import AlternativeIndexState from "AlternativeIndexState"
 import ComparisonHeader from "ComparisonHeader"
@@ -10,18 +11,20 @@ export default AlternativeIndexState.renderWith(render)
 function render({
   matchUrl,
   comparison,
-  isAlternativeNewlyCreated,
+  newlyCreatedItem,
   onSubmitNewAlternative
 }) {
   return (
     <div className="AlternativeIndex">
       {renderHeader(matchUrl)}
       {renderNewAlternative(onSubmitNewAlternative)}
-      {renderAlternativeLinks(
-        matchUrl,
-        comparison.alternatives,
-        isAlternativeNewlyCreated
-      )}
+      <div className="AlternativeIndex_items">
+        {renderAlternativeLinks(
+          matchUrl,
+          sortAlternatives(comparison.alternatives),
+          newlyCreatedItem
+        )}
+      </div>
     </div>
   )
 }
@@ -39,18 +42,20 @@ function renderNewAlternative(onSubmitNewAlternative) {
   )
 }
 
-function renderAlternativeLinks(
-  matchUrl,
-  alternatives,
-  isAlternativeNewlyCreated
-) {
-  const getNewlyCreatedClassName = i =>
-    i === 0 && isAlternativeNewlyCreated
+const sortAlternatives = sortBy(alternative => alternative.name.toLowerCase())
+
+function renderAlternativeLinks(matchUrl, alternatives, newlyCreatedItem) {
+  const getNewlyCreatedClassName = alternative =>
+    alternative === newlyCreatedItem
       ? "AlternativeIndex_link__isNewlyCreated"
       : ""
 
-  return alternatives.map((alternative, i) =>
-    renderAlternativeLink(matchUrl, alternative, getNewlyCreatedClassName(i))
+  return alternatives.map(alternative =>
+    renderAlternativeLink(
+      matchUrl,
+      alternative,
+      getNewlyCreatedClassName(alternative)
+    )
   )
 }
 

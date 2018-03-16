@@ -1,5 +1,4 @@
 import StateComponent from "StateComponent"
-import Timing from "Timing"
 
 export default class AlternativeIndexState extends StateComponent {
   static renderWith = StateComponent.renderWithComponent(AlternativeIndexState)
@@ -7,7 +6,7 @@ export default class AlternativeIndexState extends StateComponent {
   constructor(props) {
     super(props)
     this.state = {
-      isAlternativeNewlyCreated: false
+      newlyCreatedItem: null
     }
   }
 
@@ -23,8 +22,14 @@ export default class AlternativeIndexState extends StateComponent {
     return this.props.onSetComparisonState
   }
 
-  get isAlternativeNewlyCreated() {
-    return this.state.isAlternativeNewlyCreated
+  get newlyCreatedItem() {
+    return this.state.newlyCreatedItem
+  }
+
+  componentDidMount() {
+    this.setState({
+      newlyCreatedItem: null
+    })
   }
 
   async handleSubmitNewAlternative(alternative) {
@@ -36,19 +41,14 @@ export default class AlternativeIndexState extends StateComponent {
     this.onSetComparisonState({
       alternatives: [response.data].concat(this.comparison.alternatives)
     })
-    this.animateNewAlternative()
-  }
-
-  async animateNewAlternative() {
-    this.setStateTemporarily(
-      { isAlternativeNewlyCreated: true },
-      Timing.alternativeIndexHighlightLink
-    )
+    this.setState({
+      newlyCreatedItem: response.data
+    })
   }
 
   renderState() {
     return {
-      isAlternativeNewlyCreated: this.isAlternativeNewlyCreated,
+      newlyCreatedItem: this.newlyCreatedItem,
       onSubmitNewAlternative: alternative =>
         this.handleSubmitNewAlternative(alternative)
     }

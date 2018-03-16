@@ -6,6 +6,10 @@
 .AlternativeIndex_new
   margin-top: 0.5rem
 
+.AlternativeIndex_items
+  display: flex
+  flex-direction: column
+
 .AlternativeIndex_link
   margin:
     top: 1.2rem
@@ -19,6 +23,7 @@
   font-weight: $Font_boldWeight
 
 .AlternativeIndex_link__isNewlyCreated
+  order: -1
   animation:
     name: AlternativeIndex_growLink, AlternativeIndex_highlightLink
     duration: $Timing_alternativeIndexGrowLink, $Timing_alternativeIndexHighlightLink

@@ -33,7 +33,7 @@ _Probability-calibrated comparison of many alternatives_
 3. Visit http://localhost:3000 to view the app
 4. Change a source file, and the app will reload automatically
 5. Run `yarn eslint-all` to check all JavaScript style/patterns
-6. Run `yarn prettier-write` to reformat all JavaScript code
+6. Run `yarn eslint-all --fix` to reformat all JavaScript code
 7. Run `yarn sass-lint-all` to check all Sass style/patterns
 
 ## Deploying to Heroku
