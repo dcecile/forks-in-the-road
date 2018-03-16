@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  def put(_)
+  def put(_path)
     # Disable duplicate PUT route, because PATCH is more a more accurate verb
   end
 
