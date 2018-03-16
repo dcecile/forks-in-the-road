@@ -4,6 +4,7 @@ options:
 files:
   ignore:
     - node_modules/**/*
+    - vendor/**/*
 rules:
   class-name-format: 0
   empty-line-between-blocks: 0
