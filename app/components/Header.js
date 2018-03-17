@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 
 export default class Header extends React.Component {
   static contextTypes = {
-    headerSlot: PropTypes.instanceOf(HTMLElement)
+    headerSlotElement: PropTypes.instanceOf(HTMLElement)
   }
 
   get className() {
@@ -15,19 +15,19 @@ export default class Header extends React.Component {
     return this.props.children
   }
 
-  get headerSlot() {
-    return this.context.headerSlot
+  get headerSlotElement() {
+    return this.context.headerSlotElement
   }
 
   render() {
-    if (!this.headerSlot) {
+    if (!this.headerSlotElement) {
       return null
     }
 
-    this.headerSlot.parentElement.className = `Header ${this.className}`
+    this.headerSlotElement.parentElement.className = `Header ${this.className}`
 
-    return this.headerSlot
-      ? ReactDOM.createPortal(this.children, this.headerSlot)
+    return this.headerSlotElement
+      ? ReactDOM.createPortal(this.children, this.headerSlotElement)
       : null
   }
 }

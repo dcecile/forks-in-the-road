@@ -11,21 +11,21 @@ export default class AppState extends StateComponent {
   static renderWith = StateComponent.renderWithComponent(AppState)
 
   static childContextTypes = {
-    headerSlot: PropTypes.instanceOf(HTMLElement)
+    headerSlotElement: PropTypes.instanceOf(HTMLElement)
   }
 
   constructor(props) {
     super(props)
     const user = this.readUserFromLocalStorage()
     this.state = {
-      headerSlot: null,
+      isMounted: false,
       user,
       isUserSigningInChanging: false,
       isUserSigningIn: false,
       isUserSigningOut: false
     }
     this.server = new Server(user)
-    this.headerSlot = null
+    this.headerSlotElement = null
   }
 
   get history() {
@@ -49,7 +49,7 @@ export default class AppState extends StateComponent {
   }
 
   getChildContext() {
-    return { headerSlot: this.state.headerSlot }
+    return { headerSlotElement: this.headerSlotElement }
   }
 
   readUserFromLocalStorage() {
@@ -61,11 +61,15 @@ export default class AppState extends StateComponent {
   }
 
   componentDidMount() {
-    this.setState({
-      headerSlot: this.headerSlot
-    })
+    this.triggerChildContextUpdate()
     this.handleUserSignInCallback()
     this.handleOtherTabUserChange()
+  }
+
+  triggerChildContextUpdate() {
+    // Without this component's state, the child context never gets
+    // updated with the new header slot element
+    this.setState({ isMounted: true })
   }
 
   async handleUserSignIn() {
@@ -138,13 +142,13 @@ export default class AppState extends StateComponent {
 
   renderState() {
     return {
-      headerSlot: this.headerSlot,
       user: this.user,
       server: this.server,
       isUserSigningInChanging: this.isUserSigningInChanging,
       isUserSigningIn: this.isUserSigningIn,
       isUserSigningOut: this.isUserSigningOut,
-      onHeaderSlotRef: headerSlot => (this.headerSlot = headerSlot),
+      onHeaderSlotRef: headerSlotElement =>
+        (this.headerSlotElement = headerSlotElement),
       onUserSignIn: user => this.handleUserSignIn(user),
       onUserSignOut: () => this.handleUserSignOut()
     }
