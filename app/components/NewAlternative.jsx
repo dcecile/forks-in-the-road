@@ -9,10 +9,18 @@ import TextInput from "TextInput"
 
 export default FormState.renderWith(render, { fields: AlternativeFields })
 
-function render({ className, fields, onNameChange, onSubmit, onReinitForm }) {
+function render({
+  className,
+  fields,
+  onFormRef,
+  onNameChange,
+  onSubmit,
+  onReinitForm
+}) {
   return (
     <Form
       className={`NewAlternative ${className}`}
+      onRef={onFormRef}
       onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
       {renderName(fields.name, onNameChange)}

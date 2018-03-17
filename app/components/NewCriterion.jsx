@@ -10,10 +10,11 @@ import TextInput from "TextInput"
 
 export default FormState.renderWith(render, { fields: CriterionFields })
 
-function render({ className, fields, onSubmit, onReinitForm }) {
+function render({ className, fields, onFormRef, onSubmit, onReinitForm }) {
   return (
     <Form
       className={`NewCriterion ${className}`}
+      onRef={onFormRef}
       onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
       {renderName(fields.name)}

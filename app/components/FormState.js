@@ -62,11 +62,13 @@ export default class FormState extends StateComponent {
 
   handleReinit() {
     this.setState(this.createInitState())
+    this.formElement.querySelector("input").focus()
   }
 
   renderState() {
     return {
       fields: this.createFieldObjects(),
+      onFormRef: formElement => (this.formElement = formElement),
       onReinitForm: () => this.handleReinit()
     }
   }
