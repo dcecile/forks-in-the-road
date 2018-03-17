@@ -22,20 +22,30 @@
   padding: 0.5rem 1.0rem
   font-weight: $Font_boldWeight
 
-.AlternativeIndex_link__isNewlyCreated
-  order: -1
-  animation:
-    name: AlternativeIndex_growLink, AlternativeIndex_highlightLink
-    duration: $Timing_alternativeIndexGrowLink, $Timing_alternativeIndexHighlightLink
-    timing-function: ease-out, ease
-
+@mixin AlternativeIndex_link__indicator($text, $fontWeight)
   &::after
     position: absolute
     margin-left: 1.4em
-    font-weight: $Font_lightWeight
+    font-weight: $fontWeight
     font-style: italic
-    content: "New alternative"
+    content: $text
 
+.AlternativeIndex_link__isNewlyCreated
+  @include AlternativeIndex_link__indicator("New alternative", $Font_lightWeight)
+  order: -1
+  animation:
+    name: AlternativeIndex_growLink, AlternativeIndex_highlightLinkNew
+    duration: $Timing_alternativeIndexGrowLink, $Timing_alternativeIndexHighlightLinkNew
+    timing-function: ease-out, ease
+
+.AlternativeIndex_link__isMatching
+  @include AlternativeIndex_link__indicator("Matching alternative", $Font_normalWeight)
+  order: -2
+  transition:
+    property: box-shadow
+    duration: $Timing_alternativeIndexHighlightLinkMatching
+    timing-function: ease-out
+  box-shadow: 0 0 5px $Theme_primary
 
 @keyframes AlternativeIndex_growLink
   0%
@@ -50,6 +60,6 @@
   50%
     color: transparent
 
-@keyframes AlternativeIndex_highlightLink
+@keyframes AlternativeIndex_highlightLinkNew
   40%
     box-shadow: 0 0 12px $Theme_primary

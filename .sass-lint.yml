@@ -9,6 +9,7 @@ rules:
   class-name-format: 0
   empty-line-between-blocks: 0
   leading-zero: 0
+  mixin-name-format: 0
   no-trailing-zero: 0
   no-url-domains: 0
   no-url-protocols: 0

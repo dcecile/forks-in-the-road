@@ -11,17 +11,20 @@ export default AlternativeIndexState.renderWith(render)
 function render({
   matchUrl,
   comparison,
+  matchingItems,
   newlyCreatedItems,
+  onNewAlternativeNameChange,
   onSubmitNewAlternative
 }) {
   return (
     <div className="AlternativeIndex">
       {renderHeader(matchUrl)}
-      {renderNewAlternative(onSubmitNewAlternative)}
+      {renderNewAlternative(onNewAlternativeNameChange, onSubmitNewAlternative)}
       <div className="AlternativeIndex_items">
         {renderAlternativeLinks(
           matchUrl,
           sortAlternatives(comparison.alternatives),
+          matchingItems,
           newlyCreatedItems
         )}
       </div>
@@ -33,10 +36,14 @@ function renderHeader(matchUrl) {
   return <ComparisonHeader matchUrl={matchUrl} title="Alternatives" />
 }
 
-function renderNewAlternative(onSubmitNewAlternative) {
+function renderNewAlternative(
+  onNewAlternativeNameChange,
+  onSubmitNewAlternative
+) {
   return (
     <NewAlternative
       className="AlternativeIndex_new"
+      onNameChange={onNewAlternativeNameChange}
       onSubmit={onSubmitNewAlternative}
     />
   )
@@ -44,7 +51,17 @@ function renderNewAlternative(onSubmitNewAlternative) {
 
 const sortAlternatives = sortBy(alternative => alternative.name.toLowerCase())
 
-function renderAlternativeLinks(matchUrl, alternatives, newlyCreatedItems) {
+function renderAlternativeLinks(
+  matchUrl,
+  alternatives,
+  matchingItems,
+  newlyCreatedItems
+) {
+  const getMatchingClassName = alternative =>
+    contains(alternative, matchingItems)
+      ? "AlternativeIndex_link__isMatching"
+      : ""
+
   const getNewlyCreatedClassName = alternative =>
     contains(alternative, newlyCreatedItems)
       ? "AlternativeIndex_link__isNewlyCreated"
@@ -54,15 +71,21 @@ function renderAlternativeLinks(matchUrl, alternatives, newlyCreatedItems) {
     renderAlternativeLink(
       matchUrl,
       alternative,
+      getMatchingClassName(alternative),
       getNewlyCreatedClassName(alternative)
     )
   )
 }
 
-function renderAlternativeLink(matchUrl, alternative, newlyCreatedClassName) {
+function renderAlternativeLink(
+  matchUrl,
+  alternative,
+  matchingClassName,
+  newlyCreatedClassName
+) {
   return (
     <Link
-      className={`AlternativeIndex_link ${newlyCreatedClassName}`}
+      className={`AlternativeIndex_link ${matchingClassName} ${newlyCreatedClassName}`}
       key={alternative.id}
       to={`${matchUrl}/alternative/${alternative.id}`}
     >

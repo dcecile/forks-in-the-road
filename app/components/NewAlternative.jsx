@@ -9,26 +9,27 @@ import TextInput from "TextInput"
 
 export default FormState.renderWith(render, { fields: AlternativeFields })
 
-function render({ className, fields, onSubmit, onReinitForm }) {
+function render({ className, fields, onNameChange, onSubmit, onReinitForm }) {
   return (
     <Form
       className={`NewAlternative ${className}`}
       onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
-      {renderName(fields.name)}
+      {renderName(fields.name, onNameChange)}
       {renderURL(fields.url)}
       {renderButton()}
     </Form>
   )
 }
 
-function renderName(field) {
+function renderName(field, onNameChange) {
   return (
     <TextInput
       className="NewAlternative_name"
       required
       placeholder="New alternative name"
       field={field}
+      onChange={onNameChange}
     />
   )
 }

@@ -13,24 +13,31 @@ function render({
   max,
   field,
   hasFocus,
+  onChange,
   onFocus,
   onBlur
 }) {
-  const { value, onChange } = field
   return (
     <input
       placeholder={hasFocus ? null : placeholder}
+      value={field.value}
+      onChange={event => handleChange(event, field, onChange)}
       {...{
         className,
         type,
         required,
-        value,
         min,
         max,
-        onChange,
         onFocus,
         onBlur
       }}
     />
   )
+}
+
+function handleChange(event, field, onChange) {
+  field.onChange(event)
+  if (onChange) {
+    onChange(event)
+  }
 }
