@@ -6,7 +6,7 @@ export default class AlternativeIndexState extends StateComponent {
   constructor(props) {
     super(props)
     this.state = {
-      newlyCreatedItem: null
+      newlyCreatedItems: []
     }
   }
 
@@ -22,13 +22,13 @@ export default class AlternativeIndexState extends StateComponent {
     return this.props.onSetComparisonState
   }
 
-  get newlyCreatedItem() {
-    return this.state.newlyCreatedItem
+  get newlyCreatedItems() {
+    return this.state.newlyCreatedItems
   }
 
   componentDidMount() {
     this.setState({
-      newlyCreatedItem: null
+      newlyCreatedItems: []
     })
   }
 
@@ -39,16 +39,16 @@ export default class AlternativeIndexState extends StateComponent {
       alternative
     )
     this.onSetComparisonState({
-      alternatives: [response.data].concat(this.comparison.alternatives)
+      alternatives: this.comparison.alternatives.concat([response.data])
     })
     this.setState({
-      newlyCreatedItem: response.data
+      newlyCreatedItems: this.newlyCreatedItems.concat([response.data])
     })
   }
 
   renderState() {
     return {
-      newlyCreatedItem: this.newlyCreatedItem,
+      newlyCreatedItems: this.newlyCreatedItems,
       onSubmitNewAlternative: alternative =>
         this.handleSubmitNewAlternative(alternative)
     }
