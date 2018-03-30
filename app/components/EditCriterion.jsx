@@ -67,7 +67,8 @@ function renderDefaultEstimate(field) {
       field={field}
       labelText="Default estimate (optional)"
       input={EstimateInput}
-      placeholder="50"
+      defaultEstimate={null}
+      skipPlaceholderText={true}
     />
   )
 }

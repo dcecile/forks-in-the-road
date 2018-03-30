@@ -4,6 +4,7 @@ import Button from "Button"
 import EditEstimate from "EditEstimate"
 import EstimateState from "EstimateState"
 import NewEstimate from "NewEstimate"
+import { convertPercentToString } from "PercentFormat"
 
 export default EstimateState.renderWith(render)
 
@@ -54,7 +55,9 @@ function renderNew(criterion, onSubmitNew) {
 function renderShow(estimate, onBeginEdit) {
   return (
     <React.Fragment>
-      <div className="Estimate_estimate">Estimate: {estimate.estimate}</div>
+      <div className="Estimate_estimate">
+        Estimate: {convertPercentToString(estimate.estimate)}
+      </div>
       <Button className="Estimate_editButton" onClick={onBeginEdit}>
         Edit
       </Button>

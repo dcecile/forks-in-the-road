@@ -26,7 +26,7 @@ function renderEstimate(criterion, field) {
     <EstimateInput
       className="EditEstimate_input"
       required
-      placeholder={`Estimate: ${criterion.default_estimate}`}
+      defaultEstimate={criterion.default_estimate}
       field={field}
     />
   )

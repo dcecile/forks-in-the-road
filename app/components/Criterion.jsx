@@ -3,6 +3,7 @@ import React from "react"
 import Button from "Button"
 import CriterionState from "CriterionState"
 import EditCriterion from "EditCriterion"
+import { convertPercentToString } from "PercentFormat"
 
 export default CriterionState.renderWith(render)
 
@@ -36,8 +37,12 @@ function renderShow(criterion, onBeginEdit) {
       <h2 className="Criterion_name">{criterion.name} </h2>
       <p className="Criterion_description">{criterion.description}</p>
       <ul>
-        {renderDetail("Full value", criterion.full_value)}
-        {renderDetail("Default estimate", criterion.default_estimate)}
+        {renderDetail("Full value", criterion.full_value, value => value)}
+        {renderDetail(
+          "Default estimate",
+          criterion.default_estimate,
+          convertPercentToString
+        )}
       </ul>
       <Button className="Criterion_editButton" onClick={onBeginEdit}>
         Edit
@@ -46,10 +51,10 @@ function renderShow(criterion, onBeginEdit) {
   )
 }
 
-function renderDetail(text, detail) {
+function renderDetail(text, detail, convert) {
   return detail !== null ? (
     <li>
-      {text}: {detail}
+      {text}: {convert(detail)}
     </li>
   ) : null
 }

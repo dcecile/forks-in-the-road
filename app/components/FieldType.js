@@ -1,3 +1,8 @@
+import {
+  convertBareStringToPercent,
+  convertPercentToBareString
+} from "PercentFormat"
+
 export default {
   string: {
     input: value => value,
@@ -15,12 +20,12 @@ export default {
   },
 
   floatPercent: {
-    input: value => (value * 100).toString(),
-    output: value => parseFloat(value) / 100
+    input: convertPercentToBareString,
+    output: convertBareStringToPercent
   },
 
   nullFloatPercent: {
-    input: value => (value !== null ? (value * 100).toString() : ""),
-    output: value => (value !== "" ? parseFloat(value) / 100 : null)
+    input: value => (value !== null ? convertPercentToBareString(value) : ""),
+    output: value => (value !== "" ? convertBareStringToPercent(value) : null)
   }
 }
