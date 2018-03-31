@@ -3,7 +3,7 @@ export function convertPercentToBareString(value) {
 }
 
 export function convertPercentToString(value) {
-  return convertPercentToBareString(value) + "%"
+  return `${convertPercentToBareString(value)}%`
 }
 
 export function convertBareStringToPercent(value) {

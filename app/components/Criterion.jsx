@@ -4,12 +4,15 @@ import Button from "Button"
 import CriterionState from "CriterionState"
 import EditCriterion from "EditCriterion"
 import { convertPercentToString } from "PercentFormat"
+import { convertValueToString } from "ValueFormat"
+import { defaultValueUnitIfNull } from "ComparisonFields"
 
 export default CriterionState.renderWith(render)
 
 function render({
   className,
   criterion,
+  valueUnit,
   isEditing,
   isEditStateChanging,
   onBeginEdit,
@@ -24,20 +27,22 @@ function render({
     <div className={`Criterion ${className}`}>
       <div className={`Criterion_transform ${editStateChangingClassName}`}>
         {!isEditing
-          ? renderShow(criterion, onBeginEdit)
-          : renderEdit(criterion, onSubmitEdit, onCancelEdit)}
+          ? renderShow(criterion, valueUnit, onBeginEdit)
+          : renderEdit(criterion, valueUnit, onSubmitEdit, onCancelEdit)}
       </div>
     </div>
   )
 }
 
-function renderShow(criterion, onBeginEdit) {
+function renderShow(criterion, valueUnit, onBeginEdit) {
   return (
     <div className="Criterion_body">
       <h2 className="Criterion_name">{criterion.name} </h2>
       <p className="Criterion_description">{criterion.description}</p>
       <ul>
-        {renderDetail("Full value", criterion.full_value, value => value)}
+        {renderDetail("Full value", criterion.full_value, value =>
+          convertValueToString(defaultValueUnitIfNull(valueUnit), value)
+        )}
         {renderDetail(
           "Default estimate",
           criterion.default_estimate,
@@ -59,10 +64,11 @@ function renderDetail(text, detail, convert) {
   ) : null
 }
 
-function renderEdit(criterion, onSubmitEdit, onCancelEdit) {
+function renderEdit(criterion, valueUnit, onSubmitEdit, onCancelEdit) {
   return (
     <EditCriterion
       input={criterion}
+      valueUnit={valueUnit}
       onSubmit={onSubmitEdit}
       onCancel={onCancelEdit}
     />

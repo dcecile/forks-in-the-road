@@ -8,10 +8,12 @@ import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
+import { convertValueToString } from "ValueFormat"
+import { defaultValueUnitIfNull } from "ComparisonFields"
 
 export default FormState.renderWith(render, { fields: CriterionFields })
 
-function render({ input, fields, onSubmit, onCancel }) {
+function render({ input, valueUnit, fields, onSubmit, onCancel }) {
   return (
     <Form
       className="EditCriterion"
@@ -19,7 +21,7 @@ function render({ input, fields, onSubmit, onCancel }) {
     >
       {renderName(fields.name)}
       {renderDescription(fields.description)}
-      {renderFullValue(fields.full_value)}
+      {renderFullValue(fields.full_value, valueUnit)}
       {renderDefaultEstimate(fields.default_estimate)}
       {renderButtons(onCancel)}
     </Form>
@@ -49,14 +51,17 @@ function renderDescription(field) {
   )
 }
 
-function renderFullValue(field) {
+function renderFullValue(field, valueUnit) {
   return (
     <CustomLabeledInput
       field={field}
-      labelText="Full value"
+      labelText={`Full value (${defaultValueUnitIfNull(valueUnit)})`}
       input={NumberInput}
       required
-      placeholder="1000"
+      placeholder={convertValueToString(
+        defaultValueUnitIfNull(valueUnit),
+        1000
+      )}
     />
   )
 }

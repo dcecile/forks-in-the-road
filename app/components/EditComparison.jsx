@@ -1,7 +1,7 @@
 import React from "react"
 
 import Button from "Button"
-import ComparisonFields from "ComparisonFields"
+import ComparisonFields, { defaultValueUnit } from "ComparisonFields"
 import Form from "Form"
 import FormState from "FormState"
 import SubmitButton from "SubmitButton"
@@ -49,7 +49,7 @@ function renderValueUnit(field) {
     <CustomLabeledTextInput
       field={field}
       labelText="Value unit (optional)"
-      placeholder="$"
+      placeholder={defaultValueUnit}
     />
   )
 }

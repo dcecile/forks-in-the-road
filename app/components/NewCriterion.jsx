@@ -7,10 +7,18 @@ import FormState from "FormState"
 import NumberInput from "NumberInput"
 import SubmitButton from "SubmitButton"
 import TextInput from "TextInput"
+import { defaultValueUnitIfNull } from "ComparisonFields"
 
 export default FormState.renderWith(render, { fields: CriterionFields })
 
-function render({ className, fields, onFormRef, onSubmit, onReinitForm }) {
+function render({
+  className,
+  valueUnit,
+  fields,
+  onFormRef,
+  onSubmit,
+  onReinitForm
+}) {
   return (
     <Form
       className={`NewCriterion ${className}`}
@@ -18,7 +26,7 @@ function render({ className, fields, onFormRef, onSubmit, onReinitForm }) {
       onSubmit={() => handleSubmit(fields, onSubmit, onReinitForm)}
     >
       {renderName(fields.name)}
-      {renderFullValue(fields.full_value)}
+      {renderFullValue(fields.full_value, valueUnit)}
       {renderButton()}
     </Form>
   )
@@ -35,12 +43,12 @@ function renderName(field) {
   )
 }
 
-function renderFullValue(field) {
+function renderFullValue(field, valueUnit) {
   return (
     <NumberInput
       className="NewCriterion_fullValue"
       required
-      placeholder="New criterion full value"
+      placeholder={`New full value (${defaultValueUnitIfNull(valueUnit)})`}
       field={field}
     />
   )

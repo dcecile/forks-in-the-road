@@ -5,3 +5,9 @@ export default {
   alternative_noun: FieldType.nullString,
   value_unit: FieldType.nullString
 }
+
+export const defaultValueUnit = "$"
+
+export function defaultValueUnitIfNull(valueUnit) {
+  return valueUnit === null ? defaultValueUnit : valueUnit
+}

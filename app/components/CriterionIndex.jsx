@@ -19,10 +19,11 @@ function render({
       {renderHeader(matchUrl)}
       {renderCriteria(
         comparison.criteria,
+        comparison.value_unit,
         isCriterionNewlyCreated,
         onSubmitEditCriterion
       )}
-      {renderNewCriterion(onSubmitNewCriterion)}
+      {renderNewCriterion(comparison.value_unit, onSubmitNewCriterion)}
     </div>
   )
 }
@@ -33,6 +34,7 @@ function renderHeader(matchUrl) {
 
 function renderCriteria(
   criteria,
+  valueUnit,
   isCriterionNewlyCreated,
   onSubmitEditCriterion
 ) {
@@ -44,6 +46,7 @@ function renderCriteria(
   return criteria.map((criteria, i) =>
     renderCriterion(
       criteria,
+      valueUnit,
       getNewlyCreatedClassName(i),
       onSubmitEditCriterion
     )
@@ -52,6 +55,7 @@ function renderCriteria(
 
 function renderCriterion(
   criterion,
+  valueUnit,
   newlyCreatedClassName,
   onSubmitEditCriterion
 ) {
@@ -60,15 +64,17 @@ function renderCriterion(
       key={criterion.id}
       className={`CriterionIndex_item ${newlyCreatedClassName}`}
       criterion={criterion}
+      valueUnit={valueUnit}
       onSubmitEdit={onSubmitEditCriterion}
     />
   )
 }
 
-function renderNewCriterion(onSubmitNewCriterion) {
+function renderNewCriterion(valueUnit, onSubmitNewCriterion) {
   return (
     <NewCriterion
       className="CriterionIndex_newItem"
+      valueUnit={valueUnit}
       onSubmit={onSubmitNewCriterion}
     />
   )
