@@ -16,7 +16,7 @@
     "postcss-inline-svg": "^3.1.1",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
-    "rambda": "^1.0.13",
+    "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-icons": "^2.2.7",

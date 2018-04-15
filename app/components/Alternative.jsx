@@ -8,6 +8,7 @@ import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Timing from "Timing"
+import { findEstimate } from "ValueCalculation"
 
 export default AlternativeState.renderWith(render)
 
@@ -137,10 +138,6 @@ function renderEstimates(
       onSubmitResetEstimate
     )
   )
-}
-
-function findEstimate(estimates, criterion) {
-  return estimates.find(estimate => estimate.criterion_id === criterion.id)
 }
 
 function renderEstimate(

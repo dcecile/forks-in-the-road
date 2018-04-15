@@ -1,10 +1,13 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { contains, sortBy } from "rambda"
+import { ascend, contains, descend, sortWith } from "ramda"
 
 import AlternativeIndexState from "AlternativeIndexState"
 import ComparisonHeader from "ComparisonHeader"
 import NewAlternative from "NewAlternative"
+import { calculateAlternativeValue } from "ValueCalculation"
+import { convertValueToString } from "ValueFormat"
+import { defaultValueUnitIfNull } from "ComparisonFields"
 
 export default AlternativeIndexState.renderWith(render)
 
@@ -16,6 +19,13 @@ function render({
   onNewAlternativeNameChange,
   onSubmitNewAlternative
 }) {
+  const alternativesWithValues = comparison.alternatives.map(alternative => ({
+    item: alternative,
+    value: calculateAlternativeValue(alternative, comparison.criteria)
+  }))
+
+  const alternativesSortedWithValues = sortAlternatives(alternativesWithValues)
+
   return (
     <div className="AlternativeIndex">
       {renderHeader(matchUrl)}
@@ -23,7 +33,9 @@ function render({
       <div className="AlternativeIndex_items">
         {renderAlternativeLinks(
           matchUrl,
-          sortAlternatives(comparison.alternatives),
+          alternativesSortedWithValues,
+          comparison.criteria,
+          comparison.value_unit,
           matchingItems,
           newlyCreatedItems
         )}
@@ -49,11 +61,16 @@ function renderNewAlternative(
   )
 }
 
-const sortAlternatives = sortBy(alternative => alternative.name.toLowerCase())
+const sortAlternatives = sortWith([
+  descend(alternativeWithValue => alternativeWithValue.value),
+  ascend(alternativeWithValue => alternativeWithValue.item.name.toLowerCase())
+])
 
 function renderAlternativeLinks(
   matchUrl,
-  alternatives,
+  alternativesSortedWithValues,
+  criteria,
+  valueUnit,
   matchingItems,
   newlyCreatedItems
 ) {
@@ -67,29 +84,39 @@ function renderAlternativeLinks(
       ? "AlternativeIndex_link__isNewlyCreated"
       : ""
 
-  return alternatives.map(alternative =>
+  return alternativesSortedWithValues.map(alternativeWithValue =>
     renderAlternativeLink(
       matchUrl,
-      alternative,
-      getMatchingClassName(alternative),
-      getNewlyCreatedClassName(alternative)
+      alternativeWithValue,
+      criteria,
+      valueUnit,
+      getMatchingClassName(alternativeWithValue.item),
+      getNewlyCreatedClassName(alternativeWithValue.item)
     )
   )
 }
 
 function renderAlternativeLink(
   matchUrl,
-  alternative,
+  alternativeWithValue,
+  criteria,
+  valueUnit,
   matchingClassName,
   newlyCreatedClassName
 ) {
   return (
     <Link
       className={`AlternativeIndex_link ${matchingClassName} ${newlyCreatedClassName}`}
-      key={alternative.id}
-      to={`${matchUrl}/alternative/${alternative.id}`}
+      key={alternativeWithValue.item.id}
+      to={`${matchUrl}/alternative/${alternativeWithValue.item.id}`}
     >
-      {alternative.name}
+      <span>{alternativeWithValue.item.name}</span>
+      <span className="AlternativeIndex_linkValue">
+        {convertValueToString(
+          defaultValueUnitIfNull(valueUnit),
+          alternativeWithValue.value
+        )}
+      </span>
     </Link>
   )
 }

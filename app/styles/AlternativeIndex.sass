@@ -9,11 +9,13 @@
 .AlternativeIndex_items
   display: flex
   flex-direction: column
+  align-self: flex-start
 
 .AlternativeIndex_link
-  margin:
-    top: 1.2rem
-    right: auto
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin-top: 1.2rem
   border:
     width: 1px
     color: $Theme_primary
@@ -23,12 +25,13 @@
   font-weight: $Font_boldWeight
 
 @mixin AlternativeIndex_link__indicator($text, $fontWeight)
-  &::after
-    position: absolute
-    margin-left: 1.4em
-    font-weight: $fontWeight
-    font-style: italic
-    content: $text
+  & > *:last-child
+    &::after
+      position: absolute
+      margin-left: 1.4em
+      font-weight: $fontWeight
+      font-style: italic
+      content: $text
 
 .AlternativeIndex_link__isNewlyCreated
   @include AlternativeIndex_link__indicator("New alternative", $Font_lightWeight)
@@ -46,6 +49,10 @@
     duration: $Timing_alternativeIndexHighlightLinkMatching
     timing-function: ease-out
   box-shadow: 0 0 5px $Theme_primary
+
+.AlternativeIndex_linkValue
+  margin-left: 0.8em
+  font-weight: $Font_lightWeight
 
 @keyframes AlternativeIndex_growLink
   0%
