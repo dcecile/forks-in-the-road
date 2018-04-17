@@ -1,4 +1,5 @@
 import React from "react"
+import pluralize from "pluralize"
 import { Link } from "react-router-dom"
 import { ascend, contains, descend, sortWith } from "ramda"
 
@@ -104,6 +105,8 @@ function renderAlternativeLink(
   matchingClassName,
   newlyCreatedClassName
 ) {
+  const missingEstimates =
+    criteria.length - alternativeWithValue.item.estimates.length
   return (
     <Link
       className={`AlternativeIndex_link ${matchingClassName} ${newlyCreatedClassName}`}
@@ -111,6 +114,11 @@ function renderAlternativeLink(
       to={`${matchUrl}/alternative/${alternativeWithValue.item.id}`}
     >
       <span>{alternativeWithValue.item.name}</span>
+      {missingEstimates ? (
+        <span className="AlternativeIndex_linkMissingEstimates">{`${missingEstimates} missing ${pluralize(
+          "estimate"
+        )}`}</span>
+      ) : null}
       <span className="AlternativeIndex_linkValue">
         {convertValueToString(
           defaultValueUnitIfNull(valueUnit),

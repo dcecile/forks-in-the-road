@@ -14,7 +14,6 @@
 .AlternativeIndex_link
   display: flex
   flex-direction: row
-  justify-content: space-between
   margin-top: 1.2rem
   border:
     width: 1px
@@ -50,9 +49,17 @@
     timing-function: ease-out
   box-shadow: 0 0 5px $Theme_primary
 
+.AlternativeIndex_linkMissingEstimates,
 .AlternativeIndex_linkValue
   margin-left: 0.8em
   font-weight: $Font_lightWeight
+
+.AlternativeIndex_linkMissingEstimates
+  color: $Theme_danger
+
+.AlternativeIndex_linkValue
+  flex-grow: 1
+  text-align: right
 
 @keyframes AlternativeIndex_growLink
   0%
