@@ -8,7 +8,7 @@ export function calculateAlternativeValue(alternative, criteria) {
   return sum(values)
 }
 
-function calculateEstimateValue(estimate, criterion) {
+export function calculateEstimateValue(estimate, criterion) {
   return (
     (estimate ? estimate.estimate : criterion.default_estimate) *
     criterion.full_value

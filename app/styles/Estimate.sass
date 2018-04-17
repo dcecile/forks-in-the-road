@@ -1,9 +1,6 @@
 .Estimate
   @extend .card
-  max-width: 15rem
-
-.Estimate__isEditing
-  max-width: 20rem
+  min-width: 20rem
 
 .Estimate_body
   @extend .card-body
@@ -23,9 +20,21 @@
     size: 1.2rem
     weight: $Font_boldWeight
 
-.Estimate_estimate
+.Estimate_fullValue,
+.Estimate_estimate,
+.Estimate_expectedValue
   @extend .card-text
   margin-bottom: 0.6rem
+
+.Estimate_fullValue
+  font-weight: $Font_lightWeight
+
+.Estimate_estimate
+  color: $Theme_primary
+  font-weight: $Font_boldWeight
+
+.Estimate_expectedValue
+  font-weight: $Font_boldWeight
 
 .Estimate_editButton
   margin-top: 0.4rem

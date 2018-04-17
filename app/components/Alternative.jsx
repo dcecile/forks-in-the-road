@@ -36,13 +36,16 @@ function render({
         onSubmitEdit,
         onCancelEdit
       )}
-      {renderEstimates(
-        alternative,
-        comparison.criteria,
-        onSubmitNewEstimate,
-        onSubmitEditEstimate,
-        onSubmitResetEstimate
-      )}
+      <div className="Alternative_items">
+        {renderEstimates(
+          alternative,
+          comparison.criteria,
+          comparison.value_unit,
+          onSubmitNewEstimate,
+          onSubmitEditEstimate,
+          onSubmitResetEstimate
+        )}
+      </div>
     </div>
   )
 }
@@ -125,6 +128,7 @@ function renderEdit(alternative, onSubmitEdit, onCancelEdit) {
 function renderEstimates(
   alternative,
   criteria,
+  valueUnit,
   onSubmitNewEstimate,
   onSubmitEditEstimate,
   onSubmitResetEstimate
@@ -133,6 +137,7 @@ function renderEstimates(
     renderEstimate(
       criterion,
       findEstimate(alternative.estimates, criterion),
+      valueUnit,
       onSubmitNewEstimate,
       onSubmitEditEstimate,
       onSubmitResetEstimate
@@ -143,6 +148,7 @@ function renderEstimates(
 function renderEstimate(
   criterion,
   estimate,
+  valueUnit,
   onSubmitNewEstimate,
   onSubmitEditEstimate,
   onSubmitResetEstimate
@@ -153,6 +159,7 @@ function renderEstimate(
       className="Alternative_item"
       estimate={estimate}
       criterion={criterion}
+      valueUnit={valueUnit}
       onSubmitNew={onSubmitNewEstimate}
       onSubmitEdit={onSubmitEditEstimate}
       onSubmitReset={onSubmitResetEstimate}
