@@ -8,7 +8,9 @@ import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Timing from "Timing"
-import { findEstimate } from "ValueCalculation"
+import { calculateAlternativeValue, findEstimate } from "ValueCalculation"
+import { convertValueToString } from "ValueFormat"
+import { defaultValueUnitIfNull } from "ComparisonFields"
 
 export default AlternativeState.renderWith(render)
 
@@ -31,6 +33,8 @@ function render({
         match.url,
         parentMatchUrl,
         alternative,
+        comparison.criteria,
+        comparison.value_unit,
         isEditing,
         onBeginEdit,
         onSubmitEdit,
@@ -54,6 +58,8 @@ function renderInfo(
   matchUrl,
   parentMatchUrl,
   alternative,
+  criteria,
+  valueUnit,
   isEditing,
   onBeginEdit,
   onSubmitEdit,
@@ -70,18 +76,33 @@ function renderInfo(
         }}
       >
         {!isEditing
-          ? renderHeaders(matchUrl, parentMatchUrl, alternative, onBeginEdit)
+          ? renderHeaders(
+              matchUrl,
+              parentMatchUrl,
+              alternative,
+              criteria,
+              valueUnit,
+              onBeginEdit
+            )
           : renderEdit(alternative, onSubmitEdit, onCancelEdit)}
       </CSSTransition>
     </TransitionGroup>
   )
 }
 
-function renderHeaders(matchUrl, parentMatchUrl, alternative, onBeginEdit) {
+function renderHeaders(
+  matchUrl,
+  parentMatchUrl,
+  alternative,
+  criteria,
+  valueUnit,
+  onBeginEdit
+) {
   return (
     <div className="Alternative_headers">
       {renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit)}
-      {renderSubHeader(alternative)}
+      {renderValue(alternative, criteria, valueUnit)}
+      {renderLink(alternative)}
     </div>
   )
 }
@@ -101,17 +122,25 @@ function renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit) {
   )
 }
 
-function renderSubHeader(alternative) {
+function renderLink(alternative) {
   return (
     alternative.url && (
-      <h2 className="Alternative_subHeader">
+      <p className="Alternative_link">
         <a href={alternative.url} target="_blank">
           (external link){" "}
           <MdOpenInNew className="Alternative_externalLinkIcon" />
         </a>
-      </h2>
+      </p>
     )
   )
+}
+
+function renderValue(alternative, criteria, valueUnit) {
+  const expectedValueString = convertValueToString(
+    defaultValueUnitIfNull(valueUnit),
+    calculateAlternativeValue(alternative, criteria)
+  )
+  return <p className="Alternative_value">{expectedValueString}</p>
 }
 
 function renderEdit(alternative, onSubmitEdit, onCancelEdit) {
