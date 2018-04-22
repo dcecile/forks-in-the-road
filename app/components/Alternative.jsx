@@ -8,7 +8,11 @@ import ComparisonHeader from "ComparisonHeader"
 import EditAlternative from "EditAlternative"
 import Estimate from "Estimate"
 import Timing from "Timing"
-import { calculateAlternativeValue, findEstimate } from "ValueCalculation"
+import {
+  calculateAlternativeValue,
+  findEstimate,
+  renderMissingEstimates
+} from "ValueCalculation"
 import { convertValueToString } from "ValueFormat"
 import { defaultValueUnitIfNull } from "ComparisonFields"
 
@@ -102,6 +106,7 @@ function renderHeaders(
     <div className="Alternative_headers">
       {renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit)}
       {renderValue(alternative, criteria, valueUnit)}
+      {renderMissing(alternative, criteria)}
       {renderLink(alternative)}
     </div>
   )
@@ -141,6 +146,12 @@ function renderValue(alternative, criteria, valueUnit) {
     calculateAlternativeValue(alternative, criteria)
   )
   return <p className="Alternative_value">{expectedValueString}</p>
+}
+
+function renderMissing(alternative, criteria) {
+  return renderMissingEstimates(alternative, criteria, message => (
+    <p className="Alternative_missing">{message}</p>
+  ))
 }
 
 function renderEdit(alternative, onSubmitEdit, onCancelEdit) {

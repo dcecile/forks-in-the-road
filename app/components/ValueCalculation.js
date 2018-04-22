@@ -1,3 +1,4 @@
+import pluralize from "pluralize"
 import { sum } from "ramda"
 
 export function calculateAlternativeValue(alternative, criteria) {
@@ -17,4 +18,15 @@ export function calculateEstimateValue(estimate, criterion) {
 
 export function findEstimate(estimates, criterion) {
   return estimates.find(estimate => estimate.criterion_id === criterion.id)
+}
+
+export function renderMissingEstimates(alternative, criteria, render) {
+  const missingEstimates = countMissingEstimates(alternative, criteria)
+  return missingEstimates
+    ? render(`${missingEstimates} missing ${pluralize("estimate")}`)
+    : null
+}
+
+function countMissingEstimates(alternative, criteria) {
+  return criteria.length - alternative.estimates.length
 }

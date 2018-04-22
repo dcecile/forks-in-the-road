@@ -1,12 +1,14 @@
 import React from "react"
-import pluralize from "pluralize"
 import { Link } from "react-router-dom"
 import { ascend, contains, descend, sortWith } from "ramda"
 
 import AlternativeIndexState from "AlternativeIndexState"
 import ComparisonHeader from "ComparisonHeader"
 import NewAlternative from "NewAlternative"
-import { calculateAlternativeValue } from "ValueCalculation"
+import {
+  calculateAlternativeValue,
+  renderMissingEstimates
+} from "ValueCalculation"
 import { convertValueToString } from "ValueFormat"
 import { defaultValueUnitIfNull } from "ComparisonFields"
 
@@ -105,8 +107,6 @@ function renderAlternativeLink(
   matchingClassName,
   newlyCreatedClassName
 ) {
-  const missingEstimates =
-    criteria.length - alternativeWithValue.item.estimates.length
   return (
     <Link
       className={`AlternativeIndex_link ${matchingClassName} ${newlyCreatedClassName}`}
@@ -114,11 +114,9 @@ function renderAlternativeLink(
       to={`${matchUrl}/alternative/${alternativeWithValue.item.id}`}
     >
       <span>{alternativeWithValue.item.name}</span>
-      {missingEstimates ? (
-        <span className="AlternativeIndex_linkMissingEstimates">{`${missingEstimates} missing ${pluralize(
-          "estimate"
-        )}`}</span>
-      ) : null}
+      {renderMissingEstimates(alternativeWithValue.item, criteria, message => (
+        <span className="AlternativeIndex_linkMissingEstimates">{message}</span>
+      ))}
       <span className="AlternativeIndex_linkValue">
         {convertValueToString(
           defaultValueUnitIfNull(valueUnit),
