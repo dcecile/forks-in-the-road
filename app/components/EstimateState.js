@@ -30,6 +30,7 @@ export default class EstimateState extends EditableStateComponent {
 
   async handleSubmitNew(estimate) {
     await this.onSubmitNew(estimate)
+    await this.handleCancelEdit()
   }
 
   async handleSubmitEdit(estimate) {

@@ -8,6 +8,7 @@ import { calculateEstimateValue } from "ValueCalculation"
 import { convertPercentToString } from "PercentFormat"
 import { convertValueToString } from "ValueFormat"
 import { defaultValueUnitIfNull } from "ComparisonFields"
+import { unknownEstimateIfNull } from "EstimateFields"
 
 export default EstimateState.renderWith(render)
 
@@ -24,8 +25,6 @@ function render({
   onCancelEdit,
   onSubmitReset
 }) {
-  const isNew = !estimate
-
   const editStateChangingClassName = isEditStateChanging
     ? "Estimate_body__isEditChangingState"
     : ""
@@ -34,32 +33,27 @@ function render({
     <div className={`Estimate ${className}`}>
       <div className={`Estimate_body ${editStateChangingClassName}`}>
         <h2 className="Estimate_name">{criterion.name}</h2>
-        {isNew
-          ? renderNew(criterion, onSubmitNew)
-          : !isEditing
-            ? renderShow(estimate, criterion, valueUnit, onBeginEdit)
-            : renderEdit(
-                estimate,
-                criterion,
-                onSubmitEdit,
-                onCancelEdit,
-                onSubmitReset
-              )}
+        {!isEditing
+          ? renderShow(estimate, criterion, valueUnit, onBeginEdit)
+          : renderEdit(
+              estimate,
+              criterion,
+              onSubmitNew,
+              onSubmitEdit,
+              onCancelEdit,
+              onSubmitReset
+            )}
       </div>
     </div>
   )
 }
 
-function renderNew(criterion, onSubmitNew) {
-  return <NewEstimate criterion={criterion} onSubmit={onSubmitNew} />
-}
-
 function renderShow(estimate, criterion, valueUnit, onBeginEdit) {
+  const isNew = !estimate
   const fullValueString = convertValueToString(
     defaultValueUnitIfNull(valueUnit),
     criterion.full_value
   )
-  const estimateString = convertPercentToString(estimate.estimate)
   const expectedValueString = convertValueToString(
     defaultValueUnitIfNull(valueUnit),
     calculateEstimateValue(estimate, criterion)
@@ -68,7 +62,18 @@ function renderShow(estimate, criterion, valueUnit, onBeginEdit) {
   return (
     <React.Fragment>
       <div className="Estimate_fullValue">Full value: {fullValueString}</div>
-      <div className="Estimate_estimate">Estimate: {estimateString}</div>
+      {isNew ? (
+        <div className="Estimate_defaultEstimate">
+          Default estimate:{" "}
+          {convertPercentToString(
+            unknownEstimateIfNull(criterion.default_estimate)
+          )}
+        </div>
+      ) : (
+        <div className="Estimate_estimate">
+          Estimate: {convertPercentToString(estimate.estimate)}
+        </div>
+      )}
       <div className="Estimate_expectedValue">
         Expected value: {expectedValueString}
       </div>
@@ -82,17 +87,24 @@ function renderShow(estimate, criterion, valueUnit, onBeginEdit) {
 function renderEdit(
   estimate,
   criterion,
+  onSubmitNew,
   onSubmitEdit,
   onCancelEdit,
   onSubmitReset
 ) {
-  return (
-    <EditEstimate
-      input={estimate}
-      criterion={criterion}
-      onSubmit={onSubmitEdit}
-      onCancel={onCancelEdit}
-      onReset={onSubmitReset}
-    />
-  )
+  const isNew = !estimate
+
+  if (isNew) {
+    return <NewEstimate criterion={criterion} onSubmit={onSubmitNew} />
+  } else {
+    return (
+      <EditEstimate
+        input={estimate}
+        criterion={criterion}
+        onSubmit={onSubmitEdit}
+        onCancel={onCancelEdit}
+        onReset={onSubmitReset}
+      />
+    )
+  }
 }

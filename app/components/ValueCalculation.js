@@ -1,6 +1,8 @@
 import pluralize from "pluralize"
 import { sum } from "ramda"
 
+import { unknownEstimateIfNull } from "EstimateFields"
+
 export function calculateAlternativeValue(alternative, criteria) {
   const estimates = alternative.estimates
   const values = criteria.map(criterion =>
@@ -11,7 +13,9 @@ export function calculateAlternativeValue(alternative, criteria) {
 
 export function calculateEstimateValue(estimate, criterion) {
   return (
-    (estimate ? estimate.estimate : criterion.default_estimate) *
+    (estimate
+      ? estimate.estimate
+      : unknownEstimateIfNull(criterion.default_estimate)) *
     criterion.full_value
   )
 }
