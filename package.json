@@ -10,7 +10,7 @@
     "coffeescript": "2.2.3",
     "escape-string-regexp": "^1.0.5",
     "jquery": "^3.3.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.9.0",
     "pluralize": "^7.0.0",
     "popper.js": "^1.14.1",
     "postcss-import": "^11.1.0",
