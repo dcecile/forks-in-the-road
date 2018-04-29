@@ -1,4 +1,5 @@
 import MdOpenInNew from "react-icons/lib/md/open-in-new"
+import MdInfoOutline from "react-icons/lib/md/info-outline"
 import React from "react"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 
@@ -24,9 +25,11 @@ function render({
   comparison,
   alternative,
   isEditing,
+  isValueExplanationVisible,
   onBeginEdit,
   onSubmitEdit,
   onCancelEdit,
+  onToggleValueExplanationVisible,
   onSubmitNewEstimate,
   onSubmitEditEstimate,
   onSubmitResetEstimate
@@ -40,9 +43,11 @@ function render({
         comparison.criteria,
         comparison.value_unit,
         isEditing,
+        isValueExplanationVisible,
         onBeginEdit,
         onSubmitEdit,
-        onCancelEdit
+        onCancelEdit,
+        onToggleValueExplanationVisible
       )}
       <div className="Alternative_items">
         {renderEstimates(
@@ -65,9 +70,11 @@ function renderInfo(
   criteria,
   valueUnit,
   isEditing,
+  isValueExplanationVisible,
   onBeginEdit,
   onSubmitEdit,
-  onCancelEdit
+  onCancelEdit,
+  onToggleValueExplanationVisible
 ) {
   return (
     <TransitionGroup>
@@ -86,7 +93,9 @@ function renderInfo(
               alternative,
               criteria,
               valueUnit,
-              onBeginEdit
+              isValueExplanationVisible,
+              onBeginEdit,
+              onToggleValueExplanationVisible
             )
           : renderEdit(alternative, onSubmitEdit, onCancelEdit)}
       </CSSTransition>
@@ -100,12 +109,23 @@ function renderHeaders(
   alternative,
   criteria,
   valueUnit,
-  onBeginEdit
+  isValueExplanationVisible,
+  onBeginEdit,
+  onToggleValueExplanationVisible
 ) {
   return (
     <div className="Alternative_headers">
       {renderHeader(matchUrl, parentMatchUrl, alternative, onBeginEdit)}
-      {renderValue(alternative, criteria, valueUnit)}
+      {renderValue(
+        alternative,
+        criteria,
+        valueUnit,
+        onToggleValueExplanationVisible
+      )}
+      {renderValueExplanation(
+        isValueExplanationVisible,
+        onToggleValueExplanationVisible
+      )}
       {renderMissing(alternative, criteria)}
       {renderLink(alternative)}
     </div>
@@ -140,12 +160,56 @@ function renderLink(alternative) {
   )
 }
 
-function renderValue(alternative, criteria, valueUnit) {
+function renderValue(
+  alternative,
+  criteria,
+  valueUnit,
+  onToggleValueExplanationVisible
+) {
   const expectedValueString = convertValueToString(
     defaultValueUnitIfNull(valueUnit),
     calculateAlternativeValue(alternative, criteria)
   )
-  return <p className="Alternative_value">{expectedValueString}</p>
+  return (
+    <p className="Alternative_value">
+      {expectedValueString}{" "}
+      <MdInfoOutline
+        className="Alternative_valueIcon"
+        onClick={onToggleValueExplanationVisible}
+      />
+    </p>
+  )
+}
+
+function renderValueExplanation(
+  isValueExplanationVisible,
+  onToggleValueExplanationVisible
+) {
+  return (
+    <TransitionGroup>
+      <CSSTransition
+        key={isValueExplanationVisible}
+        classNames="Alternative_valueExplanation"
+        timeout={{
+          exit: Timing.alternativeValueExplanationVisible,
+          enter: Timing.alternativeValueExplanationVisible
+        }}
+      >
+        {isValueExplanationVisible ? (
+          <p
+            className="Alternative_valueExplanation"
+            onClick={onToggleValueExplanationVisible}
+          >
+            The value of this alternative is calculated by adding up the
+            expected values of each criteria, using the estimates supplied
+            below.
+          </p>
+        ) : (
+          <div />
+        )}
+      </CSSTransition>
+    </TransitionGroup>
+  )
 }
 
 function renderMissing(alternative, criteria) {

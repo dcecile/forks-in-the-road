@@ -6,7 +6,8 @@ export default class Alternative extends StateComponent {
   constructor(props) {
     super(props)
     this.state = {
-      isEditing: false
+      isEditing: false,
+      isValueExplanationVisible: false
     }
   }
 
@@ -42,6 +43,10 @@ export default class Alternative extends StateComponent {
     return this.state.isEditing
   }
 
+  get isValueExplanationVisible() {
+    return this.state.isValueExplanationVisible
+  }
+
   handleBeginEdit() {
     this.setState({
       isEditing: true
@@ -61,6 +66,12 @@ export default class Alternative extends StateComponent {
   handleCancelEdit() {
     this.setState({
       isEditing: false
+    })
+  }
+
+  handleToggleValueExplanationVisible() {
+    this.setState({
+      isValueExplanationVisible: !this.isValueExplanationVisible
     })
   }
 
@@ -113,9 +124,12 @@ export default class Alternative extends StateComponent {
     return {
       alternative: this.alternative,
       isEditing: this.isEditing,
+      isValueExplanationVisible: this.isValueExplanationVisible,
       onBeginEdit: () => this.handleBeginEdit(),
       onSubmitEdit: alternative => this.handleSubmitEdit(alternative),
       onCancelEdit: () => this.handleCancelEdit(),
+      onToggleValueExplanationVisible: () =>
+        this.handleToggleValueExplanationVisible(),
       onSubmitEditEstimate: estimate => this.handleSubmitEditEstimate(estimate),
       onSubmitNewEstimate: estimate => this.handleSubmitNewEstimate(estimate),
       onSubmitResetEstimate: estimate =>

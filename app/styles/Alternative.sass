@@ -25,7 +25,32 @@
   font-size: 1.4rem
 
 .Alternative_value
+  margin-top: 0.5rem;
   font-weight: $Font_boldWeight
+
+.Alternative_valueIcon
+  margin-top: -5px
+  font-size: 24px
+
+.Alternative_valueExplanation
+  transition:
+    property: opacity, transform
+    duration: $Timing_alternativeValueExplanationVisible
+  margin:
+    top: -0.8rem
+    bottom: 0.9rem
+    left: 1.6rem
+  cursor: default
+  max-width: 25rem
+  color: $Theme_primary
+  font-size: 1.0rem
+  font-weight: $Font_lightWeight
+  font-style: italic
+
+.Alternative_valueExplanation-enter,
+.Alternative_valueExplanation-exit
+  transform: scaleY(0)
+  opacity: 0
 
 .Alternative_missing,
 .Alternative_link
