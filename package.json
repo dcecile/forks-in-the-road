@@ -5,7 +5,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.1.1",
     "caniuse-lite": "^1.0.30000819",
     "coffeescript": "2.2.3",
     "escape-string-regexp": "^1.0.5",
