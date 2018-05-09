@@ -27,7 +27,7 @@ gem "webpacker"
 # Use React-Rails to integrate React
 gem "react-rails"
 # Use official GitHub client
-gem "octokit", "~> 4.0"
+gem "octokit", "~> 4.9"
 # Use Knock for JWT authentication
 gem "knock", "~> 2.1"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
